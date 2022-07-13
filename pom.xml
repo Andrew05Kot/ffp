@@ -11,6 +11,7 @@
 
   <modules>
     <module>dish</module>
+    <module>category</module>
   </modules>
 
   <name>ffp</name>
