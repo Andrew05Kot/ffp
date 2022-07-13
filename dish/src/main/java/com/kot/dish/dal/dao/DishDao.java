@@ -1,7 +1,7 @@
-package com.kot.dish.dao;
+package com.kot.dish.dal.dao;
 
-import com.kot.dish.model.DishEntity;
-import com.kot.dish.repository.DishRepository;
+import com.kot.dish.dal.entity.DishEntity;
+import com.kot.dish.dal.repository.DishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

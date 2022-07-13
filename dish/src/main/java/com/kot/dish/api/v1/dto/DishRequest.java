@@ -1,6 +1,6 @@
 package com.kot.dish.api.v1.dto;
 
-import com.kot.dish.model.DishEntity;
+import com.kot.dish.dal.entity.DishEntity;
 import lombok.Getter;
 import lombok.Setter;
 

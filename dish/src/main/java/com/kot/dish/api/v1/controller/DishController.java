@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import com.kot.dish.api.v1.dto.DishRequest;
 import com.kot.dish.api.v1.dto.DishResponse;
-import com.kot.dish.model.DishEntity;
-import com.kot.dish.service.DishService;
+import com.kot.dish.api.v1.mapper.DishAPIMapper;
+import com.kot.dish.bll.model.Dish;
+import com.kot.dish.bll.service.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,22 +24,28 @@ public class DishController {
 	@Autowired
 	private DishService dishService;
 
+	@Autowired
+	private DishAPIMapper dishAPIMapper;
+
 	@PostMapping("/")
 	public ResponseEntity<DishResponse> create(@RequestBody DishRequest request) {
-		DishEntity entity = request.createEntity();
-		entity = dishService.save(entity);
-		return new ResponseEntity<>(new DishResponse(entity), HttpStatus.OK);
+		Dish model = dishService.save(dishAPIMapper.dtoToModel(request));
+		return new ResponseEntity<>(dishAPIMapper.modelToDto(model), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<DishResponse> getById(@PathVariable Long id) {
-		return new ResponseEntity<>(new DishResponse(dishService.findById(id)), HttpStatus.OK);
+		Dish model = dishService.findById(id);
+		return new ResponseEntity<>(dishAPIMapper.modelToDto(model), HttpStatus.OK);
 	}
 
 	@GetMapping("/")
 	public ResponseEntity<List<DishResponse>> getAll() {
-		List<DishEntity> dishEntities = dishService.findAll().getContent();
-		List<DishResponse> dishResponses = dishEntities.stream().map(DishResponse::new).collect(Collectors.toList());
+		List<Dish> dishEntities = dishService.findAll().getContent();
+		List<DishResponse> dishResponses = dishEntities
+				.stream()
+				.map(model -> dishAPIMapper.modelToDto(model))
+				.collect(Collectors.toList());
 		return new ResponseEntity<>(dishResponses, HttpStatus.OK);
 	}
 

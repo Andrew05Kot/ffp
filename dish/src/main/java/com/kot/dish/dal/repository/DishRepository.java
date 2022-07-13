@@ -1,6 +1,6 @@
-package com.kot.dish.repository;
+package com.kot.dish.dal.repository;
 
-import com.kot.dish.model.DishEntity;
+import com.kot.dish.dal.entity.DishEntity;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
