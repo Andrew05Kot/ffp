@@ -1,11 +1,5 @@
 package com.kot.dish.api.v1.dto;
 
-import com.kot.dish.dal.entity.DishEntity;
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class DishRequest {
 
 	private Long id;
@@ -14,11 +8,27 @@ public class DishRequest {
 
 	private Long categoryId;
 
-	public DishEntity createEntity() {
-		DishEntity entity = new DishEntity();
-		entity.setId(id);
-		entity.setName(name);
-		entity.setCategoryId(categoryId);
-		return entity;
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
 	}
 }
