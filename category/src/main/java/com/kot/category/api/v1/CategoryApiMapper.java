@@ -1,4 +1,4 @@
-package com.kot.category.api;
+package com.kot.category.api.v1;
 
 import com.kot.category.bll.model.Category;
 

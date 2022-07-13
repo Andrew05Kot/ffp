@@ -1,4 +1,4 @@
-package com.kot.category.api;
+package com.kot.category.api.v1;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("api/v1/categories")
 public class CategoryController {
 
 	@Autowired
@@ -22,19 +24,19 @@ public class CategoryController {
 	@Autowired
 	private CategoryApiMapper categoryApiMapper;
 
-	@PostMapping("/category")
+	@PostMapping("/")
 	public ResponseEntity<CategoryResponse> create(@RequestBody CategoryRequest request) {
 		Category model = categoryService.save(categoryApiMapper.dtoToModel(request));
 		return new ResponseEntity<>(categoryApiMapper.modelToDto(model), HttpStatus.OK);
 	}
 
-	@GetMapping("/category/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<CategoryResponse> getById(@PathVariable Long id) {
 		Category model = categoryService.findById(id);
 		return new ResponseEntity<>(categoryApiMapper.modelToDto(model), HttpStatus.OK);
 	}
 
-	@GetMapping("/categories")
+	@GetMapping("/")
 	public ResponseEntity<List<CategoryResponse>> getAll() {
 		List<Category> dishEntities = categoryService.findAll().getContent();
 		List<CategoryResponse> dishResponses = dishEntities
