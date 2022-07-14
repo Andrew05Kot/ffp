@@ -27,6 +27,11 @@ public class DishController {
 	@Autowired
 	private DishAPIMapper dishAPIMapper;
 
+	@GetMapping("/status")
+	public ResponseEntity<?> getStatus() {
+		return new ResponseEntity<>("Works!", HttpStatus.OK);
+	}
+
 	@PostMapping("/")
 	public ResponseEntity<DishResponse> create(@RequestBody DishRequest request) {
 		Dish model = dishService.save(dishAPIMapper.dtoToModel(request));
