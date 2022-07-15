@@ -7,6 +7,8 @@ import com.kot.dish.api.v1.dto.DishResponse;
 import com.kot.dish.api.v1.mapper.DishAPIMapper;
 import com.kot.dish.bll.model.Dish;
 import com.kot.dish.bll.service.DishService;
+import com.kot.dish.intercomm.category.CategoryClient;
+import com.kot.dish.intercomm.category.CategoryResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +29,18 @@ public class DishController {
 	@Autowired
 	private DishAPIMapper dishAPIMapper;
 
+	@Autowired
+	private CategoryClient categoryClient;
+
 	@GetMapping("/status")
 	public ResponseEntity<?> getStatus() {
 		return new ResponseEntity<>("Works!", HttpStatus.OK);
+	}
+
+	@GetMapping("/categories")
+	public ResponseEntity<?> getCategories() {
+		List<CategoryResponseModel> categories = categoryClient.getCategories();
+		return new ResponseEntity<>(categories, HttpStatus.OK);
 	}
 
 	@PostMapping("/")

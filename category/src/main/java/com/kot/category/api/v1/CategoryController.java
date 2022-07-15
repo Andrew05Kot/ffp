@@ -24,6 +24,11 @@ public class CategoryController {
 	@Autowired
 	private CategoryApiMapper categoryApiMapper;
 
+	@GetMapping("/status")
+	public ResponseEntity<?> getStatus() {
+		return new ResponseEntity<>("Works!", HttpStatus.OK);
+	}
+
 	@PostMapping("/")
 	public ResponseEntity<CategoryResponse> create(@RequestBody CategoryRequest request) {
 		Category model = categoryService.save(categoryApiMapper.dtoToModel(request));
