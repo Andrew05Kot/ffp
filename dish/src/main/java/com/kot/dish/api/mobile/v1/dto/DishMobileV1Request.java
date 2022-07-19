@@ -1,6 +1,6 @@
-package com.kot.dish.api.v1.dto;
+package com.kot.dish.api.mobile.v1.dto;
 
-public class DishRequest {
+public class DishMobileV1Request {
 
 	private Long id;
 

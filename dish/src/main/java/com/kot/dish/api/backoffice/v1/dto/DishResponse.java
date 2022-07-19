@@ -1,4 +1,4 @@
-package com.kot.dish.api.v1.dto;
+package com.kot.dish.api.backoffice.v1.dto;
 
 public class DishResponse {
 
