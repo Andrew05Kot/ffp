@@ -1,6 +1,6 @@
-package com.kot.category.api.v1;
+package com.kot.category.api.backoffice.v1;
 
-public class CategoryResponse {
+public class CategoryV1Response {
 
 	private Long id;
 
