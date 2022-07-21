@@ -1,0 +1,12 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+com:
+  kot:
+      image:
+        formats: image/png,image/jpeg
+        maxImageSize: 10485760 # equals to 10 * 1024 * 1024 (10 mb)
+        folderName: /images/

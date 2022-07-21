@@ -13,6 +13,8 @@
     <module>dish</module>
     <module>category</module>
     <module>eureka-server</module>
+    <module>api-getaway</module>
+    <module>image</module>
   </modules>
 
   <name>ffp</name>
