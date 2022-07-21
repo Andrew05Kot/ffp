@@ -1,4 +1,4 @@
-package com.kot.category.api.config;
+package com.kot.category.api.common.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

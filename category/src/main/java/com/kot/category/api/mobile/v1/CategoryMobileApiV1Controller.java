@@ -2,7 +2,7 @@ package com.kot.category.api.mobile.v1;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import com.kot.category.api.ApiInfo;
+import com.kot.category.api.common.ApiInfo;
 import com.kot.category.bll.model.Category;
 import com.kot.category.bll.service.CategoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
