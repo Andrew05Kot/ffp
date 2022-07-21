@@ -1,9 +1,11 @@
-package com.kot.category.api.v1;
+package com.kot.category.api.backoffice.v1;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import com.kot.category.api.ApiInfo;
 import com.kot.category.bll.model.Category;
 import com.kot.category.bll.service.CategoryService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +17,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/v1/categories")
-public class CategoryController {
+@RequestMapping(CategoryV1Controller.API_URL)
+@Tag(name = "Category API")
+public class CategoryV1Controller {
+
+	public static final String API_URL = ApiInfo.API_PREFIX + ApiInfo.API_VERSION_V1 + ApiInfo.CATEGORY_ENDPOINT;
 
 	@Autowired
 	private CategoryService categoryService;
 
 	@Autowired
-	private CategoryApiMapper categoryApiMapper;
+	private CategoryApiV1Mapper categoryApiMapper;
 
 	@GetMapping("/status")
 	public ResponseEntity<?> getStatus() {
@@ -30,21 +35,21 @@ public class CategoryController {
 	}
 
 	@PostMapping("/")
-	public ResponseEntity<CategoryResponse> create(@RequestBody CategoryRequest request) {
+	public ResponseEntity<CategoryV1Response> create(@RequestBody CategoryV1Request request) {
 		Category model = categoryService.save(categoryApiMapper.dtoToModel(request));
 		return new ResponseEntity<>(categoryApiMapper.modelToDto(model), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CategoryResponse> getById(@PathVariable Long id) {
+	public ResponseEntity<CategoryV1Response> getById(@PathVariable Long id) {
 		Category model = categoryService.findById(id);
 		return new ResponseEntity<>(categoryApiMapper.modelToDto(model), HttpStatus.OK);
 	}
 
 	@GetMapping("/")
-	public ResponseEntity<List<CategoryResponse>> getAll() {
+	public ResponseEntity<List<CategoryV1Response>> getAll() {
 		List<Category> dishEntities = categoryService.findAll().getContent();
-		List<CategoryResponse> dishResponses = dishEntities
+		List<CategoryV1Response> dishResponses = dishEntities
 				.stream()
 				.map(model -> categoryApiMapper.modelToDto(model))
 				.collect(Collectors.toList());

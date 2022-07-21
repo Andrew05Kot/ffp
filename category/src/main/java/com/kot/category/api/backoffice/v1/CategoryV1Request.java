@@ -1,12 +1,10 @@
-package com.kot.dish.api.v1.dto;
+package com.kot.category.api.backoffice.v1;
 
-public class DishResponse {
+public class CategoryV1Request {
 
 	private Long id;
 
 	private String name;
-
-	private Long categoryId;
 
 	public Long getId() {
 		return id;
@@ -22,13 +20,5 @@ public class DishResponse {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Long getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
 	}
 }

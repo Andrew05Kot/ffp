@@ -1,6 +1,6 @@
-package com.kot.category.api.v1;
+package com.kot.category.api.mobile.v1;
 
-public class CategoryRequest {
+public class CategoryMobileApiV1Request {
 
 	private Long id;
 
