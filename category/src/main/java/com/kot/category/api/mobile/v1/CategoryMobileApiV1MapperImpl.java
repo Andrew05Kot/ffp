@@ -11,6 +11,8 @@ public class CategoryMobileApiV1MapperImpl implements CategoryMobileApiV1Mapper 
 		CategoryMobileApiV1Response response = new CategoryMobileApiV1Response();
 		response.setId(model.getId());
 		response.setName(model.getName());
+		response.setDescription(model.getDescription());
+		response.setIconName(model.getIconName());
 		return response;
 	}
 
@@ -19,6 +21,8 @@ public class CategoryMobileApiV1MapperImpl implements CategoryMobileApiV1Mapper 
 		Category model = new Category();
 		model.setId(dto.getId());
 		model.setName(dto.getName());
+		model.setDescription(dto.getDescription());
+		model.setIconName(dto.getIconName());
 		return model;
 	}
 }

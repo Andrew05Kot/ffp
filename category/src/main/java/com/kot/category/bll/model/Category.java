@@ -9,6 +9,10 @@ public class Category {
 
 	private String name;
 
+	private String description;
+
+	private String iconName;
+
 	public Long getId() {
 		return id;
 	}
@@ -25,6 +29,22 @@ public class Category {
 		this.name = name;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getIconName() {
+		return iconName;
+	}
+
+	public void setIconName(String iconName) {
+		this.iconName = iconName;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -36,6 +56,8 @@ public class Category {
 		return new EqualsBuilder()
 				.append(id, category.id)
 				.append(name, category.name)
+				.append(description, category.description)
+				.append(iconName, category.iconName)
 				.isEquals();
 	}
 
@@ -44,6 +66,8 @@ public class Category {
 		return new HashCodeBuilder()
 				.append(id)
 				.append(name)
+				.append(description)
+				.append(iconName)
 				.toHashCode();
 	}
 
@@ -52,6 +76,8 @@ public class Category {
 		return "Category{" +
 				"id=" + id +
 				", name='" + name + '\'' +
+				", description='" + description + '\'' +
+				", iconName='" + iconName + '\'' +
 				'}';
 	}
 }
