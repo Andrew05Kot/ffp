@@ -16,7 +16,7 @@ import com.kot.dish.bll.service.DishService;
 
 @RestController
 @RequestMapping(DishMobileV1Controller.API_URL)
-@Tag(name = ApiInfo.DISH_MOBILE_API)
+@Tag(name = "Dish Mobile API")
 public class DishMobileV1Controller {
 
 	public static final String API_URL = ApiInfo.API_PREFIX + ApiInfo.MOBILE_API_VERSION_V1 + ApiInfo.DISH_ENDPOINT;
