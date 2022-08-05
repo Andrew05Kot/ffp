@@ -1,5 +1,6 @@
 package com.kot.dish.api.mobile.v1.dish;
 
+import java.math.BigDecimal;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import com.kot.dish.api.mobile.v1.category.CategoryMobileV1Response;
@@ -11,6 +12,8 @@ public class DishMobileV1Response {
 	private String name;
 
 	private String description;
+
+	private BigDecimal price;
 
 	private CategoryMobileV1Response category;
 
@@ -46,6 +49,14 @@ public class DishMobileV1Response {
 		this.category = category;
 	}
 
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -59,6 +70,7 @@ public class DishMobileV1Response {
 				.append(name, that.name)
 				.append(description, that.description)
 				.append(category, that.category)
+				.append(price, that.price)
 				.isEquals();
 	}
 
@@ -69,6 +81,7 @@ public class DishMobileV1Response {
 				.append(name)
 				.append(description)
 				.append(category)
+				.append(price)
 				.toHashCode();
 	}
 
@@ -79,6 +92,7 @@ public class DishMobileV1Response {
 				", name='" + name + '\'' +
 				", description='" + description + '\'' +
 				", category=" + category +
+				", price=" + price +
 				'}';
 	}
 }
