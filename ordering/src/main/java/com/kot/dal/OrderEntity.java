@@ -2,7 +2,10 @@ package com.kot.dal;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -50,6 +53,10 @@ public class OrderEntity {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private PaymentMethod paymentMethod;
+
+	@Column(name = "dish_ids")
+	@ElementCollection(targetClass = Long.class)
+	private List<Long> dishIds;
 
 	public Long getId() {
 		return id;
@@ -115,6 +122,14 @@ public class OrderEntity {
 		this.paymentMethod = paymentMethod;
 	}
 
+	public List<Long> getDishIds() {
+		return dishIds;
+	}
+
+	public void setDishIds(List<Long> dishIds) {
+		this.dishIds = dishIds;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -132,6 +147,7 @@ public class OrderEntity {
 				.append(expiration, that.expiration)
 				.append(cvv, that.cvv)
 				.append(paymentMethod, that.paymentMethod)
+				.append(dishIds, that.dishIds)
 				.isEquals();
 	}
 
@@ -146,6 +162,7 @@ public class OrderEntity {
 				.append(expiration)
 				.append(cvv)
 				.append(paymentMethod)
+				.append(dishIds)
 				.toHashCode();
 	}
 
@@ -160,6 +177,7 @@ public class OrderEntity {
 				", expiration='" + expiration + '\'' +
 				", cvv='" + cvv + '\'' +
 				", paymentMethod=" + paymentMethod +
+				", dishIds=" + dishIds +
 				'}';
 	}
 }
