@@ -21,6 +21,7 @@ public class DishV1ApiMapperImpl implements DishV1ApiMapper {
 		response.setId(model.getId());
 		response.setName(model.getName());
 		response.setDescription(model.getDescription());
+		response.setPrice(model.getPrice());
 		response.setCategory(categoryMapper.modelToDto(model.getCategory()));
 		return response;
 	}
@@ -31,6 +32,7 @@ public class DishV1ApiMapperImpl implements DishV1ApiMapper {
 		model.setId(dto.getId());
 		model.setName(dto.getName());
 		model.setDescription(dto.getDescription());
+		model.setPrice(dto.getPrice());
 		model.setCategory(categoryService.findById(dto.getCategoryId()));
 		return model;
 	}

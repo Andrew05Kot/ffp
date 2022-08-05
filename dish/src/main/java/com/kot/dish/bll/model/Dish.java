@@ -1,5 +1,6 @@
 package com.kot.dish.bll.model;
 
+import java.math.BigDecimal;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -10,6 +11,8 @@ public class Dish {
 	private String name;
 
 	private String description;
+
+	private BigDecimal price;
 
 	private Category category;
 
@@ -45,6 +48,14 @@ public class Dish {
 		this.category = category;
 	}
 
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -58,6 +69,7 @@ public class Dish {
 				.append(name, dish.name)
 				.append(description, dish.description)
 				.append(category, dish.category)
+				.append(price, dish.price)
 				.isEquals();
 	}
 
@@ -68,6 +80,7 @@ public class Dish {
 				.append(name)
 				.append(description)
 				.append(category)
+				.append(price)
 				.toHashCode();
 	}
 
@@ -78,6 +91,7 @@ public class Dish {
 				", name='" + name + '\'' +
 				", description='" + description + '\'' +
 				", category=" + category +
+				", price=" + price +
 				'}';
 	}
 }

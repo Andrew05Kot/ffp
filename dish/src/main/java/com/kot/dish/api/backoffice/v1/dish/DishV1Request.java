@@ -1,5 +1,6 @@
 package com.kot.dish.api.backoffice.v1.dish;
 
+import java.math.BigDecimal;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -10,6 +11,8 @@ public class DishV1Request {
 	private String name;
 
 	private String description;
+
+	private BigDecimal price;
 
 	private Long categoryId;
 
@@ -45,6 +48,14 @@ public class DishV1Request {
 		this.categoryId = categoryId;
 	}
 
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -58,6 +69,7 @@ public class DishV1Request {
 				.append(name, that.name)
 				.append(categoryId, that.categoryId)
 				.append(description, that.description)
+				.append(price, that.price)
 				.isEquals();
 	}
 
@@ -68,6 +80,7 @@ public class DishV1Request {
 				.append(name)
 				.append(categoryId)
 				.append(description)
+				.append(price)
 				.toHashCode();
 	}
 
@@ -78,6 +91,7 @@ public class DishV1Request {
 				", name='" + name + '\'' +
 				", description='" + description + '\'' +
 				", categoryId=" + categoryId +
+				", price=" + price +
 				'}';
 	}
 }
