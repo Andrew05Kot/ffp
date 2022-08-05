@@ -14,6 +14,7 @@
     <module>eureka-server</module>
     <module>api-getaway</module>
     <module>image</module>
+    <module>ordering</module>
   </modules>
 
   <name>ffp</name>

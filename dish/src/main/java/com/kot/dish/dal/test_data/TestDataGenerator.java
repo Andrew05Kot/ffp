@@ -1,4 +1,4 @@
-package com.kot.dish.bll.demo;
+package com.kot.dish.dal.test_data;
 
 import java.util.HashMap;
 import java.util.Map;
