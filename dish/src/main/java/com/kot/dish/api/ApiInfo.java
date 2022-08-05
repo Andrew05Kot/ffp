@@ -19,4 +19,7 @@ public class ApiInfo {
 
 	public static final String DISH_ENDPOINT = "/dishes";
 
+	public static final String CATEGORY_ENDPOINT = "/categories";
+
+
 }

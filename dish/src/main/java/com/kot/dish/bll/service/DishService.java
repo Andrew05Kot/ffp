@@ -4,8 +4,6 @@ import com.kot.dish.bll.mapper.DishBLLMapper;
 import com.kot.dish.bll.model.Dish;
 import com.kot.dish.dal.dao.DishDao;
 import com.kot.dish.dal.entity.DishEntity;
-import com.kot.dish.intercomm.category.CategoryClient;
-import com.kot.dish.intercomm.category.CategoryResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,17 +16,7 @@ public class DishService {
 	@Autowired
 	private DishDao dishDao;
 
-	@Autowired
-	private CategoryClient categoryClient;
-
 	public Dish save(Dish dish) {
-//		if (dish.getCategoryId() == null) {
-//
-//		}
-//		CategoryResponseModel categoryResponseModel = categoryClient.getCategoryById(dish.getCategoryId());
-//		if (categoryResponseModel == null) {
-//			throw new
-//		}
 		DishEntity dishEntity = dishDao.save(DishBLLMapper.INSTANCE.modelToEntity(dish), dish.getId());
 		return DishBLLMapper.INSTANCE.entityToModel(dishEntity);
 	}
