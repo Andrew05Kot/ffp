@@ -25,21 +25,27 @@ public class TestDataGenerator {
 
 		DishEntity hamburger = new DishEntity();
 		hamburger.setName("Hamburger");
-		hamburger.setCategory(categories.get("Sandwich"));
+		hamburger.setCategory(categories.get("Hamburger"));
 		hamburger.setDescription("A hamburger is a type of sandwich consisting of a chopped patty served inside a sliced bun. In addition to meat, a hamburger can have a large number of different seasonings, for example: ketchup and mayonnaise, lettuce, pickled cucumber, cheese or fried onion, tomato.");
 		dishRepository.save(hamburger);
 
 		DishEntity cheeseburger = new DishEntity();
 		cheeseburger.setName("Cheeseburger");
-		cheeseburger.setCategory(categories.get("Sandwich"));
+		cheeseburger.setCategory(categories.get("Hamburger"));
 		cheeseburger.setDescription("A cheeseburger is a hamburger topped with cheese. Traditionally, the slice of cheese is placed on top of the meat patty. The cheese is usually added to the cooking hamburger patty shortly before serving, which allows the cheese to melt. Cheeseburgers can include variations in structure, ingredients and composition. As with other hamburgers, a cheeseburger may include toppings such as lettuce, tomato, onion, pickles, bacon, mayonnaise, ketchup, and mustard.");
 		dishRepository.save(cheeseburger);
 
 		DishEntity doubleBurger = new DishEntity();
 		doubleBurger.setName("Double burger");
-		doubleBurger.setCategory(categories.get("Sandwich"));
+		doubleBurger.setCategory(categories.get("Hamburger"));
 		doubleBurger.setDescription("Although the legendary Double Burger really needs no introduction, please allow us... Tucked in between three soft buns are two all-beef patties, cheddar cheese, ketchup, onion, pickles and iceberg lettuce. Hesburger's own paprika and cucumber mayonnaise add the crowning touch. Oh baby!");
 		dishRepository.save(doubleBurger);
+
+		DishEntity mushroomBurger = new DishEntity();
+		mushroomBurger.setName("Mushroom Burger");
+		mushroomBurger.setCategory(categories.get("Hamburger"));
+		mushroomBurger.setDescription("For the healthy and calorie conscious folks we've got this tasty burger. A lentil, mushroom and sun dried tomato pattie packed between a whole wheat bun.");
+		dishRepository.save(mushroomBurger);
 
 		DishEntity cheesePizza = new DishEntity();
 		cheesePizza.setName("Cheese Pizza");
@@ -93,9 +99,9 @@ public class TestDataGenerator {
 	public Map<String, CategoryEntity> buildAndSaveCategories() {
 		Map<String, CategoryEntity> categories = new HashMap<>();
 		CategoryEntity sandwich = new CategoryEntity();
-		sandwich.setName("Sandwich");
-		sandwich.setDescription("A sandwich is a type of sandwich. It consists of two or more slices of bread (often a bun) and one or more layers of meat and other fillings. In big cities (especially in the West), the sandwich has become an integral part of the food culture.");
-		sandwich.setIconName("sandwich");
+		sandwich.setName("Hamburger");
+		sandwich.setDescription("A hamburger is a type of sandwich. It consists of two or more slices of bread (often a bun) and one or more layers of meat and other fillings. In big cities (especially in the West), the sandwich has become an integral part of the food culture.");
+		sandwich.setIconName("hamburger");
 		categories.put(sandwich.getName(), categoryRepository.save(sandwich));
 
 		CategoryEntity pizza = new CategoryEntity();

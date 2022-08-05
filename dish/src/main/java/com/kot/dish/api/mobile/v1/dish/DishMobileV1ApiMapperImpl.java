@@ -16,6 +16,7 @@ public class DishMobileV1ApiMapperImpl implements DishMobileV1ApiMapper {
 		DishMobileV1Response response = new DishMobileV1Response();
 		response.setId(model.getId());
 		response.setName(model.getName());
+		response.setDescription(model.getDescription());
 		response.setCategory(categoryMapper.modelToDto(model.getCategory()));
 		return response;
 	}
