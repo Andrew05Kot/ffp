@@ -2,6 +2,7 @@ package com.kot.bll;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import com.kot.dal.PaymentMethod;
@@ -23,6 +24,8 @@ public class Order {
 	private String cvv;
 
 	private PaymentMethod paymentMethod;
+
+	private List<Long> dishIds;
 
 	public Long getId() {
 		return id;
@@ -88,6 +91,14 @@ public class Order {
 		this.paymentMethod = paymentMethod;
 	}
 
+	public List<Long> getDishIds() {
+		return dishIds;
+	}
+
+	public void setDishIds(List<Long> dishIds) {
+		this.dishIds = dishIds;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -105,6 +116,7 @@ public class Order {
 				.append(expiration, order.expiration)
 				.append(cvv, order.cvv)
 				.append(paymentMethod, order.paymentMethod)
+				.append(dishIds, order.dishIds)
 				.isEquals();
 	}
 
@@ -119,6 +131,7 @@ public class Order {
 				.append(expiration)
 				.append(cvv)
 				.append(paymentMethod)
+				.append(dishIds)
 				.toHashCode();
 	}
 
@@ -133,6 +146,7 @@ public class Order {
 				", expiration='" + expiration + '\'' +
 				", cvv='" + cvv + '\'' +
 				", paymentMethod=" + paymentMethod +
+				", dishIds=" + dishIds +
 				'}';
 	}
 }
