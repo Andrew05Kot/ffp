@@ -1,17 +1,30 @@
-package com.kot.dish.bll.model;
+package com.kot.dish.dal.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class Dish {
+@Entity
+@Table(name="category")
+public class CategoryEntity {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(name = "name")
 	private String name;
 
+	@Column(name = "description", length = 5000)
 	private String description;
 
-	private Category category;
+	@Column(name = "icon_name")
+	private String iconName;
 
 	public Long getId() {
 		return id;
@@ -37,12 +50,12 @@ public class Dish {
 		this.description = description;
 	}
 
-	public Category getCategory() {
-		return category;
+	public String getIconName() {
+		return iconName;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setIconName(String iconName) {
+		this.iconName = iconName;
 	}
 
 	@Override
@@ -51,13 +64,13 @@ public class Dish {
 
 		if (o == null || getClass() != o.getClass()) return false;
 
-		Dish dish = (Dish) o;
+		CategoryEntity entity = (CategoryEntity) o;
 
 		return new EqualsBuilder()
-				.append(id, dish.id)
-				.append(name, dish.name)
-				.append(description, dish.description)
-				.append(category, dish.category)
+				.append(id, entity.id)
+				.append(name, entity.name)
+				.append(description, entity.description)
+				.append(iconName, entity.iconName)
 				.isEquals();
 	}
 
@@ -67,17 +80,17 @@ public class Dish {
 				.append(id)
 				.append(name)
 				.append(description)
-				.append(category)
+				.append(iconName)
 				.toHashCode();
 	}
 
 	@Override
 	public String toString() {
-		return "Dish{" +
+		return "CategoryEntity{" +
 				"id=" + id +
 				", name='" + name + '\'' +
 				", description='" + description + '\'' +
-				", category=" + category +
+				", iconName='" + iconName + '\'' +
 				'}';
 	}
 }

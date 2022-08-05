@@ -1,9 +1,9 @@
-package com.kot.dish.bll.model;
+package com.kot.dish.api.mobile.v1.category;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class Dish {
+public class CategoryMobileV1Response {
 
 	private Long id;
 
@@ -11,7 +11,7 @@ public class Dish {
 
 	private String description;
 
-	private Category category;
+	private String iconName;
 
 	public Long getId() {
 		return id;
@@ -37,12 +37,12 @@ public class Dish {
 		this.description = description;
 	}
 
-	public Category getCategory() {
-		return category;
+	public String getIconName() {
+		return iconName;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setIconName(String iconName) {
+		this.iconName = iconName;
 	}
 
 	@Override
@@ -51,13 +51,13 @@ public class Dish {
 
 		if (o == null || getClass() != o.getClass()) return false;
 
-		Dish dish = (Dish) o;
+		CategoryMobileV1Response that = (CategoryMobileV1Response) o;
 
 		return new EqualsBuilder()
-				.append(id, dish.id)
-				.append(name, dish.name)
-				.append(description, dish.description)
-				.append(category, dish.category)
+				.append(id, that.id)
+				.append(name, that.name)
+				.append(description, that.description)
+				.append(iconName, that.iconName)
 				.isEquals();
 	}
 
@@ -67,17 +67,17 @@ public class Dish {
 				.append(id)
 				.append(name)
 				.append(description)
-				.append(category)
+				.append(iconName)
 				.toHashCode();
 	}
 
 	@Override
 	public String toString() {
-		return "Dish{" +
+		return "CategoryMobileApiV1Response{" +
 				"id=" + id +
 				", name='" + name + '\'' +
 				", description='" + description + '\'' +
-				", category=" + category +
+				", iconName='" + iconName + '\'' +
 				'}';
 	}
 }

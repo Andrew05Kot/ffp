@@ -1,9 +1,9 @@
-package com.kot.dish.bll.model;
+package com.kot.dish.api.backoffice.v1.dish;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class Dish {
+public class DishV1Request {
 
 	private Long id;
 
@@ -11,7 +11,7 @@ public class Dish {
 
 	private String description;
 
-	private Category category;
+	private Long categoryId;
 
 	public Long getId() {
 		return id;
@@ -37,12 +37,12 @@ public class Dish {
 		this.description = description;
 	}
 
-	public Category getCategory() {
-		return category;
+	public Long getCategoryId() {
+		return categoryId;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	@Override
@@ -51,13 +51,13 @@ public class Dish {
 
 		if (o == null || getClass() != o.getClass()) return false;
 
-		Dish dish = (Dish) o;
+		DishV1Request that = (DishV1Request) o;
 
 		return new EqualsBuilder()
-				.append(id, dish.id)
-				.append(name, dish.name)
-				.append(description, dish.description)
-				.append(category, dish.category)
+				.append(id, that.id)
+				.append(name, that.name)
+				.append(categoryId, that.categoryId)
+				.append(description, that.description)
 				.isEquals();
 	}
 
@@ -66,18 +66,18 @@ public class Dish {
 		return new HashCodeBuilder()
 				.append(id)
 				.append(name)
+				.append(categoryId)
 				.append(description)
-				.append(category)
 				.toHashCode();
 	}
 
 	@Override
 	public String toString() {
-		return "Dish{" +
+		return "DishV1Request{" +
 				"id=" + id +
 				", name='" + name + '\'' +
 				", description='" + description + '\'' +
-				", category=" + category +
+				", categoryId=" + categoryId +
 				'}';
 	}
 }
