@@ -13,10 +13,9 @@ public class ApiInfo {
 
 	public static final String MOBILE_API_VERSION_V1 = MOBILE + "/v1";
 
-	public static final String DISH_API = "Dish API";
-
-	public static final String DISH_MOBILE_API = "Dish Mobile API";
-
 	public static final String DISH_ENDPOINT = "/dishes";
+
+	public static final String CATEGORY_ENDPOINT = "/categories";
+
 
 }
