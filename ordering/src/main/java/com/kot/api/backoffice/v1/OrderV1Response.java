@@ -2,9 +2,11 @@ package com.kot.api.backoffice.v1;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import com.kot.dal.PaymentMethod;
+import com.kot.intercomm.client.DishResponseModel;
 
 public class OrderV1Response {
 
@@ -23,6 +25,8 @@ public class OrderV1Response {
 	private String cvv;
 
 	private PaymentMethod paymentMethod;
+
+	private List<DishResponseModel> dishes;
 
 	public Long getId() {
 		return id;
@@ -88,6 +92,14 @@ public class OrderV1Response {
 		this.paymentMethod = paymentMethod;
 	}
 
+	public List<DishResponseModel> getDishes() {
+		return dishes;
+	}
+
+	public void setDishes(List<DishResponseModel> dishes) {
+		this.dishes = dishes;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -104,6 +116,7 @@ public class OrderV1Response {
 				.append(expiration, that.expiration)
 				.append(cvv, that.cvv)
 				.append(paymentMethod, that.paymentMethod)
+				.append(dishes, that.dishes)
 				.isEquals();
 	}
 
@@ -117,6 +130,7 @@ public class OrderV1Response {
 				.append(expiration)
 				.append(cvv)
 				.append(paymentMethod)
+				.append(dishes)
 				.toHashCode();
 	}
 
@@ -131,6 +145,7 @@ public class OrderV1Response {
 				", expiration='" + expiration + '\'' +
 				", cvv='" + cvv + '\'' +
 				", paymentMethod=" + paymentMethod +
+				", dishes=" + dishes +
 				'}';
 	}
 }
