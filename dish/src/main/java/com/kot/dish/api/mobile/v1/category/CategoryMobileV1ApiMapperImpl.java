@@ -15,14 +15,4 @@ public class CategoryMobileV1ApiMapperImpl implements CategoryMobileV1ApiMapper 
 		response.setIconName(model.getIconName());
 		return response;
 	}
-
-	@Override
-	public Category dtoToModel(CategoryMobileV1Request dto) {
-		Category model = new Category();
-		model.setId(dto.getId());
-		model.setName(dto.getName());
-		model.setDescription(dto.getDescription());
-		model.setIconName(dto.getIconName());
-		return model;
-	}
 }

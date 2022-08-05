@@ -34,12 +34,6 @@ public class CategoryMobileV1Controller {
 		return new ResponseEntity<>("Works!", HttpStatus.OK);
 	}
 
-	@PostMapping("/")
-	public ResponseEntity<CategoryMobileV1Response> create(@RequestBody CategoryMobileV1Request request) {
-		Category model = categoryService.save(categoryApiMapper.dtoToModel(request));
-		return new ResponseEntity<>(categoryApiMapper.modelToDto(model), HttpStatus.OK);
-	}
-
 	@GetMapping("/{id}")
 	public ResponseEntity<CategoryMobileV1Response> getById(@PathVariable Long id) {
 		Category model = categoryService.findById(id);

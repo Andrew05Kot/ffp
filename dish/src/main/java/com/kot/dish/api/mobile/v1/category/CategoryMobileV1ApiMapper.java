@@ -6,5 +6,4 @@ public interface CategoryMobileV1ApiMapper {
 
 	CategoryMobileV1Response modelToDto(Category model);
 
-	Category dtoToModel(CategoryMobileV1Request dto);
 }

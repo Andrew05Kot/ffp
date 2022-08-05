@@ -6,5 +6,4 @@ public interface DishMobileV1ApiMapper {
 
 	DishMobileV1Response modelToDto(Dish model);
 
-	Dish dtoToModel(DishMobileV1Request dto);
 }

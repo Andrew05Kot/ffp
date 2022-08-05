@@ -9,7 +9,9 @@ public class Dish {
 
 	private String name;
 
-	private Long categoryId;
+	private String description;
+
+	private Category category;
 
 	public Long getId() {
 		return id;
@@ -27,12 +29,20 @@ public class Dish {
 		this.name = name;
 	}
 
-	public Long getCategoryId() {
-		return categoryId;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	@Override
@@ -46,7 +56,8 @@ public class Dish {
 		return new EqualsBuilder()
 				.append(id, dish.id)
 				.append(name, dish.name)
-				.append(categoryId, dish.categoryId)
+				.append(description, dish.description)
+				.append(category, dish.category)
 				.isEquals();
 	}
 
@@ -55,7 +66,8 @@ public class Dish {
 		return new HashCodeBuilder()
 				.append(id)
 				.append(name)
-				.append(categoryId)
+				.append(description)
+				.append(category)
 				.toHashCode();
 	}
 
@@ -64,7 +76,8 @@ public class Dish {
 		return "Dish{" +
 				"id=" + id +
 				", name='" + name + '\'' +
-				", categoryId=" + categoryId +
+				", description='" + description + '\'' +
+				", category=" + category +
 				'}';
 	}
 }
