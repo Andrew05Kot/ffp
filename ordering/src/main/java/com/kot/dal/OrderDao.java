@@ -1,5 +1,7 @@
 package com.kot.dal;
 
+import java.util.List;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +30,10 @@ public class OrderDao {
 
 	public Page<OrderEntity> findAll(Specification specification) {
 		return (Page<OrderEntity>) orderRepository.findAll(specification);
+	}
+
+	public List<OrderEntity> findAll(BooleanExpression booleanExpression) {
+		return (List<OrderEntity>) orderRepository.findAll(booleanExpression);
 	}
 
 	public Page<OrderEntity> findAll(Specification<OrderEntity> filter, Pageable pageable) {

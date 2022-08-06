@@ -1,4 +1,4 @@
-package com.kot.bll;
+package com.kot.bll.test_data;
 
 import java.math.BigDecimal;
 import java.security.SecureRandom;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 import com.kot.dal.OrderEntity;
 import com.kot.dal.OrderRepository;
 import com.kot.dal.PaymentMethod;
-import com.kot.intercomm.client.DishClient;
-import com.kot.intercomm.client.DishResponseModel;
+import com.kot.intercomm.client.DishV1Client;
+import com.kot.intercomm.client.DishV1ResponseModel;
 
 @Component
 public class TestDataGenerator {
@@ -21,13 +21,13 @@ public class TestDataGenerator {
 	private OrderRepository orderRepository;
 
 	@Autowired
-	private DishClient dishClient;
+	private DishV1Client dishClient;
 
 	private final SecureRandom random = new SecureRandom();
 
 	@PostConstruct
 	public void buildAndSaveOrders() {
-		List<DishResponseModel> dishes = dishClient.getDishes();
+		List<DishV1ResponseModel> dishes = dishClient.getDishes();
 
 		int ordersCount = random.nextInt(3500) + 7500;
 		for (int i = 0; i < ordersCount; i++) {

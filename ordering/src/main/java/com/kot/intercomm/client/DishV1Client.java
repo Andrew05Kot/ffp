@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name = "DISH")
-public interface DishClient {
+public interface DishV1Client {
 
 	@GetMapping(value = "/api/v1/dishes/", consumes = "application/json")
-	List<DishResponseModel> getDishes();
+	List<DishV1ResponseModel> getDishes();
 
 	@GetMapping(value = "/api/v1/dishes/{id}", consumes = "application/json")
-	DishResponseModel getDishById(@PathVariable(name = "id") Long id);
+	DishV1ResponseModel getDishById(@PathVariable(name = "id") Long id);
 }

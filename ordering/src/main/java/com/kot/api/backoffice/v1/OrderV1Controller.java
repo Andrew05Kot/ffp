@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.kot.api.ApiInfo;
-import com.kot.bll.Order;
-import com.kot.bll.OrderService;
+import com.kot.api.UnPagedPage;
+import com.kot.bll.order.Order;
+import com.kot.bll.order.OrderService;
+import com.kot.bll.statistic.OrderStatisticService;
 
 @RestController
 @RequestMapping(OrderV1Controller.API_URL)
@@ -35,6 +37,9 @@ public class OrderV1Controller {
 
 	@Autowired
 	private OrderV1ApiMapper orderV1ApiMapper;
+
+	@Autowired
+	private OrderStatisticService orderStatisticService;
 
 	@GetMapping("/")
 	public ResponseEntity<List<OrderV1Response>> getAll() {
@@ -73,6 +78,17 @@ public class OrderV1Controller {
 	public ResponseEntity<OrderV1Response> getById(@PathVariable Long id) {
 		Order model = orderService.findById(id);
 		return new ResponseEntity<>(orderV1ApiMapper.modelToDto(model), HttpStatus.OK);
+	}
+
+	@GetMapping("/statistic")
+	public ResponseEntity<?> getStatistic(
+			@RequestParam(value = "startDate", required = false) Optional<String> startDate,
+			@RequestParam(value = "endDate", required = false) Optional<String> endDate
+	) {
+		if (startDate.isPresent() && endDate.isPresent()) {
+			return ResponseEntity.ok(orderStatisticService.getStatistic(startDate.get(), endDate.get()));
+		}
+		return ResponseEntity.ok(orderStatisticService.getStatistic());
 	}
 
 }

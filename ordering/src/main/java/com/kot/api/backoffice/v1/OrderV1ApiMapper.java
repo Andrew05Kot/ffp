@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.kot.bll.Order;
-import com.kot.intercomm.client.DishClient;
-import com.kot.intercomm.client.DishResponseModel;
+import com.kot.bll.order.Order;
+import com.kot.intercomm.client.DishV1Client;
+import com.kot.intercomm.client.DishV1ResponseModel;
 
 @Component
 public class OrderV1ApiMapper {
 
 	@Autowired
-	private DishClient dishClient;
+	private DishV1Client dishClient;
 
 	public OrderV1Response modelToDto(Order model) {
 		OrderV1Response response = new OrderV1Response();
@@ -29,10 +29,10 @@ public class OrderV1ApiMapper {
 		return response;
 	}
 
-	private BigDecimal calculateTotal(List<DishResponseModel> dishes) {
+	private BigDecimal calculateTotal(List<DishV1ResponseModel> dishes) {
 		BigDecimal totalPrice = BigDecimal.ZERO;
 		MathContext mc = new MathContext(3);
-		for (DishResponseModel dish : dishes) {
+		for (DishV1ResponseModel dish : dishes) {
 			totalPrice = totalPrice.add(dish.getPrice(), mc);
 		}
 		return totalPrice;

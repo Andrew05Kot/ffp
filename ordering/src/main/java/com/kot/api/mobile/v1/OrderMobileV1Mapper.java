@@ -1,7 +1,7 @@
 package com.kot.api.mobile.v1;
 
 import org.springframework.stereotype.Component;
-import com.kot.bll.Order;
+import com.kot.bll.order.Order;
 
 @Component
 public class OrderMobileV1Mapper {

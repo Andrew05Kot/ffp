@@ -1,4 +1,4 @@
-package com.kot.bll;
+package com.kot.bll.order;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
