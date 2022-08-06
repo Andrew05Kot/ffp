@@ -45,13 +45,12 @@ public class TestDataGenerator {
 	}
 
 	private List<Long> getRandomDishIds(int size) {
-		if (size == 0) {
-			size++;
-		}
+		if (size == 0) ++size;
 		List<Long> dishesIds = new ArrayList<>();
 		int countOfDishesInOrder = random.nextInt(4) + 1;
 		for (int i = 0; i < countOfDishesInOrder; i++) {
-			dishesIds.add((long) random.nextInt(size));
+			long id = random.nextInt(size);
+			if (id != 0) dishesIds.add(id);
 		}
 		return dishesIds;
 	}
