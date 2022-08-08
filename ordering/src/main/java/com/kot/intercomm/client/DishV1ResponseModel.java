@@ -1,9 +1,10 @@
 package com.kot.intercomm.client;
 
+import java.math.BigDecimal;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class CategoryResponseModel {
+public class DishV1ResponseModel {
 
 	private Long id;
 
@@ -11,7 +12,9 @@ public class CategoryResponseModel {
 
 	private String description;
 
-	private String iconName;
+	private BigDecimal price;
+
+	private CategoryV1ResponseModel category;
 
 	public Long getId() {
 		return id;
@@ -37,12 +40,20 @@ public class CategoryResponseModel {
 		this.description = description;
 	}
 
-	public String getIconName() {
-		return iconName;
+	public BigDecimal getPrice() {
+		return price;
 	}
 
-	public void setIconName(String iconName) {
-		this.iconName = iconName;
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public CategoryV1ResponseModel getCategory() {
+		return category;
+	}
+
+	public void setCategory(CategoryV1ResponseModel category) {
+		this.category = category;
 	}
 
 	@Override
@@ -51,13 +62,14 @@ public class CategoryResponseModel {
 
 		if (o == null || getClass() != o.getClass()) return false;
 
-		CategoryResponseModel that = (CategoryResponseModel) o;
+		DishV1ResponseModel that = (DishV1ResponseModel) o;
 
 		return new EqualsBuilder()
 				.append(id, that.id)
 				.append(name, that.name)
 				.append(description, that.description)
-				.append(iconName, that.iconName)
+				.append(price, that.price)
+				.append(category, that.category)
 				.isEquals();
 	}
 
@@ -67,17 +79,19 @@ public class CategoryResponseModel {
 				.append(id)
 				.append(name)
 				.append(description)
-				.append(iconName)
+				.append(price)
+				.append(category)
 				.toHashCode();
 	}
 
 	@Override
 	public String toString() {
-		return "CategoryResponseModel{" +
+		return "DishResponseModel{" +
 				"id=" + id +
 				", name='" + name + '\'' +
 				", description='" + description + '\'' +
-				", iconName='" + iconName + '\'' +
+				", price=" + price +
+				", category=" + category +
 				'}';
 	}
 }

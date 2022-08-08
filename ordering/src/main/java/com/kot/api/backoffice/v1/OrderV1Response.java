@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import com.kot.dal.PaymentMethod;
-import com.kot.intercomm.client.DishResponseModel;
+import com.kot.intercomm.client.DishV1ResponseModel;
 
 public class OrderV1Response {
 
@@ -26,7 +26,7 @@ public class OrderV1Response {
 
 	private PaymentMethod paymentMethod;
 
-	private List<DishResponseModel> dishes;
+	private List<DishV1ResponseModel> dishes;
 
 	public Long getId() {
 		return id;
@@ -92,11 +92,11 @@ public class OrderV1Response {
 		this.paymentMethod = paymentMethod;
 	}
 
-	public List<DishResponseModel> getDishes() {
+	public List<DishV1ResponseModel> getDishes() {
 		return dishes;
 	}
 
-	public void setDishes(List<DishResponseModel> dishes) {
+	public void setDishes(List<DishV1ResponseModel> dishes) {
 		this.dishes = dishes;
 	}
 

@@ -1,4 +1,4 @@
-package com.kot.bll;
+package com.kot.bll.order;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

@@ -1,4 +1,4 @@
-package com.kot.api.backoffice.v1;
+package com.kot.api;
 
 import java.io.Serializable;
 import org.springframework.data.domain.Pageable;

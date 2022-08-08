@@ -1,5 +1,8 @@
 package com.kot.api.backoffice.v1;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.kot.api.ApiInfo;
-import com.kot.bll.Order;
-import com.kot.bll.OrderService;
+import com.kot.api.UnPagedPage;
+import com.kot.bll.order.Order;
+import com.kot.bll.order.OrderService;
+import com.kot.bll.statistic.OrderStatisticService;
 
 @RestController
 @RequestMapping(OrderV1Controller.API_URL)
@@ -36,12 +41,15 @@ public class OrderV1Controller {
 	@Autowired
 	private OrderV1ApiMapper orderV1ApiMapper;
 
+	@Autowired
+	private OrderStatisticService orderStatisticService;
+
 	@GetMapping("/")
 	public ResponseEntity<List<OrderV1Response>> getAll() {
 		List<Order> models = orderService.findAll().getContent();
 		List<OrderV1Response> responses = models
 				.stream()
-				.map(model -> orderV1ApiMapper.modelToDto(model))
+				.map(model -> orderV1ApiMapper.modelToDto(model, new ArrayList<>()))
 				.collect(Collectors.toList());
 		return new ResponseEntity<>(responses, HttpStatus.OK);
 	}
@@ -49,7 +57,8 @@ public class OrderV1Controller {
 	@GetMapping("/page")
 	public ResponseEntity<PageV1Response<OrderV1Response>> getAllPage(
 			@RequestParam(value = "index", required = false) Optional<Integer> index,
-			@RequestParam(value = "size", required = false) Optional<Integer> size
+			@RequestParam(value = "size", required = false) Optional<Integer> size,
+			@RequestParam(value = "expand_fields", required = false) Optional<String> expand
 	) {
 		int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
 
@@ -62,7 +71,7 @@ public class OrderV1Controller {
 		Page<Order> entitiesPaged = orderService.findAll(pageable);
 		List<OrderV1Response> responses = entitiesPaged
 				.stream()
-				.map(model -> orderV1ApiMapper.modelToDto(model))
+				.map(model -> orderV1ApiMapper.modelToDto(model, parseExpandField(expand)))
 				.collect(Collectors.toList());
 		PageV1Response<OrderV1Response> apiResponseTypePageResponse =
 				new PageV1Response<>(responses, entitiesPaged.getTotalElements(), entitiesPaged.getNumber(), entitiesPaged.getSize());
@@ -72,7 +81,22 @@ public class OrderV1Controller {
 	@GetMapping("/{id}")
 	public ResponseEntity<OrderV1Response> getById(@PathVariable Long id) {
 		Order model = orderService.findById(id);
-		return new ResponseEntity<>(orderV1ApiMapper.modelToDto(model), HttpStatus.OK);
+		return new ResponseEntity<>(orderV1ApiMapper.modelToDto(model, new ArrayList<>()), HttpStatus.OK);
+	}
+
+	@GetMapping("/statistic")
+	public ResponseEntity<?> getStatistic(
+			@RequestParam(value = "startDate", required = false) Optional<String> startDate,
+			@RequestParam(value = "endDate", required = false) Optional<String> endDate
+	) {
+		if (startDate.isPresent() && endDate.isPresent()) {
+			return ResponseEntity.ok(orderStatisticService.getStatistic(startDate.get(), endDate.get()));
+		}
+		return ResponseEntity.ok(orderStatisticService.getStatistic());
+	}
+
+	public List<String> parseExpandField(Optional<String> expandFields) {
+		return expandFields.map(s -> Arrays.asList(s.split(","))).orElse(Collections.emptyList());
 	}
 
 }
