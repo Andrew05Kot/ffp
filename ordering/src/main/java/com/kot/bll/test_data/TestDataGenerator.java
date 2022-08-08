@@ -1,10 +1,12 @@
 package com.kot.bll.test_data;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.security.SecureRandom;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,21 +29,34 @@ public class TestDataGenerator {
 
 	@PostConstruct
 	public void buildAndSaveOrders() {
-		List<DishV1ResponseModel> dishes = dishClient.getDishes();
+		List<DishV1ResponseModel> allDishes = dishClient.getDishes();
 
 		int ordersCount = random.nextInt(3500) + 7500;
 		for (int i = 0; i < ordersCount; i++) {
 			OrderEntity order = new OrderEntity();
 			order.setCreationDate(ZonedDateTime.now().minusDays(random.nextInt(364) + 1));
-			order.setTotalPrice(BigDecimal.valueOf(ordersCount / 2));
 			order.setCardName("Master Card");
 			order.setCardNumber(ordersCount + "" + ordersCount + "" + random.nextInt(4000) + 1000);
 			order.setExpiration("12.05.2022");
 			order.setCvv((random.nextInt(900) + 100) + "");
 			order.setPaymentMethod(PaymentMethod.CREDIT_CARD);
-			order.setDishIds(getRandomDishIds(dishes.size()));
+			order.setDishIds(getRandomDishIds(allDishes.size()));
+			List<DishV1ResponseModel> orderDishes = order.getDishIds().stream().map(dishId -> allDishes.stream()
+					.filter(dishV1ResponseModel -> dishV1ResponseModel.getId().equals(dishId))
+					.findAny()
+					.orElse(null)).collect(Collectors.toList());
+			order.setTotalPrice(calculateTotal(orderDishes));
 			orderRepository.save(order);
 		}
+	}
+
+	private BigDecimal calculateTotal(List<DishV1ResponseModel> dishes) {
+		BigDecimal totalPrice = BigDecimal.ZERO;
+		MathContext mc = new MathContext(3);
+		for (DishV1ResponseModel dish : dishes) {
+			totalPrice = totalPrice.add(dish.getPrice(), mc);
+		}
+		return totalPrice;
 	}
 
 	private List<Long> getRandomDishIds(int size) {
