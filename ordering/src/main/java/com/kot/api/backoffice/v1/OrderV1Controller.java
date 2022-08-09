@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,6 +46,7 @@ public class OrderV1Controller {
 	@Autowired
 	private OrderStatisticService orderStatisticService;
 
+	@Operation(summary = "Get all existing orders")
 	@GetMapping("/")
 	public ResponseEntity<List<OrderV1Response>> getAll() {
 		List<Order> models = orderService.findAll().getContent();
@@ -54,10 +57,14 @@ public class OrderV1Controller {
 		return new ResponseEntity<>(responses, HttpStatus.OK);
 	}
 
+	@Operation(summary = "Get page of existing orders")
 	@GetMapping("/page")
 	public ResponseEntity<PageV1Response<OrderV1Response>> getAllPage(
+			@Parameter(description = "Page number")
 			@RequestParam(value = "index", required = false) Optional<Integer> index,
+			@Parameter(description = "Page size")
 			@RequestParam(value = "size", required = false) Optional<Integer> size,
+			@Parameter(description = "Specify fields which has to be expanded in response")
 			@RequestParam(value = "expand_fields", required = false) Optional<String> expand
 	) {
 		int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
@@ -78,15 +85,22 @@ public class OrderV1Controller {
 		return ResponseEntity.ok(apiResponseTypePageResponse);
 	}
 
+	@Operation(summary = "Get an order by its id")
 	@GetMapping("/{id}")
-	public ResponseEntity<OrderV1Response> getById(@PathVariable Long id) {
+	public ResponseEntity<OrderV1Response> getById(
+			@Parameter(description = "Id of order to be searched")
+			@PathVariable Long id) {
 		Order model = orderService.findById(id);
 		return new ResponseEntity<>(orderV1ApiMapper.modelToDto(model, new ArrayList<>()), HttpStatus.OK);
 	}
 
+	@Operation(summary = "Get a Map of sales statistics in advance for each month.\n" +
+			"To get all the statistics of all existing orders, there is no need to pass startDate and endDate parameters")
 	@GetMapping("/statistic")
 	public ResponseEntity<?> getStatistic(
+			@Parameter(description = "Date from", example = "2022-05-01T00:00:00.000Z")
 			@RequestParam(value = "startDate", required = false) Optional<String> startDate,
+			@Parameter(description = "Date to", example = "2022-08-01T00:00:00.000Z")
 			@RequestParam(value = "endDate", required = false) Optional<String> endDate
 	) {
 		if (startDate.isPresent() && endDate.isPresent()) {
