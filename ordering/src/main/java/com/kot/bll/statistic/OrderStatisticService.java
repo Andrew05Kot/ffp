@@ -16,7 +16,7 @@ import com.kot.bll.order.Order;
 import com.kot.bll.order.OrderService;
 import com.kot.dal.QOrderEntity;
 import com.kot.intercomm.client.DishV1Client;
-import com.kot.intercomm.client.DishV1ResponseModel;
+import com.kot.intercomm.client.FraudDishV1Response;
 
 @Service
 public class OrderStatisticService {
@@ -33,7 +33,7 @@ public class OrderStatisticService {
 		System.out.println("orders count >> " + orders.size());
 		MathContext mc = new MathContext(3);
 		for (Order order : orders) {
-			List<DishV1ResponseModel> dishesOfOrder = order.getDishIds()
+			List<FraudDishV1Response> dishesOfOrder = order.getDishIds()
 					.stream()
 					.map(dishId -> dishV1Client.getDishById(dishId))
 					.collect(Collectors.toList());
@@ -54,7 +54,7 @@ public class OrderStatisticService {
 		System.out.println("orders count >> " + orders.size());
 		MathContext mc = new MathContext(3);
 		for (Order order : orders) {
-			List<DishV1ResponseModel> dishesOfOrder = order.getDishIds()
+			List<FraudDishV1Response> dishesOfOrder = order.getDishIds()
 					.stream()
 					.map(dishId -> dishV1Client.getDishById(dishId))
 					.collect(Collectors.toList());
@@ -65,10 +65,10 @@ public class OrderStatisticService {
 		return statisticsMap;
 	}
 
-	private BigDecimal calculateTotal(List<DishV1ResponseModel> dishes) {
+	private BigDecimal calculateTotal(List<FraudDishV1Response> dishes) {
 		BigDecimal totalPrice = BigDecimal.ZERO;
 		MathContext mc = new MathContext(3);
-		for (DishV1ResponseModel dish : dishes) {
+		for (FraudDishV1Response dish : dishes) {
 			totalPrice = totalPrice.add(dish.getPrice(), mc);
 		}
 		return totalPrice;

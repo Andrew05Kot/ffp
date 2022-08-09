@@ -1,10 +1,9 @@
 package com.kot.intercomm.client;
 
-import java.math.BigDecimal;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class DishV1ResponseModel {
+public class FraudCategoryV1Response {
 
 	private Long id;
 
@@ -12,9 +11,7 @@ public class DishV1ResponseModel {
 
 	private String description;
 
-	private BigDecimal price;
-
-	private CategoryV1ResponseModel category;
+	private String iconName;
 
 	public Long getId() {
 		return id;
@@ -40,20 +37,12 @@ public class DishV1ResponseModel {
 		this.description = description;
 	}
 
-	public BigDecimal getPrice() {
-		return price;
+	public String getIconName() {
+		return iconName;
 	}
 
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
-
-	public CategoryV1ResponseModel getCategory() {
-		return category;
-	}
-
-	public void setCategory(CategoryV1ResponseModel category) {
-		this.category = category;
+	public void setIconName(String iconName) {
+		this.iconName = iconName;
 	}
 
 	@Override
@@ -62,14 +51,13 @@ public class DishV1ResponseModel {
 
 		if (o == null || getClass() != o.getClass()) return false;
 
-		DishV1ResponseModel that = (DishV1ResponseModel) o;
+		FraudCategoryV1Response that = (FraudCategoryV1Response) o;
 
 		return new EqualsBuilder()
 				.append(id, that.id)
 				.append(name, that.name)
 				.append(description, that.description)
-				.append(price, that.price)
-				.append(category, that.category)
+				.append(iconName, that.iconName)
 				.isEquals();
 	}
 
@@ -79,19 +67,17 @@ public class DishV1ResponseModel {
 				.append(id)
 				.append(name)
 				.append(description)
-				.append(price)
-				.append(category)
+				.append(iconName)
 				.toHashCode();
 	}
 
 	@Override
 	public String toString() {
-		return "DishResponseModel{" +
+		return "CategoryResponseModel{" +
 				"id=" + id +
 				", name='" + name + '\'' +
 				", description='" + description + '\'' +
-				", price=" + price +
-				", category=" + category +
+				", iconName='" + iconName + '\'' +
 				'}';
 	}
 }

@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface DishV1Client {
 
 	@GetMapping(value = "/api/v1/dishes/", consumes = "application/json")
-	List<DishV1ResponseModel> getDishes();
+	List<FraudDishV1Response> getDishes();
 
 	@GetMapping(value = "/api/v1/dishes/{id}", consumes = "application/json")
-	DishV1ResponseModel getDishById(@PathVariable(name = "id") Long id);
+	FraudDishV1Response getDishById(@PathVariable(name = "id") Long id);
 }

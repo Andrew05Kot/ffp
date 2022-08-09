@@ -14,7 +14,7 @@ import com.kot.dal.OrderEntity;
 import com.kot.dal.OrderRepository;
 import com.kot.dal.PaymentMethod;
 import com.kot.intercomm.client.DishV1Client;
-import com.kot.intercomm.client.DishV1ResponseModel;
+import com.kot.intercomm.client.FraudDishV1Response;
 
 @Component
 public class TestDataGenerator {
@@ -29,7 +29,7 @@ public class TestDataGenerator {
 
 	@PostConstruct
 	public void buildAndSaveOrders() {
-		List<DishV1ResponseModel> allDishes = dishClient.getDishes();
+		List<FraudDishV1Response> allDishes = dishClient.getDishes();
 
 		int ordersCount = random.nextInt(3500) + 7500;
 		for (int i = 0; i < ordersCount; i++) {
@@ -41,7 +41,7 @@ public class TestDataGenerator {
 			order.setCvv((random.nextInt(900) + 100) + "");
 			order.setPaymentMethod(PaymentMethod.CREDIT_CARD);
 			order.setDishIds(getRandomDishIds(allDishes.size()));
-			List<DishV1ResponseModel> orderDishes = order.getDishIds().stream().map(dishId -> allDishes.stream()
+			List<FraudDishV1Response> orderDishes = order.getDishIds().stream().map(dishId -> allDishes.stream()
 					.filter(dishV1ResponseModel -> dishV1ResponseModel.getId().equals(dishId))
 					.findAny()
 					.orElse(null)).collect(Collectors.toList());
@@ -50,10 +50,10 @@ public class TestDataGenerator {
 		}
 	}
 
-	private BigDecimal calculateTotal(List<DishV1ResponseModel> dishes) {
+	private BigDecimal calculateTotal(List<FraudDishV1Response> dishes) {
 		BigDecimal totalPrice = BigDecimal.ZERO;
 		MathContext mc = new MathContext(3);
-		for (DishV1ResponseModel dish : dishes) {
+		for (FraudDishV1Response dish : dishes) {
 			totalPrice = totalPrice.add(dish.getPrice(), mc);
 		}
 		return totalPrice;
