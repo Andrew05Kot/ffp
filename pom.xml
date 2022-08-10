@@ -15,6 +15,7 @@
     <module>api-getaway</module>
     <module>image</module>
     <module>ordering</module>
+      <module>establishment</module>
   </modules>
 
   <name>ffp</name>
