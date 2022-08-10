@@ -10,8 +10,6 @@
 
 	<artifactId>eureka</artifactId>
 
-	<groupId>com.kot</groupId>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

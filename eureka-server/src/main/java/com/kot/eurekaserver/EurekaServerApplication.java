@@ -1,4 +1,4 @@
-package kot.eurekaserver;
+package com.kot.eurekaserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
