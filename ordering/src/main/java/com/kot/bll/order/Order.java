@@ -11,7 +11,9 @@ public class Order {
 
 	private Long id;
 
-	private ZonedDateTime creationDate;
+	private ZonedDateTime createdDate;
+
+	private ZonedDateTime lastModifiedDate;
 
 	private BigDecimal totalPrice;
 
@@ -35,12 +37,20 @@ public class Order {
 		this.id = id;
 	}
 
-	public ZonedDateTime getCreationDate() {
-		return creationDate;
+	public ZonedDateTime getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setCreationDate(ZonedDateTime creationDate) {
-		this.creationDate = creationDate;
+	public void setCreatedDate(ZonedDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public ZonedDateTime getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(ZonedDateTime lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
 
 	public BigDecimal getTotalPrice() {
@@ -109,7 +119,8 @@ public class Order {
 
 		return new EqualsBuilder()
 				.append(id, order.id)
-				.append(creationDate, order.creationDate)
+				.append(createdDate, order.createdDate)
+				.append(lastModifiedDate, order.lastModifiedDate)
 				.append(totalPrice, order.totalPrice)
 				.append(cardName, order.cardName)
 				.append(cardNumber, order.cardNumber)
@@ -124,7 +135,8 @@ public class Order {
 	public int hashCode() {
 		return new HashCodeBuilder()
 				.append(id)
-				.append(creationDate)
+				.append(createdDate)
+				.append(lastModifiedDate)
 				.append(totalPrice)
 				.append(cardName)
 				.append(cardNumber)
@@ -139,7 +151,8 @@ public class Order {
 	public String toString() {
 		return "Order{" +
 				"id=" + id +
-				", creationDate=" + creationDate +
+				", createdDate=" + createdDate +
+				", lastModifiedDate=" + lastModifiedDate +
 				", totalPrice=" + totalPrice +
 				", cardName='" + cardName + '\'' +
 				", cardNumber='" + cardNumber + '\'' +

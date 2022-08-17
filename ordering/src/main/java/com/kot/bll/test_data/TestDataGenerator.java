@@ -34,7 +34,7 @@ public class TestDataGenerator {
 		int ordersCount = random.nextInt(3500) + 7500;
 		for (int i = 0; i < ordersCount; i++) {
 			OrderEntity order = new OrderEntity();
-			order.setCreationDate(ZonedDateTime.now().minusDays(random.nextInt(364) + 1));
+			order.setCreatedDate(ZonedDateTime.now().minusDays(random.nextInt(364) + 1));
 			order.setCardName("Master Card");
 			order.setCardNumber(ordersCount + "" + ordersCount + "" + random.nextInt(4000) + 1000);
 			order.setExpiration("12.05.2022");

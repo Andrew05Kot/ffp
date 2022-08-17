@@ -16,7 +16,8 @@ public class OrderV1ApiMapper {
 	public OrderV1Response modelToDto(Order model, List<String> expandFields) {
 		OrderV1Response response = new OrderV1Response();
 		response.setId(model.getId());
-		response.setCreationDate(model.getCreationDate());
+		response.setCreatedDate(model.getCreatedDate());
+		response.setLastModifiedDate(model.getLastModifiedDate());
 		response.setCardName(model.getCardName());
 		response.setCardNumber(model.getCardNumber());
 		response.setExpiration(model.getExpiration());

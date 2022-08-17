@@ -1,6 +1,7 @@
 package com.kot.dal;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.Column;
@@ -17,6 +18,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 @Table(name = "ordering")
@@ -26,8 +29,13 @@ public class OrderEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "creation_date", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
-	private ZonedDateTime creationDate;
+	@CreatedDate
+	@Column(name = "created_date", updatable = false, nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+	private ZonedDateTime createdDate = ZonedDateTime.now();
+
+	@LastModifiedDate
+	@Column(name = "last_modified_date")
+	private ZonedDateTime lastModifiedDate = ZonedDateTime.now();
 
 	@Column(name = "total_price", nullable = false)
 	@NotNull
@@ -66,12 +74,20 @@ public class OrderEntity {
 		this.id = id;
 	}
 
-	public ZonedDateTime getCreationDate() {
-		return creationDate;
+	public ZonedDateTime getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setCreationDate(ZonedDateTime creationDate) {
-		this.creationDate = creationDate;
+	public void setCreatedDate(ZonedDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public ZonedDateTime getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(ZonedDateTime lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
 
 	public BigDecimal getTotalPrice() {
@@ -140,7 +156,8 @@ public class OrderEntity {
 
 		return new EqualsBuilder()
 				.append(id, that.id)
-				.append(creationDate, that.creationDate)
+				.append(createdDate, that.createdDate)
+				.append(lastModifiedDate, that.lastModifiedDate)
 				.append(totalPrice, that.totalPrice)
 				.append(cardName, that.cardName)
 				.append(cardNumber, that.cardNumber)
@@ -155,7 +172,8 @@ public class OrderEntity {
 	public int hashCode() {
 		return new HashCodeBuilder()
 				.append(id)
-				.append(creationDate)
+				.append(createdDate)
+				.append(lastModifiedDate)
 				.append(totalPrice)
 				.append(cardName)
 				.append(cardNumber)
@@ -170,7 +188,8 @@ public class OrderEntity {
 	public String toString() {
 		return "OrderEntity{" +
 				"id=" + id +
-				", creationDate=" + creationDate +
+				", createdDate=" + createdDate +
+				", lastModifiedDate=" + lastModifiedDate +
 				", totalPrice=" + totalPrice +
 				", cardName='" + cardName + '\'' +
 				", cardNumber='" + cardNumber + '\'' +

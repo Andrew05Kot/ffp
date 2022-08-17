@@ -12,7 +12,9 @@ public class OrderV1Response {
 
 	private Long id;
 
-	private ZonedDateTime creationDate;
+	private ZonedDateTime createdDate;
+
+	private ZonedDateTime lastModifiedDate;
 
 	private BigDecimal totalPrice;
 
@@ -36,12 +38,20 @@ public class OrderV1Response {
 		this.id = id;
 	}
 
-	public ZonedDateTime getCreationDate() {
-		return creationDate;
+	public ZonedDateTime getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setCreationDate(ZonedDateTime creationDate) {
-		this.creationDate = creationDate;
+	public void setCreatedDate(ZonedDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public ZonedDateTime getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(ZonedDateTime lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
 
 	public BigDecimal getTotalPrice() {
@@ -109,7 +119,8 @@ public class OrderV1Response {
 		OrderV1Response that = (OrderV1Response) o;
 
 		return new EqualsBuilder().append(id, that.id)
-				.append(creationDate, that.creationDate)
+				.append(createdDate, that.createdDate)
+				.append(lastModifiedDate, that.lastModifiedDate)
 				.append(totalPrice, that.totalPrice)
 				.append(cardName, that.cardName)
 				.append(cardNumber, that.cardNumber)
@@ -123,7 +134,8 @@ public class OrderV1Response {
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder().append(id)
-				.append(creationDate)
+				.append(createdDate)
+				.append(lastModifiedDate)
 				.append(totalPrice)
 				.append(cardName)
 				.append(cardNumber)
@@ -138,7 +150,8 @@ public class OrderV1Response {
 	public String toString() {
 		return "OrderV1Response{" +
 				"id=" + id +
-				", creationDate=" + creationDate +
+				", createdDate=" + createdDate +
+				", lastModifiedDate=" + lastModifiedDate +
 				", totalPrice=" + totalPrice +
 				", cardName='" + cardName + '\'' +
 				", cardNumber='" + cardNumber + '\'' +

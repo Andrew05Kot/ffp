@@ -38,7 +38,7 @@ public class OrderStatisticService {
 					.map(dishId -> dishV1Client.getDishById(dishId))
 					.collect(Collectors.toList());
 			BigDecimal total = calculateTotal(dishesOfOrder);
-			String date = order.getCreationDate().format(DateTimeFormatter.ofPattern("yyyy-MM"));
+			String date = order.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM"));
 			statisticsMap.merge(date, total, (a, b) -> a.add(b, mc));
 		}
 		return statisticsMap;
@@ -50,7 +50,7 @@ public class OrderStatisticService {
 		SortedMap<String, BigDecimal> statisticsMap = new TreeMap<>();
 		Sort sort = Sort.by(Sort.Direction.ASC, "creationDate");
 
-		List<Order> orders = orderService.findAll(sort, QOrderEntity.orderEntity.creationDate.after(startDateTime).and(QOrderEntity.orderEntity.creationDate.before(endDateTime)));
+		List<Order> orders = orderService.findAll(sort, QOrderEntity.orderEntity.createdDate.after(startDateTime).and(QOrderEntity.orderEntity.createdDate.before(endDateTime)));
 		System.out.println("orders count >> " + orders.size());
 		MathContext mc = new MathContext(3);
 		for (Order order : orders) {
@@ -59,7 +59,7 @@ public class OrderStatisticService {
 					.map(dishId -> dishV1Client.getDishById(dishId))
 					.collect(Collectors.toList());
 			BigDecimal total = calculateTotal(dishesOfOrder);
-			String date = order.getCreationDate().format(DateTimeFormatter.ofPattern("yyyy-MM"));
+			String date = order.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM"));
 			statisticsMap.merge(date, total, (a, b) -> a.add(b, mc));
 		}
 		return statisticsMap;

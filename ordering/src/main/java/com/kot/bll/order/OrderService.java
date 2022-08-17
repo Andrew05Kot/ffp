@@ -20,7 +20,7 @@ public class OrderService {
 	private OrderDao orderDao;
 
 	public Order save(Order model) {
-		model.setCreationDate(ZonedDateTime.now());
+		model.setLastModifiedDate(ZonedDateTime.now());
 		OrderEntity orderEntity = orderDao.save(OrderBLLMapper.INSTANCE.modelToEntity(model), model.getId());
 		return OrderBLLMapper.INSTANCE.entityToModel(orderEntity);
 	}
