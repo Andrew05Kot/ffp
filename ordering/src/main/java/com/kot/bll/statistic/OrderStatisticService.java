@@ -8,7 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,8 @@ import com.kot.intercomm.client.FraudDishV1Response;
 @Service
 public class OrderStatisticService {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(OrderStatisticService.class);
+
 	@Autowired
 	private OrderService orderService;
 
@@ -29,40 +34,32 @@ public class OrderStatisticService {
 
 	public Map<String, BigDecimal> getStatistic() {
 		List<Order> orders = orderService.findAll(Sort.by(Sort.Direction.ASC, "creationDate")).toList();
-		SortedMap<String, BigDecimal> statisticsMap = new TreeMap<>();
-		System.out.println("orders count >> " + orders.size());
-		MathContext mc = new MathContext(3);
-		for (Order order : orders) {
-			List<FraudDishV1Response> dishesOfOrder = order.getDishIds()
-					.stream()
-					.map(dishId -> dishV1Client.getDishById(dishId))
-					.collect(Collectors.toList());
-			BigDecimal total = calculateTotal(dishesOfOrder);
-			String date = order.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM"));
-			statisticsMap.merge(date, total, (a, b) -> a.add(b, mc));
-		}
-		return statisticsMap;
+		LOGGER.info("Founded {} orders for statistics.", orders.size());
+		return orders.stream().collect(Collectors.toMap(
+				order -> order.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM")),
+				order -> calculateTotal(order.getDishIds()
+						.stream()
+						.map(dishId -> dishV1Client.getDishById(dishId))
+						.collect(Collectors.toList())),
+				(a, b) -> a
+		));
 	}
 
 	public Map<String, BigDecimal> getStatistic(String startDate, String endDate) {
 		ZonedDateTime startDateTime = ZonedDateTime.parse(startDate);
 		ZonedDateTime endDateTime = ZonedDateTime.parse(endDate);
-		SortedMap<String, BigDecimal> statisticsMap = new TreeMap<>();
 		Sort sort = Sort.by(Sort.Direction.ASC, "creationDate");
 
 		List<Order> orders = orderService.findAll(sort, QOrderEntity.orderEntity.createdDate.after(startDateTime).and(QOrderEntity.orderEntity.createdDate.before(endDateTime)));
-		System.out.println("orders count >> " + orders.size());
-		MathContext mc = new MathContext(3);
-		for (Order order : orders) {
-			List<FraudDishV1Response> dishesOfOrder = order.getDishIds()
-					.stream()
-					.map(dishId -> dishV1Client.getDishById(dishId))
-					.collect(Collectors.toList());
-			BigDecimal total = calculateTotal(dishesOfOrder);
-			String date = order.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM"));
-			statisticsMap.merge(date, total, (a, b) -> a.add(b, mc));
-		}
-		return statisticsMap;
+
+		return orders.stream().collect(Collectors.toMap(
+				order -> order.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM")),
+				order -> calculateTotal(order.getDishIds()
+						.stream()
+						.map(dishId -> dishV1Client.getDishById(dishId))
+						.collect(Collectors.toList())),
+				(a, b) -> a
+		));
 	}
 
 	private BigDecimal calculateTotal(List<FraudDishV1Response> dishes) {
