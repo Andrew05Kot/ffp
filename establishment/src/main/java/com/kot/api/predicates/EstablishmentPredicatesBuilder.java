@@ -27,7 +27,7 @@ public class EstablishmentPredicatesBuilder {
 		final List<BooleanExpression> predicates = params.stream().map(param -> {
 			EstablishmentPredicate predicate = new EstablishmentPredicate(param);
 			return predicate.getPredicate();
-		}).filter(Objects::nonNull).collect(Collectors.toList());
+		}).filter(Objects::nonNull).toList();
 
 		BooleanExpression result = Expressions.asBoolean(true).isTrue();
 		for (BooleanExpression predicate : predicates) {

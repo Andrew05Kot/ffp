@@ -32,7 +32,7 @@ public class OrderV1ApiMapper {
 			return;
 		}
 		if (entitiesToExpand.contains("dishes")) {
-			response.setDishes(model.getDishIds().stream().map(dishId -> dishClient.getDishById(dishId)).collect(Collectors.toList()));
+			response.setDishes(model.getDishIds().stream().map(dishId -> dishClient.getDishById(dishId)).toList());
 		}
 	}
 }

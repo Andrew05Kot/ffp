@@ -52,7 +52,7 @@ public class CategoryV1Controller {
 		List<CategoryV1Response> dishResponses = models
 				.stream()
 				.map(model -> categoryApiMapper.modelToDto(model))
-				.collect(Collectors.toList());
+				.toList();
 		return new ResponseEntity<>(dishResponses, HttpStatus.OK);
 	}
 }

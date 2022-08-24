@@ -75,8 +75,7 @@ public class EstablishmentV1Controller {
 				: Pageable.unpaged();
 
 		Page<EstablishmentEntity> establishmentEntityList = establishmentService.findAll(predicate, pageable);
-		return new ResponsePage<>(establishmentEntityList.stream().map(EstablishmentV1Response::new)
-				.collect(Collectors.toList()), establishmentEntityList.stream().count());
+		return new ResponsePage<>(establishmentEntityList.stream().map(EstablishmentV1Response::new).toList(), establishmentEntityList.stream().count());
 	}
 
 	@DeleteMapping(path = "/{id}")

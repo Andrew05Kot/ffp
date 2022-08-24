@@ -44,7 +44,7 @@ public class DishMobileV1Controller {
 		List<DishMobileV1Response> dishResponses = dishEntities
 				.stream()
 				.map(model -> dishAPIMapper.modelToDto(model))
-				.collect(Collectors.toList());
+				.toList();
 		return new ResponseEntity<>(dishResponses, HttpStatus.OK);
 	}
 

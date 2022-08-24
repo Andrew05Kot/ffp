@@ -46,7 +46,7 @@ public class CategoryMobileV1Controller {
 		List<CategoryMobileV1Response> dishResponses = dishEntities
 				.stream()
 				.map(model -> categoryApiMapper.modelToDto(model))
-				.collect(Collectors.toList());
+				.toList();
 		return new ResponseEntity<>(dishResponses, HttpStatus.OK);
 	}
 }
