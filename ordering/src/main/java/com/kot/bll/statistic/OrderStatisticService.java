@@ -36,7 +36,7 @@ public class OrderStatisticService {
 			List<FraudDishV1Response> dishesOfOrder = order.getDishIds()
 					.stream()
 					.map(dishId -> dishV1Client.getDishById(dishId))
-					.collect(Collectors.toList());
+					.toList();
 			BigDecimal total = calculateTotal(dishesOfOrder);
 			String date = order.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM"));
 			statisticsMap.merge(date, total, (a, b) -> a.add(b, mc));
@@ -57,7 +57,7 @@ public class OrderStatisticService {
 			List<FraudDishV1Response> dishesOfOrder = order.getDishIds()
 					.stream()
 					.map(dishId -> dishV1Client.getDishById(dishId))
-					.collect(Collectors.toList());
+					.toList();
 			BigDecimal total = calculateTotal(dishesOfOrder);
 			String date = order.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM"));
 			statisticsMap.merge(date, total, (a, b) -> a.add(b, mc));

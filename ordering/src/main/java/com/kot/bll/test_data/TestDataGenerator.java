@@ -44,7 +44,7 @@ public class TestDataGenerator {
 			List<FraudDishV1Response> orderDishes = order.getDishIds().stream().map(dishId -> allDishes.stream()
 					.filter(dishV1ResponseModel -> dishV1ResponseModel.getId().equals(dishId))
 					.findAny()
-					.orElse(null)).collect(Collectors.toList());
+					.orElse(null)).toList();
 			order.setTotalPrice(calculateTotal(orderDishes));
 			orderRepository.save(order);
 		}

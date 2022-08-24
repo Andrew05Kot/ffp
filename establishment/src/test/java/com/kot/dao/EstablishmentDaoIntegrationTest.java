@@ -36,7 +36,7 @@ class EstablishmentDaoIntegrationTest {
 				establishmentBuilder.setCountry("specialCountry").buildNewEntity(),
 				establishmentBuilder.buildNewEntity());
 
-		establishmentsList = establishmentsList.stream().map(establishment -> establishmentDao.save(establishment)).collect(Collectors.toList());
+		establishmentsList = establishmentsList.stream().map(establishment -> establishmentDao.save(establishment)).toList();
 		EstablishmentPredicatesBuilder establishmentPredicatesBuilder = new EstablishmentPredicatesBuilder()
 				.with("country", "=", "specialCountry");
 
