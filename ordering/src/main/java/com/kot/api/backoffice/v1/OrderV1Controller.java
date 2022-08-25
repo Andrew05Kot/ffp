@@ -96,17 +96,17 @@ public class OrderV1Controller {
 
 	@Operation(summary = "Get a Map of sales statistics in advance for each month.\n" +
 			"To get all the statistics of all existing orders, there is no need to pass startDate and endDate parameters")
-	@GetMapping("/statistic")
-	public ResponseEntity<?> getStatistic(
+	@GetMapping("/statistics")
+	public ResponseEntity<?> getStatistics(
 			@Parameter(description = "Date from", example = "2022-05-01T00:00:00.000Z")
 			@RequestParam(value = "startDate", required = false) Optional<String> startDate,
 			@Parameter(description = "Date to", example = "2022-08-01T00:00:00.000Z")
 			@RequestParam(value = "endDate", required = false) Optional<String> endDate
 	) {
 		if (startDate.isPresent() && endDate.isPresent()) {
-			return ResponseEntity.ok(orderStatisticService.getStatistic(startDate.get(), endDate.get()));
+			return ResponseEntity.ok(orderStatisticService.getStatisticsByParallelStreams(startDate.get(), endDate.get()));
 		}
-		return ResponseEntity.ok(orderStatisticService.getStatistic());
+		return ResponseEntity.ok(orderStatisticService.getStatisticsByParallelStreams());
 	}
 
 	public List<String> parseExpandField(Optional<String> expandFields) {
