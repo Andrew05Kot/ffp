@@ -40,7 +40,8 @@ public class OrderService {
 	public List<Order> findAll(Sort sort, BooleanExpression booleanExpression) {
 		return orderDao.findAll(booleanExpression).stream().map(OrderBLLMapper.INSTANCE::entityToModel).toList();
 	}
-		public List<Order> findAllList(Sort sort) {
+
+	public List<Order> findAllList(Sort sort) {
 		return orderDao.findAll(sort).stream().map(OrderBLLMapper.INSTANCE::entityToModel).collect(Collectors.toList());
 	}
 
