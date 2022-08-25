@@ -5,15 +5,13 @@ import java.math.MathContext;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.function.Function;
 import java.util.stream.Collectors;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.kot.bll.order.Order;
 import com.kot.bll.order.OrderService;
@@ -32,33 +30,33 @@ public class OrderStatisticService {
 	@Autowired
 	private DishV1Client dishV1Client;
 
-	public Map<String, BigDecimal> getStatistic() {
-		List<Order> orders = orderService.findAll(Sort.by(Sort.Direction.ASC, "creationDate")).toList();
-		LOGGER.info("Founded {} orders for statistics.", orders.size());
-		return orders.stream().collect(Collectors.toMap(
-				order -> order.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM")),
-				order -> calculateTotal(order.getDishIds()
-						.stream()
-						.map(dishId -> dishV1Client.getDishById(dishId))
-						.collect(Collectors.toList())),
-				(a, b) -> a
-		));
+	public SortedMap<String, BigDecimal> getStatisticsByParallelStreams() {
+		List<Order> orders = orderService.findAll().getContent();
+		return getStatisticsMap(orders);
 	}
 
-	public Map<String, BigDecimal> getStatistic(String startDate, String endDate) {
+	public SortedMap<String, BigDecimal> getStatisticsByParallelStreams(String startDate, String endDate) {
 		ZonedDateTime startDateTime = ZonedDateTime.parse(startDate);
 		ZonedDateTime endDateTime = ZonedDateTime.parse(endDate);
-		Sort sort = Sort.by(Sort.Direction.ASC, "creationDate");
+		BooleanExpression searchCriteria = QOrderEntity.orderEntity.createdDate.after(startDateTime).and(QOrderEntity.orderEntity.createdDate.before(endDateTime));
+		List<Order> orders = orderService.findAll(searchCriteria);
+		return getStatisticsMap(orders);
+	}
 
-		List<Order> orders = orderService.findAll(sort, QOrderEntity.orderEntity.createdDate.after(startDateTime).and(QOrderEntity.orderEntity.createdDate.before(endDateTime)));
+	private TreeMap<String, BigDecimal> getStatisticsMap(List<Order> orders) {
+		List<FraudDishV1Response> dishes = dishV1Client.getDishes();
+		LOGGER.info("Founded {} orders for statistics.", orders.size());
+
+		MathContext mc = new MathContext(3);
 
 		return orders.stream().collect(Collectors.toMap(
 				order -> order.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM")),
 				order -> calculateTotal(order.getDishIds()
-						.stream()
-						.map(dishId -> dishV1Client.getDishById(dishId))
+						.parallelStream()
+						.map(dishId -> getDishResponseById(dishes, dishId))
 						.collect(Collectors.toList())),
-				(a, b) -> a
+				(a, b) -> a.add(b, mc),
+				TreeMap::new
 		));
 	}
 
@@ -69,6 +67,10 @@ public class OrderStatisticService {
 			totalPrice = totalPrice.add(dish.getPrice(), mc);
 		}
 		return totalPrice;
+	}
+
+	private FraudDishV1Response getDishResponseById(List<FraudDishV1Response> dishes, Long id) {
+		return dishes.stream().filter(d -> d.getId().equals(id)).findFirst().orElse(null);
 	}
 
 }

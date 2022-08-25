@@ -36,6 +36,10 @@ public class OrderDao {
 		return (List<OrderEntity>) orderRepository.findAll(booleanExpression);
 	}
 
+	public List<OrderEntity> findAll(Sort sort) {
+		return (List<OrderEntity>) orderRepository.findAll(sort);
+	}
+
 	public Page<OrderEntity> findAll(Specification<OrderEntity> filter, Pageable pageable) {
 		return findAll(filter, pageable);
 	}
