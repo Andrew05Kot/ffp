@@ -41,7 +41,6 @@ public class OrderService {
 		return orderDao.findAll(sort).stream().map(OrderBLLMapper.INSTANCE::entityToModel).collect(Collectors.toList());
 	}
 
-
 	public List<Order> findAll(BooleanExpression booleanExpression) {
 		return orderDao.findAll(booleanExpression).stream().map(OrderBLLMapper.INSTANCE::entityToModel).collect(Collectors.toList());
 	}
