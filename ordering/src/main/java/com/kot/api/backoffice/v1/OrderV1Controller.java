@@ -53,7 +53,7 @@ public class OrderV1Controller {
 		List<OrderV1Response> responses = models
 				.stream()
 				.map(model -> orderV1ApiMapper.modelToDto(model, new ArrayList<>()))
-				.collect(Collectors.toList());
+				.toList();
 		return new ResponseEntity<>(responses, HttpStatus.OK);
 	}
 
@@ -79,7 +79,7 @@ public class OrderV1Controller {
 		List<OrderV1Response> responses = entitiesPaged
 				.stream()
 				.map(model -> orderV1ApiMapper.modelToDto(model, parseExpandField(expand)))
-				.collect(Collectors.toList());
+				.toList();
 		PageV1Response<OrderV1Response> apiResponseTypePageResponse =
 				new PageV1Response<>(responses, entitiesPaged.getTotalElements(), entitiesPaged.getNumber(), entitiesPaged.getSize());
 		return ResponseEntity.ok(apiResponseTypePageResponse);

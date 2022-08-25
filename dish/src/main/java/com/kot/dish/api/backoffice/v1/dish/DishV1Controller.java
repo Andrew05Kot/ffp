@@ -55,7 +55,7 @@ public class DishV1Controller {
 		List<DishV1Response> dishResponses = dishEntities
 				.stream()
 				.map(model -> dishAPIMapper.modelToDto(model))
-				.collect(Collectors.toList());
+				.toList();
 		return new ResponseEntity<>(dishResponses, HttpStatus.OK);
 	}
 
