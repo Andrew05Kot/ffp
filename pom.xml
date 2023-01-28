@@ -16,6 +16,8 @@
     <module>image</module>
     <module>ordering</module>
     <module>establishment</module>
+    <module>notification</module>
+    <module>user</module>
   </modules>
 
   <name>ffp</name>
