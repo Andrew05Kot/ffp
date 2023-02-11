@@ -1,15 +1,25 @@
-package com.kot;
+package com.kot.entity;
 
+import com.querydsl.core.annotations.QueryEntity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
 @Data
-@Document(collection = "db_user")
+@QueryEntity
+@TypeAlias("user")
+@NoArgsConstructor
+@AllArgsConstructor
+@Document(collection = UserEntity.COLLECTION_NAME)
 public class UserEntity {
+
+    public static final String COLLECTION_NAME = "db_user";
 
     @Id
     private String id;

@@ -1,5 +1,9 @@
 package com.kot;
 
+import com.kot.entity.AddressEntity;
+import com.kot.entity.Gender;
+import com.kot.entity.UserEntity;
+import com.kot.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +19,7 @@ import java.time.LocalDateTime;
 @EnableEurekaClient
 @EnableFeignClients
 public class UserApplication {
+
     public static void main(String[] args) {
         SpringApplication.run(UserApplication.class, args);
     }
@@ -43,12 +48,12 @@ public class UserApplication {
                     LocalDateTime.now()
             );
 
-            repository.findUserEntityByEmail(email).ifPresentOrElse(u -> {
-                System.out.println(u + " already exists");
-            }, () -> {
-                System.out.println("Inserting the user " + user);
-                repository.insert(user);
-            });
+//            repository.findUserEntityByEmail(email).ifPresentOrElse(u -> {
+//                System.out.println(u + " already exists");
+//            }, () -> {
+//                System.out.println("Inserting the user " + user);
+//                repository.insert(user);
+//            });
         };
     }
 }

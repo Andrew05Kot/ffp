@@ -1,4 +1,4 @@
-package com.kot;
+package com.kot.entity;
 
 import lombok.Data;
 
