@@ -8,7 +8,7 @@ import java.time.format.DateTimeParseException;
 
 class BasicPredicate<T> {
 
-    private SearchCriteria criteria;
+    private final SearchCriteria criteria;
 
     BasicPredicate(SearchCriteria criteria) {
         this.criteria = criteria;
@@ -17,7 +17,6 @@ class BasicPredicate<T> {
     BooleanExpression getPredicate(Class<T> tClass, String collectionName) {
         PathBuilder<T> entityPath = new PathBuilder<>(tClass, collectionName);
 
-        // Date criteria
         if (this.isDate(criteria.getValue())) {
             DatePath<LocalDate> datePath = entityPath.getDate(criteria.getKey(), LocalDate.class);
             switch (criteria.getOperation()) {

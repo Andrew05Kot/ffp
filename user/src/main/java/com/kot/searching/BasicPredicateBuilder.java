@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 
 public class BasicPredicateBuilder<T> {
 
-    private List<SearchCriteria> criteria;
-    private Class<T> tClass;
-    private String collectionName;
+    private final List<SearchCriteria> criteria;
+    private final Class<T> tClass;
+    private final String collectionName;
 
     public BasicPredicateBuilder(Class<T> tClass, String collectionName) {
-        criteria = new ArrayList<>();
+        this.criteria = new ArrayList<>();
         this.tClass = tClass;
         this.collectionName = collectionName;
     }

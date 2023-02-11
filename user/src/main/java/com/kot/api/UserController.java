@@ -8,7 +8,12 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -24,10 +29,7 @@ public class UserController {
             @RequestParam(value = "pageIndex") int pageIndex,
             @RequestParam(value = "pageSize") int pageSize,
             @RequestParam(value = "search", required = false) String search) {
-        BasicPredicateBuilder<UserEntity> builder = new BasicPredicateBuilder<>(UserEntity.class, UserEntity.COLLECTION_NAME);
-        builder.from(search);
-        BooleanExpression exp = builder.build();
-        return userService.getUsersPage(PageRequest.of(pageIndex, pageSize), exp).stream().map(UserResponse::new).toList();
+        return userService.getUsersPage(PageRequest.of(pageIndex, pageSize), search).stream().map(UserResponse::new).toList();
     }
 
     @PostMapping

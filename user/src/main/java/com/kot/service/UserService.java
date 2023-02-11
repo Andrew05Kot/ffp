@@ -18,10 +18,11 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public Page<UserEntity> getUsersPage(Pageable pageable, Predicate predicate) {
-//        Query query = new Query();
-//        query.with(pageable);
-        return userRepository.findAll(pageable);
+    public Page<UserEntity> getUsersPage(Pageable pageable, String search) {
+        BasicPredicateBuilder<UserEntity> builder = new BasicPredicateBuilder<>(UserEntity.class, UserEntity.COLLECTION_NAME);
+        builder.from(search);
+        BooleanExpression exp = builder.build();
+        return userRepository.findAll(exp, pageable);
     }
 
     public UserEntity createUser(UserEntity request) {
