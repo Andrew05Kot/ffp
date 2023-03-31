@@ -1,4 +1,4 @@
-package com.kot.test_data;
+package com.kot.establishment.test_data;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -6,7 +6,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import com.kot.repository.EstablishmentRepository;
+import com.kot.establishment.repository.EstablishmentRepository;
 
 @Component
 @Profile("testdata")

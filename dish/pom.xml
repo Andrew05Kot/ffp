@@ -10,6 +10,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>dish</artifactId>
 	<groupId>com.kot</groupId>
+	<version>1.0.0</version>
 
 	<properties>
 		<org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
@@ -68,13 +69,7 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.6.9</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-webmvc-core</artifactId>
-			<version>1.6.9</version>
+			<version>1.5.12</version>
 		</dependency>
 	</dependencies>
 

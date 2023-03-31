@@ -1,4 +1,4 @@
-package com.kot.dao;
+package com.kot.establishment.dao;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,8 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import com.kot.entity.EstablishmentEntity;
-import com.kot.repository.EstablishmentRepository;
+import com.kot.establishment.entity.EstablishmentEntity;
+import com.kot.establishment.repository.EstablishmentRepository;
 
 @Service
 public class EstablishmentDao {

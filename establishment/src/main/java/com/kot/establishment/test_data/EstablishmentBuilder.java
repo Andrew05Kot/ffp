@@ -1,7 +1,7 @@
-package com.kot.test_data;
+package com.kot.establishment.test_data;
 
 import java.util.concurrent.ThreadLocalRandom;
-import com.kot.entity.EstablishmentEntity;
+import com.kot.establishment.entity.EstablishmentEntity;
 
 public class EstablishmentBuilder {
 

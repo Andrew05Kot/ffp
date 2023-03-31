@@ -1,4 +1,4 @@
-package com.kot.entity;
+package com.kot.establishment.entity;
 
 import java.time.Instant;
 import javax.persistence.Column;

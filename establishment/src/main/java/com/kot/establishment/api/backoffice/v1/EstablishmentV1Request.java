@@ -1,8 +1,8 @@
-package com.kot.api.backoffice.v1;
+package com.kot.establishment.api.backoffice.v1;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import com.kot.entity.EstablishmentEntity;
+import com.kot.establishment.entity.EstablishmentEntity;
 
 public class EstablishmentV1Request {
 

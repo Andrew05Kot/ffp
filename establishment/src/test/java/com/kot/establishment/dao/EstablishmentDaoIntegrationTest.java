@@ -1,22 +1,19 @@
-package com.kot.dao;
+package com.kot.establishment.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.PredicateTemplate;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import com.kot.api.predicates.EstablishmentPredicatesBuilder;
-import com.kot.entity.EstablishmentEntity;
-import com.kot.test_data.EstablishmentBuilder;
+import com.kot.establishment.api.predicates.EstablishmentPredicatesBuilder;
+import com.kot.establishment.entity.EstablishmentEntity;
+import com.kot.establishment.test_data.EstablishmentBuilder;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)

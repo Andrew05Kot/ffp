@@ -1,38 +1,26 @@
-package com.kot.api.backoffice.v1;
+package com.kot.establishment.api.backoffice.v1;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.validation.groups.Default;
 
-import com.querydsl.core.types.Predicate;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import com.kot.api.ApiInfo;
-import com.kot.api.ResponsePage;
-import com.kot.entity.EstablishmentEntity;
-import com.kot.repository.EstablishmentRepository;
-import com.kot.service.EstablishmentService;
+import org.springframework.web.bind.annotation.*;
+import com.kot.establishment.api.ApiInfo;
+import com.kot.establishment.api.ResponsePage;
+import com.kot.establishment.entity.EstablishmentEntity;
+import com.kot.establishment.service.EstablishmentService;
 
 @RestController
 @RequestMapping(EstablishmentV1Controller.API_URL)
 @Tag(name = "Ordering API")
+@CrossOrigin(origins = "http://localhost:4200")
 public class EstablishmentV1Controller {
 
     public static int DEFAULT_PAGE_SIZE = 15;

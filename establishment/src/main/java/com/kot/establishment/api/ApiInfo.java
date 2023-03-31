@@ -1,4 +1,4 @@
-package com.kot.api;
+package com.kot.establishment.api;
 
 public class ApiInfo {
 

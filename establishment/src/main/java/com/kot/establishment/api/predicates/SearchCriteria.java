@@ -1,4 +1,4 @@
-package com.kot.api.predicates;
+package com.kot.establishment.api.predicates;
 
 public class SearchCriteria {
 
