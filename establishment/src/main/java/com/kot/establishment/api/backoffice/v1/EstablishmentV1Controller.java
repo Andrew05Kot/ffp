@@ -19,7 +19,7 @@ import com.kot.establishment.service.EstablishmentService;
 
 @RestController
 @RequestMapping(EstablishmentV1Controller.API_URL)
-@Tag(name = "Ordering API")
+@Tag(name = "Establishment Backoffice API V1")
 @CrossOrigin(origins = "http://localhost:4200")
 public class EstablishmentV1Controller {
 

@@ -19,7 +19,7 @@ import com.kot.dish.bll.service.DishService;
 
 @RestController
 @RequestMapping(DishV1Controller.API_URL)
-@Tag(name = "Dish API")
+@Tag(name = "Dish Backoffice API V1")
 @CrossOrigin(origins = "http://localhost:4200")
 public class DishV1Controller {
 

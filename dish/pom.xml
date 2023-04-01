@@ -66,9 +66,10 @@
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 
+		<!-- OpenAPI doc generator dependencies -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
+			<artifactId>springdoc-openapi-webmvc-core</artifactId>
 			<version>1.5.12</version>
 		</dependency>
 	</dependencies>
