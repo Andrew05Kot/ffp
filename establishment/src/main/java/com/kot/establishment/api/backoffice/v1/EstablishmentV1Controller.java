@@ -1,8 +1,8 @@
 package com.kot.establishment.api.backoffice.v1;
 
-import java.util.Optional;
-import javax.validation.groups.Default;
-
+import com.kot.establishment.api.ApiInfo;
+import com.kot.establishment.entity.EstablishmentEntity;
+import com.kot.establishment.service.EstablishmentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,18 +12,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import com.kot.establishment.api.ApiInfo;
-import com.kot.establishment.api.ResponsePage;
-import com.kot.establishment.entity.EstablishmentEntity;
-import com.kot.establishment.service.EstablishmentService;
+
+import javax.validation.groups.Default;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(EstablishmentV1Controller.API_URL)
 @Tag(name = "Establishment Backoffice API V1")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8765"})
 public class EstablishmentV1Controller {
 
     public static int DEFAULT_PAGE_SIZE = 15;
+    public static int DEFAULT_PAGE_INDEX = 0;
 
     @Autowired
     private EstablishmentService establishmentService;
@@ -52,20 +52,24 @@ public class EstablishmentV1Controller {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponsePage<EstablishmentV1Response> getAll(
-            @RequestParam(required = false) Optional<Integer> index
-            , @RequestParam(required = false) Optional<Integer> size
+    public EstablishmentPageV1Response getAll(
+            @RequestParam(required = false) Optional<Integer> pageIndex
+            , @RequestParam(required = false) Optional<Integer> pageSize
             , @RequestParam(required = false) Sort sort
     ) {
-        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
-        boolean isPageable = index.isPresent() && pageSize > 0;
+        int size = pageSize.orElse(DEFAULT_PAGE_SIZE);
+        int index = pageIndex.orElse(DEFAULT_PAGE_INDEX);
+        boolean isPageable = pageIndex.isPresent() && size > 0;
 
         Pageable pageable = isPageable ?
-                PageRequest.of(index.get(), pageSize, Sort.by(Sort.Order.asc("city")))
+                PageRequest.of(index, size, Sort.by(Sort.Order.asc("city")))
                 : Pageable.unpaged();
 
         Page<EstablishmentEntity> establishmentEntityList = establishmentService.findAll(pageable);
-        return new ResponsePage<>(establishmentEntityList.stream().map(EstablishmentV1Response::new).toList(), establishmentEntityList.stream().count());
+        return new EstablishmentPageV1Response(establishmentEntityList.stream().map(EstablishmentV1Response::new).toList(),
+                establishmentEntityList.stream().count(),
+                index,
+                size);
     }
 
     @DeleteMapping(path = "/{id}")
