@@ -62,25 +62,21 @@ public class EstablishmentV1Controller {
             @RequestParam(name = "sortField") Optional<String> sortField) {
 
         Sort sort = getSort(sortDirection, sortField);
-        PageableRecord result = getResult(pageIndex, pageSize, sort);
+        Pageable pageable = getResult(pageIndex, pageSize, sort);
 
-        Page<EstablishmentEntity> fetchedPage = establishmentService.findAll(result.pageable());
+        Page<EstablishmentEntity> fetchedPage = establishmentService.findAll(pageable);
         return new EstablishmentPageV1Response(fetchedPage.stream().map(EstablishmentV1Response::new).toList(),
                 fetchedPage.getTotalElements(),
-                result.index(),
-                result.size());
+                pageable.getPageNumber(),
+                pageable.getPageSize());
     }
 
-    private static PageableRecord getResult(Optional<Integer> pageIndex, Optional<Integer> pageSize, Sort sort) {
+    private static Pageable getResult(Optional<Integer> pageIndex, Optional<Integer> pageSize, Sort sort) {
         int size = pageSize.orElse(DEFAULT_PAGE_SIZE);
         int index = pageIndex.orElse(DEFAULT_PAGE_INDEX);
-        Pageable pageable = pageIndex.isPresent() && size > 0 ?
+        return pageIndex.isPresent() && size > 0 ?
                 PageRequest.of(index, size, sort)
                 : Pageable.unpaged();
-        return new PageableRecord(size, index, pageable);
-    }
-
-    private record PageableRecord(int size, int index, Pageable pageable) {
     }
 
     private Sort getSort(Optional<String> sortDirection, Optional<String> sortField) {
