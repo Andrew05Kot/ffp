@@ -62,12 +62,12 @@ public class EstablishmentV1Controller {
         boolean isPageable = pageIndex.isPresent() && size > 0;
 
         Pageable pageable = isPageable ?
-                PageRequest.of(index, size, Sort.by(Sort.Order.asc("city")))
+                PageRequest.of(index, size, Sort.by(Sort.Order.asc("id")))
                 : Pageable.unpaged();
 
-        Page<EstablishmentEntity> establishmentEntityList = establishmentService.findAll(pageable);
-        return new EstablishmentPageV1Response(establishmentEntityList.stream().map(EstablishmentV1Response::new).toList(),
-                establishmentEntityList.stream().count(),
+        Page<EstablishmentEntity> fetchedPage = establishmentService.findAll(pageable);
+        return new EstablishmentPageV1Response(fetchedPage.stream().map(EstablishmentV1Response::new).toList(),
+                fetchedPage.getTotalElements(),
                 index,
                 size);
     }
