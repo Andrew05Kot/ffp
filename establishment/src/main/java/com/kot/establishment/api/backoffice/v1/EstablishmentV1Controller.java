@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.groups.Default;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -22,8 +23,10 @@ import java.util.Optional;
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8765"})
 public class EstablishmentV1Controller {
 
-    public static int DEFAULT_PAGE_SIZE = 15;
-    public static int DEFAULT_PAGE_INDEX = 0;
+    public static final int DEFAULT_PAGE_SIZE = 15;
+    public static final int DEFAULT_PAGE_INDEX = 0;
+    public static final String DEFAULT_SORT_DIRECTION = "ASC";
+    public static final String DEFAULT_SORT_FIELD = "id";
 
     @Autowired
     private EstablishmentService establishmentService;
@@ -53,23 +56,38 @@ public class EstablishmentV1Controller {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public EstablishmentPageV1Response getAll(
-            @RequestParam(required = false) Optional<Integer> pageIndex
-            , @RequestParam(required = false) Optional<Integer> pageSize
-            , @RequestParam(required = false) Sort sort
-    ) {
-        int size = pageSize.orElse(DEFAULT_PAGE_SIZE);
-        int index = pageIndex.orElse(DEFAULT_PAGE_INDEX);
-        boolean isPageable = pageIndex.isPresent() && size > 0;
+            @RequestParam(name = "pageIndex") Optional<Integer> pageIndex,
+            @RequestParam(name = "pageSize") Optional<Integer> pageSize,
+            @RequestParam(name = "sortDirection") Optional<String> sortDirection,
+            @RequestParam(name = "sortField") Optional<String> sortField) {
 
-        Pageable pageable = isPageable ?
-                PageRequest.of(index, size, Sort.by(Sort.Order.asc("id")))
-                : Pageable.unpaged();
+        Sort sort = getSort(sortDirection, sortField);
+        PageableRecord result = getResult(pageIndex, pageSize, sort);
 
-        Page<EstablishmentEntity> fetchedPage = establishmentService.findAll(pageable);
+        Page<EstablishmentEntity> fetchedPage = establishmentService.findAll(result.pageable());
         return new EstablishmentPageV1Response(fetchedPage.stream().map(EstablishmentV1Response::new).toList(),
                 fetchedPage.getTotalElements(),
-                index,
-                size);
+                result.index(),
+                result.size());
+    }
+
+    private static PageableRecord getResult(Optional<Integer> pageIndex, Optional<Integer> pageSize, Sort sort) {
+        int size = pageSize.orElse(DEFAULT_PAGE_SIZE);
+        int index = pageIndex.orElse(DEFAULT_PAGE_INDEX);
+        Pageable pageable = pageIndex.isPresent() && size > 0 ?
+                PageRequest.of(index, size, sort)
+                : Pageable.unpaged();
+        return new PageableRecord(size, index, pageable);
+    }
+
+    private record PageableRecord(int size, int index, Pageable pageable) {
+    }
+
+    private Sort getSort(Optional<String> sortDirection, Optional<String> sortField) {
+        if (sortField.isPresent() && sortDirection.isPresent()) {
+            return Sort.by(Sort.Order.by(sortDirection.get()).withProperty(sortField.get()));
+        }
+        return Sort.by(Sort.Order.by(DEFAULT_SORT_DIRECTION).withProperty(DEFAULT_SORT_FIELD));
     }
 
     @DeleteMapping(path = "/{id}")
