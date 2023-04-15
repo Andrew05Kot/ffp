@@ -1,4 +1,4 @@
-package com.kot.establishment.api;
+package com.kot.dish.api.backoffice.v1.dish;
 
 import java.util.List;
 

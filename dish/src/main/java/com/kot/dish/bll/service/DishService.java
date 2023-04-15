@@ -13,27 +13,31 @@ import org.springframework.stereotype.Service;
 @Service
 public class DishService {
 
-	@Autowired
-	private DishDao dishDao;
+    @Autowired
+    private DishDao dishDao;
 
-	public Dish save(Dish dish) {
-		DishEntity dishEntity = dishDao.save(DishBLLMapper.INSTANCE.modelToEntity(dish), dish.getId());
-		return DishBLLMapper.INSTANCE.entityToModel(dishEntity);
-	}
+    public Dish save(Dish dish) {
+        DishEntity dishEntity = dishDao.save(DishBLLMapper.INSTANCE.modelToEntity(dish), dish.getId());
+        return DishBLLMapper.INSTANCE.entityToModel(dishEntity);
+    }
 
-	public Dish findById(Long id) {
-		return DishBLLMapper.INSTANCE.entityToModel(dishDao.findById(id));
-	}
+    public Dish findById(Long id) {
+        return DishBLLMapper.INSTANCE.entityToModel(dishDao.findById(id));
+    }
 
-	public Page<Dish> findAll() {
-		return dishDao.findAll().map(DishBLLMapper.INSTANCE::entityToModel);
-	}
+    public Page<Dish> findAll() {
+        return dishDao.findAll().map(DishBLLMapper.INSTANCE::entityToModel);
+    }
 
-	public Page<Dish> findAll(Specification specification) {
-		return dishDao.findAll(specification).map(DishBLLMapper.INSTANCE::entityToModel);
-	}
+    public Page<Dish> findAll(Specification specification) {
+        return dishDao.findAll(specification).map(DishBLLMapper.INSTANCE::entityToModel);
+    }
 
-	public Page<Dish> findAll(Specification<DishEntity> filter, Pageable pageable) {
-		return dishDao.findAll(filter, pageable).map(DishBLLMapper.INSTANCE::entityToModel);
-	}
+    public Page<Dish> findAll(Specification<DishEntity> filter, Pageable pageable) {
+        return dishDao.findAll(filter, pageable).map(DishBLLMapper.INSTANCE::entityToModel);
+    }
+
+    public Page<Dish> findAll(Pageable pageable) {
+        return dishDao.findAll(pageable).map(DishBLLMapper.INSTANCE::entityToModel);
+    }
 }

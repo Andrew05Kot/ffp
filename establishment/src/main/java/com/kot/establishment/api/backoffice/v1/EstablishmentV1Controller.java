@@ -1,6 +1,7 @@
 package com.kot.establishment.api.backoffice.v1;
 
 import com.kot.establishment.api.ApiInfo;
+import com.kot.establishment.api.ResponsePage;
 import com.kot.establishment.entity.EstablishmentEntity;
 import com.kot.establishment.service.EstablishmentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,10 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.groups.Default;
-import java.util.List;
 import java.util.Optional;
-
-import static org.springframework.data.domain.Sort.Direction.ASC;
 
 @RestController
 @RequestMapping(EstablishmentV1Controller.API_URL)
@@ -58,7 +56,7 @@ public class EstablishmentV1Controller {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public EstablishmentPageV1Response getAll(
+    public ResponsePage<EstablishmentV1Response> getAll(
             @RequestParam(name = "pageIndex") Optional<Integer> pageIndex,
             @RequestParam(name = "pageSize") Optional<Integer> pageSize,
             @RequestParam(name = "sortDirection") Optional<String> sortDirection,
@@ -67,7 +65,7 @@ public class EstablishmentV1Controller {
         Pageable pageable = getResult(pageIndex, pageSize, sort);
 
         Page<EstablishmentEntity> fetchedPage = establishmentService.findAll(pageable);
-        return new EstablishmentPageV1Response(fetchedPage.stream().map(EstablishmentV1Response::new).toList(),
+        return new ResponsePage<>(fetchedPage.stream().map(EstablishmentV1Response::new).toList(),
                 fetchedPage.getTotalElements(),
                 pageable.getPageNumber(),
                 pageable.getPageSize());
