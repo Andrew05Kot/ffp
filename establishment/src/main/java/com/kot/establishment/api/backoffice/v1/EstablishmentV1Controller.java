@@ -17,6 +17,8 @@ import javax.validation.groups.Default;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.data.domain.Sort.Direction.ASC;
+
 @RestController
 @RequestMapping(EstablishmentV1Controller.API_URL)
 @Tag(name = "Establishment Backoffice API V1")
@@ -27,6 +29,7 @@ public class EstablishmentV1Controller {
     public static final int DEFAULT_PAGE_INDEX = 0;
     public static final String DEFAULT_SORT_DIRECTION = "ASC";
     public static final String DEFAULT_SORT_FIELD = "id";
+    public static final Sort DEFAULT_SORT = Sort.by(Sort.Order.by(DEFAULT_SORT_DIRECTION).withProperty(DEFAULT_SORT_FIELD));
 
     @Autowired
     private EstablishmentService establishmentService;
@@ -60,7 +63,6 @@ public class EstablishmentV1Controller {
             @RequestParam(name = "pageSize") Optional<Integer> pageSize,
             @RequestParam(name = "sortDirection") Optional<String> sortDirection,
             @RequestParam(name = "sortField") Optional<String> sortField) {
-
         Sort sort = getSort(sortDirection, sortField);
         Pageable pageable = getResult(pageIndex, pageSize, sort);
 
@@ -81,9 +83,13 @@ public class EstablishmentV1Controller {
 
     private Sort getSort(Optional<String> sortDirection, Optional<String> sortField) {
         if (sortField.isPresent() && sortDirection.isPresent()) {
-            return Sort.by(Sort.Order.by(sortDirection.get()).withProperty(sortField.get()));
+            return switch (sortDirection.get().toUpperCase()) {
+                case "ASC" -> Sort.by(Sort.Order.asc(sortField.get()));
+                case "DESC" -> Sort.by(Sort.Order.desc(sortField.get()));
+                default -> DEFAULT_SORT;
+            };
         }
-        return Sort.by(Sort.Order.by(DEFAULT_SORT_DIRECTION).withProperty(DEFAULT_SORT_FIELD));
+        return DEFAULT_SORT;
     }
 
     @DeleteMapping(path = "/{id}")
