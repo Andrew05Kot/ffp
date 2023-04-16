@@ -22,7 +22,10 @@ public class DishV1ApiMapperImpl implements DishV1ApiMapper {
 		response.setName(model.getName());
 		response.setDescription(model.getDescription());
 		response.setPrice(model.getPrice());
+		response.setImageUrl(model.getImageUrl());
 		response.setCategory(categoryMapper.modelToDto(model.getCategory()));
+		response.setCreatedDate(model.getCreatedDate());
+		response.setLastModifiedDate(model.getLastModifiedDate());
 		return response;
 	}
 

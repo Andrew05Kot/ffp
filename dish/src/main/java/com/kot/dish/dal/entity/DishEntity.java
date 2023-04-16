@@ -1,6 +1,7 @@
 package com.kot.dish.dal.entity;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 @Table(name = "dish")
@@ -33,9 +36,20 @@ public class DishEntity {
 	@NotNull
 	private BigDecimal price;
 
+	@Column(name = "image_url")
+	private String imageUrl;
+
 	@ManyToOne
 	@JoinColumn(name = "category_id", nullable = false)
 	private CategoryEntity category;
+
+	@CreatedDate
+	@Column(name = "created_date", updatable = false)
+	private Instant createdDate = Instant.now();
+
+	@LastModifiedDate
+	@Column(name = "last_modified_date")
+	private Instant lastModifiedDate = Instant.now();
 
 	public Long getId() {
 		return id;
@@ -77,6 +91,30 @@ public class DishEntity {
 		this.price = price;
 	}
 
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public Instant getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Instant createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Instant getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Instant lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -91,6 +129,9 @@ public class DishEntity {
 				.append(description, that.description)
 				.append(category, that.category)
 				.append(price, that.price)
+				.append(imageUrl, that.imageUrl)
+				.append(createdDate, that.createdDate)
+				.append(lastModifiedDate, that.lastModifiedDate)
 				.isEquals();
 	}
 
@@ -102,6 +143,9 @@ public class DishEntity {
 				.append(description)
 				.append(category)
 				.append(price)
+				.append(imageUrl)
+				.append(createdDate)
+				.append(lastModifiedDate)
 				.toHashCode();
 	}
 
@@ -113,6 +157,9 @@ public class DishEntity {
 				", description='" + description + '\'' +
 				", category=" + category +
 				", price=" + price +
+				", imageUrl=" + imageUrl +
+				", createdDate=" + createdDate +
+				", lastModifiedDate=" + lastModifiedDate +
 				'}';
 	}
 }

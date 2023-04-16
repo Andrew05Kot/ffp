@@ -14,6 +14,8 @@ public class DishV1Request {
 
 	private BigDecimal price;
 
+	private String imageUrl;
+
 	private Long categoryId;
 
 	public Long getId() {
@@ -56,6 +58,14 @@ public class DishV1Request {
 		this.price = price;
 	}
 
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -70,6 +80,7 @@ public class DishV1Request {
 				.append(categoryId, that.categoryId)
 				.append(description, that.description)
 				.append(price, that.price)
+				.append(imageUrl, that.imageUrl)
 				.isEquals();
 	}
 
@@ -81,6 +92,7 @@ public class DishV1Request {
 				.append(categoryId)
 				.append(description)
 				.append(price)
+				.append(imageUrl)
 				.toHashCode();
 	}
 
@@ -92,6 +104,7 @@ public class DishV1Request {
 				", description='" + description + '\'' +
 				", categoryId=" + categoryId +
 				", price=" + price +
+				", imageUrl=" + imageUrl +
 				'}';
 	}
 }
