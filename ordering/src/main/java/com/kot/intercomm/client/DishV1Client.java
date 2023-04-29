@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "DISH")
 public interface DishV1Client {
 
-	@GetMapping(value = "/api/v1/dishes/", consumes = "application/json")
+	@GetMapping(value = "/api/v1/dishes/unpaged", consumes = "application/json")
 	List<FraudDishV1Response> getDishes();
 
 	@GetMapping(value = "/api/v1/dishes/{id}", consumes = "application/json")

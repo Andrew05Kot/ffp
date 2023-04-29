@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -59,23 +60,29 @@ public class DishV1Controller {
             @RequestParam(name = "pageIndex") Optional<Integer> pageIndex,
             @RequestParam(name = "pageSize") Optional<Integer> pageSize,
             @RequestParam(name = "sortDirection") Optional<String> sortDirection,
-            @RequestParam(name = "sortField") Optional<String> sortField) {
+            @RequestParam(name = "sortField") Optional<String> sortField,
+            @RequestParam(value = "search", required = false) Optional<String> filter) {
         Sort sort = getSort(sortDirection, sortField);
         Pageable pageable = getResult(pageIndex, pageSize, sort);
 
-        Page<Dish> fetchedPage = dishService.findAll(pageable);
+        Page<Dish> fetchedPage = filter.isPresent() ? dishService.findAll(filter.get(), pageable) : dishService.findAll(pageable);
+
         return new ResponsePage<>(fetchedPage.stream().map(dishAPIMapper::modelToDto).toList(),
                 fetchedPage.getTotalElements(),
                 pageable.getPageNumber(),
                 pageable.getPageSize());
     }
 
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/unpaged")
+    public List<DishV1Response> getAll() {
+        Page<Dish> fetchedPage = dishService.findAll();
+        return fetchedPage.stream().map(dishAPIMapper::modelToDto).toList();
+    }
+
     private static Pageable getResult(Optional<Integer> pageIndex, Optional<Integer> pageSize, Sort sort) {
         int size = pageSize.orElse(DEFAULT_PAGE_SIZE);
         int index = pageIndex.orElse(DEFAULT_PAGE_INDEX);
-        return pageIndex.isPresent() && size > 0 ?
-                PageRequest.of(index, size, sort)
-                : Pageable.unpaged();
+        return PageRequest.of(index, size, sort);
     }
 
     private Sort getSort(Optional<String> sortDirection, Optional<String> sortField) {

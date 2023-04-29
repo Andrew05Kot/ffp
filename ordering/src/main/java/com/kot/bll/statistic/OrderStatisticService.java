@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
+
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.kot.bll.order.Order;
 import com.kot.bll.order.OrderService;
-import com.kot.dal.QOrderEntity;
 import com.kot.intercomm.client.DishV1Client;
 import com.kot.intercomm.client.FraudDishV1Response;
 
@@ -35,13 +35,14 @@ public class OrderStatisticService {
 		return getStatisticsMap(orders);
 	}
 
-	public SortedMap<String, BigDecimal> getStatisticsByParallelStreams(String startDate, String endDate) {
-		ZonedDateTime startDateTime = ZonedDateTime.parse(startDate);
-		ZonedDateTime endDateTime = ZonedDateTime.parse(endDate);
-		BooleanExpression searchCriteria = QOrderEntity.orderEntity.createdDate.after(startDateTime).and(QOrderEntity.orderEntity.createdDate.before(endDateTime));
-		List<Order> orders = orderService.findAll(searchCriteria);
-		return getStatisticsMap(orders);
-	}
+//	public SortedMap<String, BigDecimal> getStatisticsByParallelStreams(String startDate, String endDate) {
+//		ZonedDateTime startDateTime = ZonedDateTime.parse(startDate);
+//		ZonedDateTime endDateTime = ZonedDateTime.parse(endDate);
+//		OrderEntity
+//		BooleanExpression searchCriteria = QOrderEntity.orderEntity.createdDate.after(startDateTime).and(QOrderEntity.orderEntity.createdDate.before(endDateTime));
+//		List<Order> orders = orderService.findAll(searchCriteria);
+//		return getStatisticsMap(orders);
+//	}
 
 	private TreeMap<String, BigDecimal> getStatisticsMap(List<Order> orders) {
 		List<FraudDishV1Response> dishes = dishV1Client.getDishes();
