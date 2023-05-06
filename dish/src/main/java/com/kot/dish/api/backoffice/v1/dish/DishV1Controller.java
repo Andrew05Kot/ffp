@@ -61,11 +61,11 @@ public class DishV1Controller {
             @RequestParam(name = "pageSize") Optional<Integer> pageSize,
             @RequestParam(name = "sortDirection") Optional<String> sortDirection,
             @RequestParam(name = "sortField") Optional<String> sortField,
-            @RequestParam(value = "search", required = false) Optional<String> filter) {
+            @RequestParam(value = "search", required = false) Optional<String> search) {
         Sort sort = getSort(sortDirection, sortField);
         Pageable pageable = getResult(pageIndex, pageSize, sort);
 
-        Page<Dish> fetchedPage = filter.isPresent() ? dishService.findAll(filter.get(), pageable) : dishService.findAll(pageable);
+        Page<Dish> fetchedPage = search.isPresent() ? dishService.findAll(search.get(), pageable) : dishService.findAll(pageable);
 
         return new ResponsePage<>(fetchedPage.stream().map(dishAPIMapper::modelToDto).toList(),
                 fetchedPage.getTotalElements(),

@@ -9,6 +9,10 @@ public class DishSpecificationsBuilder extends EntityFilterSpecificationsBuilder
     @Override
     public List<FilteringProperty> getFilterableProperties() {
         return List.of(
+                new FilteringProperty("text",
+                        String.class,
+                        DishTextSpecificationBuilder.SUPPORTED_OPERATORS,
+                        new DishTextSpecificationBuilder()),
                 new FilteringProperty("name",
                         String.class,
                         StringComparisonSpecificationBuilder.SUPPORTED_OPERATORS,

@@ -24,7 +24,7 @@ public class DishService {
     @Autowired
     private FilteringCriteriaParser searchCriteriaParser;
 
-    private DishSpecificationsBuilder dishSpecificationsBuilder =  new DishSpecificationsBuilder();
+    private final DishSpecificationsBuilder dishSpecificationsBuilder =  new DishSpecificationsBuilder();
 
     public Dish save(Dish dish) {
         DishEntity dishEntity = dishDao.save(DishBLLMapper.INSTANCE.modelToEntity(dish), dish.getId());
@@ -39,8 +39,8 @@ public class DishService {
         return dishDao.findAll().map(DishBLLMapper.INSTANCE::entityToModel);
     }
 
-    public Page<Dish> findAll(String filter, Pageable pageable) {
-        Specification<DishEntity> specification = buildSpecification(filter);
+    public Page<Dish> findAll(String search, Pageable pageable) {
+        Specification<DishEntity> specification = buildSpecification(search);
         return dishDao.findAll(specification, pageable).map(DishBLLMapper.INSTANCE::entityToModel);
     }
 

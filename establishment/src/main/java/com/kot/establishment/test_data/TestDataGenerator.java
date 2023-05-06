@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.kot.establishment.repository.EstablishmentRepository;
 
 @Component
-@Profile("testdata")
+//@Profile("testdata")
 public class TestDataGenerator {
 
 	private static final List<String> CITIES = List.of("Chernivtsi", "Ivano-Frankivsk", "Lviv", "Kolomyia", "Kyiv", "Lutsk", "Uzgorod", "Ternopil", "Khmelnytskyi", "Cherkasy", "Rivne", "Zitomyr", "Vinnytsia ", "Odessa", "Kherson");
