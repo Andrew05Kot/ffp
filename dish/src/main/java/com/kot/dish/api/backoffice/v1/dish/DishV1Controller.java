@@ -20,7 +20,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(DishV1Controller.API_URL)
 @Tag(name = "Dish Backoffice API V1")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8765"})
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8765", "http://localhost:8082"})
 public class DishV1Controller {
 
     static final int DEFAULT_PAGE_SIZE = 15;
