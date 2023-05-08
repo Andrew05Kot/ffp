@@ -30,7 +30,7 @@ import com.kot.bll.statistic.OrderStatisticService;
 @RestController
 @RequestMapping(OrderV1Controller.API_URL)
 @Tag(name = "Ordering API")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8765"})
 public class OrderV1Controller {
 
 	public static final String API_URL = ApiInfo.API_PREFIX + ApiInfo.API_VERSION_V1 + ApiInfo.ORDER_ENDPOINT;
@@ -103,9 +103,9 @@ public class OrderV1Controller {
 			@Parameter(description = "Date to", example = "2022-08-01T00:00:00.000Z")
 			@RequestParam(value = "endDate", required = false) Optional<String> endDate
 	) {
-//		if (startDate.isPresent() && endDate.isPresent()) {
-//			return ResponseEntity.ok(orderStatisticService.getStatisticsByParallelStreams(startDate.get(), endDate.get()));
-//		}
+		if (startDate.isPresent() && endDate.isPresent()) {
+			return ResponseEntity.ok(orderStatisticService.getStatisticsByParallelStreams(startDate.get(), endDate.get()));
+		}
 		return ResponseEntity.ok(orderStatisticService.getStatisticsByParallelStreams());
 	}
 
