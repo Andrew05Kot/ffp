@@ -1,7 +1,6 @@
 package com.kot.api.backoffice.v1;
 
 import com.kot.api.ApiInfo;
-import com.kot.api.UnPagedPage;
 import com.kot.bll.order.Order;
 import com.kot.bll.order.OrderService;
 import com.kot.bll.statistic.OrderStatisticService;
@@ -12,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,11 @@ public class OrderV1Controller {
 
     public static final String API_URL = ApiInfo.API_PREFIX + ApiInfo.API_VERSION_V1 + ApiInfo.ORDER_ENDPOINT;
 
-    public static final Integer DEFAULT_PAGE_SIZE = 10;
+    public static final int DEFAULT_PAGE_SIZE = 15;
+    public static final int DEFAULT_PAGE_INDEX = 0;
+    public static final String DEFAULT_SORT_DIRECTION = "ASC";
+    public static final String DEFAULT_SORT_FIELD = "id";
+    public static final Sort DEFAULT_SORT = Sort.by(Sort.Order.by(DEFAULT_SORT_DIRECTION).withProperty(DEFAULT_SORT_FIELD));
 
     @Autowired
     private OrderService orderService;
@@ -39,43 +44,42 @@ public class OrderV1Controller {
     @Autowired
     private OrderStatisticService orderStatisticService;
 
-    @Operation(summary = "Get all existing orders")
-    @GetMapping("/")
-    public ResponseEntity<List<OrderV1Response>> getAll() {
-        List<Order> models = orderService.findAll().getContent();
-        List<OrderV1Response> responses = models
-                .stream()
-                .map(model -> orderV1ApiMapper.modelToDto(model, new ArrayList<>()))
-                .toList();
-        return new ResponseEntity<>(responses, HttpStatus.OK);
+    @Operation(summary = "Get page of existing orders")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponsePage<OrderV1Response> getAll(
+            @RequestParam(name = "pageIndex") Optional<Integer> pageIndex,
+            @RequestParam(name = "pageSize") Optional<Integer> pageSize,
+            @RequestParam(name = "sortDirection") Optional<String> sortDirection,
+            @RequestParam(name = "sortField") Optional<String> sortField,
+            @RequestParam(value = "expand_fields", required = false) Optional<String> expand) {
+        Sort sort = getSort(sortDirection, sortField);
+        Pageable pageable = getResult(pageIndex, pageSize, sort);
+
+        Page<Order> fetchedPage = orderService.findAll(pageable);
+        return new ResponsePage<>(
+                fetchedPage.stream().map(model -> orderV1ApiMapper.modelToDto(model, parseExpandField(expand))).toList(),
+                fetchedPage.getTotalElements(),
+                pageable.getPageNumber(),
+                pageable.getPageSize());
     }
 
-    @Operation(summary = "Get page of existing orders")
-    @GetMapping("/page")
-    public ResponseEntity<PageV1Response<OrderV1Response>> getAllPage(
-            @Parameter(description = "Page number")
-            @RequestParam(value = "index", required = false) Optional<Integer> index,
-            @Parameter(description = "Page size")
-            @RequestParam(value = "size", required = false) Optional<Integer> size,
-            @Parameter(description = "Specify fields which has to be expanded in response")
-            @RequestParam(value = "expand_fields", required = false) Optional<String> expand
-    ) {
-        int pageSize = size.orElse(DEFAULT_PAGE_SIZE);
+    private static Pageable getResult(Optional<Integer> pageIndex, Optional<Integer> pageSize, Sort sort) {
+        int size = pageSize.orElse(DEFAULT_PAGE_SIZE);
+        int index = pageIndex.orElse(DEFAULT_PAGE_INDEX);
+        return pageIndex.isPresent() && size > 0 ?
+                PageRequest.of(index, size, sort)
+                : Pageable.unpaged();
+    }
 
-        boolean isPageable = index.isPresent() && pageSize > 0;
-
-        Pageable pageable = isPageable ?
-                PageRequest.of(index.get(), pageSize)
-                : new UnPagedPage();
-
-        Page<Order> entitiesPaged = orderService.findAll(pageable);
-        List<OrderV1Response> responses = entitiesPaged
-                .stream()
-                .map(model -> orderV1ApiMapper.modelToDto(model, parseExpandField(expand)))
-                .toList();
-        PageV1Response<OrderV1Response> apiResponseTypePageResponse =
-                new PageV1Response<>(responses, entitiesPaged.getTotalElements(), entitiesPaged.getNumber(), entitiesPaged.getSize());
-        return ResponseEntity.ok(apiResponseTypePageResponse);
+    private Sort getSort(Optional<String> sortDirection, Optional<String> sortField) {
+        if (sortField.isPresent() && sortDirection.isPresent()) {
+            return switch (sortDirection.get().toUpperCase()) {
+                case "ASC" -> Sort.by(Sort.Order.asc(sortField.get()));
+                case "DESC" -> Sort.by(Sort.Order.desc(sortField.get()));
+                default -> DEFAULT_SORT;
+            };
+        }
+        return DEFAULT_SORT;
     }
 
     @Operation(summary = "Get an order by its id")

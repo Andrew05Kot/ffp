@@ -46,7 +46,6 @@ public class OrderStatisticService {
 
     private TreeMap<String, BigDecimal> getStatisticsMap(List<Order> orders) {
         List<FraudDishV1Response> dishes = dishV1Client.getDishes();
-        LOGGER.info("Founded {} dishes", dishes.size());
         LOGGER.info("Founded {} orders for statistics.", orders.size());
 
         MathContext mc = new MathContext(3);
