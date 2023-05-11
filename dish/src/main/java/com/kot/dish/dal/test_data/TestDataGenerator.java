@@ -13,7 +13,7 @@ import com.kot.dish.dal.repository.CategoryRepository;
 import com.kot.dish.dal.repository.DishRepository;
 
 @Component
-@Profile("testdata")
+//@Profile("testdata")
 public class TestDataGenerator {
 
 	@Autowired

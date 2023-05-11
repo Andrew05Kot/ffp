@@ -1,11 +1,9 @@
-package com.kot.dal;
+package com.kot.dal.domain;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.annotation.CreatedDate;
@@ -62,9 +61,13 @@ public class OrderEntity {
 	@Enumerated(EnumType.STRING)
 	private PaymentMethod paymentMethod;
 
-	@Column(name = "dish_ids")
+	@Column(name = "selected_dishes_ids")
 	@ElementCollection(targetClass = Long.class)
-	private List<Long> dishIds;
+	private List<Long> selectedDishes;
+
+	@Column(name = "selected_categories")
+	@ElementCollection(targetClass = String.class)
+	private List<String> selectedCategories;
 
 	public Long getId() {
 		return id;
@@ -138,12 +141,20 @@ public class OrderEntity {
 		this.paymentMethod = paymentMethod;
 	}
 
-	public List<Long> getDishIds() {
-		return dishIds;
+	public List<Long> getSelectedDishes() {
+		return selectedDishes;
 	}
 
-	public void setDishIds(List<Long> dishIds) {
-		this.dishIds = dishIds;
+	public void setSelectedDishes(List<Long> selectedDishes) {
+		this.selectedDishes = selectedDishes;
+	}
+
+	public List<String> getSelectedCategories() {
+		return selectedCategories;
+	}
+
+	public void setSelectedCategories(List<String> selectedCategories) {
+		this.selectedCategories = selectedCategories;
 	}
 
 	@Override
@@ -164,7 +175,8 @@ public class OrderEntity {
 				.append(expiration, that.expiration)
 				.append(cvv, that.cvv)
 				.append(paymentMethod, that.paymentMethod)
-				.append(dishIds, that.dishIds)
+				.append(selectedCategories, that.selectedCategories)
+				.append(selectedDishes, that.selectedDishes)
 				.isEquals();
 	}
 
@@ -180,7 +192,8 @@ public class OrderEntity {
 				.append(expiration)
 				.append(cvv)
 				.append(paymentMethod)
-				.append(dishIds)
+				.append(selectedDishes)
+				.append(selectedCategories)
 				.toHashCode();
 	}
 
@@ -196,7 +209,8 @@ public class OrderEntity {
 				", expiration='" + expiration + '\'' +
 				", cvv='" + cvv + '\'' +
 				", paymentMethod=" + paymentMethod +
-				", dishIds=" + dishIds +
+				", selectedDishes=" + selectedDishes +
+				", selectedCategories=" + selectedCategories +
 				'}';
 	}
 }

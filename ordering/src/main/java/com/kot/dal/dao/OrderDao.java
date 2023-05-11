@@ -1,6 +1,9 @@
-package com.kot.dal;
+package com.kot.dal.dao;
 
 import java.util.List;
+
+import com.kot.dal.domain.OrderEntity;
+import com.kot.dal.repository.OrderRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

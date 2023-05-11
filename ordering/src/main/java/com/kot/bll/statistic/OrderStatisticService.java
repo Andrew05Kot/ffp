@@ -2,7 +2,7 @@ package com.kot.bll.statistic;
 
 import com.kot.bll.order.Order;
 import com.kot.bll.order.OrderService;
-import com.kot.dal.QOrderEntity;
+import com.kot.dal.domain.QOrderEntity;
 import com.kot.intercomm.client.DishV1Client;
 import com.kot.intercomm.client.FraudDishV1Response;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -46,16 +46,17 @@ public class OrderStatisticService {
 
     private TreeMap<String, BigDecimal> getStatisticsMap(List<Order> orders) {
         List<FraudDishV1Response> dishes = dishV1Client.getDishes();
+        LOGGER.info("Founded {} dishes", dishes.size());
         LOGGER.info("Founded {} orders for statistics.", orders.size());
 
         MathContext mc = new MathContext(3);
 
         return orders.stream().collect(Collectors.toMap(
                 order -> order.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM")),
-                order -> calculateTotal(order.getDishIds()
+                order -> calculateTotal(order.getSelectedDishes()
                         .parallelStream()
                         .map(dishId -> getDishResponseById(dishes, dishId))
-                        .collect(Collectors.toList())),
+                        .toList()),
                 (a, b) -> a.add(b, mc),
                 TreeMap::new
         ));

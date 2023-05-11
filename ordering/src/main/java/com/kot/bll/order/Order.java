@@ -5,7 +5,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import com.kot.dal.PaymentMethod;
+import com.kot.dal.domain.PaymentMethod;
 
 public class Order {
 
@@ -27,7 +27,9 @@ public class Order {
 
 	private PaymentMethod paymentMethod;
 
-	private List<Long> dishIds;
+	private List<Long> selectedDishes;
+
+	private List<String> selectedCategories;
 
 	public Long getId() {
 		return id;
@@ -101,12 +103,20 @@ public class Order {
 		this.paymentMethod = paymentMethod;
 	}
 
-	public List<Long> getDishIds() {
-		return dishIds;
+	public List<Long> getSelectedDishes() {
+		return selectedDishes;
 	}
 
-	public void setDishIds(List<Long> dishIds) {
-		this.dishIds = dishIds;
+	public void setSelectedDishes(List<Long> selectedDishes) {
+		this.selectedDishes = selectedDishes;
+	}
+
+	public List<String> getSelectedCategories() {
+		return selectedCategories;
+	}
+
+	public void setSelectedCategories(List<String> selectedCategories) {
+		this.selectedCategories = selectedCategories;
 	}
 
 	@Override
@@ -127,7 +137,8 @@ public class Order {
 				.append(expiration, order.expiration)
 				.append(cvv, order.cvv)
 				.append(paymentMethod, order.paymentMethod)
-				.append(dishIds, order.dishIds)
+				.append(selectedCategories, order.selectedCategories)
+				.append(selectedDishes, order.selectedDishes)
 				.isEquals();
 	}
 
@@ -143,7 +154,8 @@ public class Order {
 				.append(expiration)
 				.append(cvv)
 				.append(paymentMethod)
-				.append(dishIds)
+				.append(selectedDishes)
+				.append(selectedCategories)
 				.toHashCode();
 	}
 
@@ -159,7 +171,8 @@ public class Order {
 				", expiration='" + expiration + '\'' +
 				", cvv='" + cvv + '\'' +
 				", paymentMethod=" + paymentMethod +
-				", dishIds=" + dishIds +
+				", selectedDishes=" + selectedDishes +
+				", selectedCategories=" + selectedCategories +
 				'}';
 	}
 }

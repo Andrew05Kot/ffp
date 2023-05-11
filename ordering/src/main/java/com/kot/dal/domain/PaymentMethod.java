@@ -1,4 +1,4 @@
-package com.kot.dal;
+package com.kot.dal.domain;
 
 public enum PaymentMethod {
 
