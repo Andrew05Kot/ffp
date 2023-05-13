@@ -13,46 +13,43 @@ import org.springframework.stereotype.Service;
 @Service
 public class DishDao {
 
-	@Autowired
-	private DishRepository dishRepository;
+    @Autowired
+    private DishRepository dishRepository;
 
-	public DishEntity save(DishEntity entity, Long id) {
-		return this.dishRepository.save(entity);
-	}
+    public DishEntity save(DishEntity entity, Long id) {
+        return this.dishRepository.save(entity);
+    }
 
-	public DishEntity findById(Long id) {
-		return dishRepository.findById(id).orElse(null);
-	}
+    public DishEntity findById(Long id) {
+        return dishRepository.findById(id).orElse(null);
+    }
 
-	public Page<DishEntity> findAll() {
-		return dishRepository.findAll(Specification.where(null), Pageable.unpaged());
-	}
+    public Page<DishEntity> findAll() {
+        return dishRepository.findAll(Specification.where(null), Pageable.unpaged());
+    }
 
-	public Page<DishEntity> findAll(Specification specification) {
-		return (Page<DishEntity>) dishRepository.findAll(specification);
-	}
+    public Page<DishEntity> findAll(Specification<DishEntity> filter, Pageable pageable) {
+        return dishRepository.findAll(filter, pageable);
+    }
 
-	public Page<DishEntity> findAll(Specification<DishEntity> filter, Pageable pageable) {
-		return findAll(filter, pageable);
-	}
+    public Page<DishEntity> findAll(Specification specification) {
+        return (Page<DishEntity>) dishRepository.findAll(specification);
+    }
 
-	public Page<DishEntity> findAll(Pageable pageable) {
+    public Page<DishEntity> findAll(Pageable pageable) {
+        Specification<DishEntity> specification = addSpecifications().and(addAdditionalSpecificationsForGet());
 
-		Specification<DishEntity> specification = addSpecifications().and(addAdditionalSpecificationsForGet());
+        Sort sort = pageable.getSort();
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 
-		Sort sort = pageable.getSort();
-		PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+        return dishRepository.findAll(specification, pageRequest);
+    }
 
-		Page<DishEntity> page = dishRepository.findAll(specification, pageRequest);
+    protected Specification<DishEntity> addSpecifications() {
+        return Specification.where(null);
+    }
 
-		return page;
-	}
-
-	protected Specification<DishEntity> addSpecifications() {
-		return Specification.where(null);
-	}
-
-	protected Specification<DishEntity> addAdditionalSpecificationsForGet() {
-		return null;
-	}
+    protected Specification<DishEntity> addAdditionalSpecificationsForGet() {
+        return null;
+    }
 }

@@ -48,6 +48,14 @@
             <artifactId>reactor-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- Open api docs dependencies -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-webflux-ui</artifactId>
+            <version>1.6.15</version>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>

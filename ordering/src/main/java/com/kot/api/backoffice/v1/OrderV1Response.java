@@ -5,7 +5,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import com.kot.dal.PaymentMethod;
+import com.kot.dal.domain.PaymentMethod;
 import com.kot.intercomm.client.FraudDishV1Response;
 
 public class OrderV1Response {
@@ -28,7 +28,9 @@ public class OrderV1Response {
 
 	private PaymentMethod paymentMethod;
 
-	private List<FraudDishV1Response> dishes;
+	private List<FraudDishV1Response> selectedDishes;
+
+	private List<String> selectedCategories;
 
 	public Long getId() {
 		return id;
@@ -102,12 +104,20 @@ public class OrderV1Response {
 		this.paymentMethod = paymentMethod;
 	}
 
-	public List<FraudDishV1Response> getDishes() {
-		return dishes;
+	public List<FraudDishV1Response> getSelectedDishes() {
+		return selectedDishes;
 	}
 
-	public void setDishes(List<FraudDishV1Response> dishes) {
-		this.dishes = dishes;
+	public void setSelectedDishes(List<FraudDishV1Response> selectedDishes) {
+		this.selectedDishes = selectedDishes;
+	}
+
+	public List<String> getSelectedCategories() {
+		return selectedCategories;
+	}
+
+	public void setSelectedCategories(List<String> selectedCategories) {
+		this.selectedCategories = selectedCategories;
 	}
 
 	@Override
@@ -127,7 +137,8 @@ public class OrderV1Response {
 				.append(expiration, that.expiration)
 				.append(cvv, that.cvv)
 				.append(paymentMethod, that.paymentMethod)
-				.append(dishes, that.dishes)
+				.append(selectedDishes, that.selectedDishes)
+				.append(selectedCategories, that.selectedCategories)
 				.isEquals();
 	}
 
@@ -142,7 +153,8 @@ public class OrderV1Response {
 				.append(expiration)
 				.append(cvv)
 				.append(paymentMethod)
-				.append(dishes)
+				.append(selectedCategories)
+				.append(selectedDishes)
 				.toHashCode();
 	}
 
@@ -158,7 +170,8 @@ public class OrderV1Response {
 				", expiration='" + expiration + '\'' +
 				", cvv='" + cvv + '\'' +
 				", paymentMethod=" + paymentMethod +
-				", dishes=" + dishes +
+				", selectedDishes=" + selectedDishes +
+				", selectedCategories=" + selectedCategories +
 				'}';
 	}
 }

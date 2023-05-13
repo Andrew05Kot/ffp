@@ -1,6 +1,8 @@
 package com.kot.dish.api.backoffice.v1.dish;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import com.kot.dish.api.backoffice.v1.category.CategoryV1Response;
@@ -15,7 +17,13 @@ public class DishV1Response {
 
 	private BigDecimal price;
 
+	private String imageUrl;
+
 	private CategoryV1Response category;
+
+	private Instant createdDate;
+
+	private Instant lastModifiedDate;
 
 	public Long getId() {
 		return id;
@@ -57,6 +65,30 @@ public class DishV1Response {
 		this.price = price;
 	}
 
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public Instant getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Instant createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Instant getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Instant lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -71,6 +103,9 @@ public class DishV1Response {
 				.append(description, that.description)
 				.append(category, that.category)
 				.append(price, that.price)
+				.append(imageUrl, that.imageUrl)
+				.append(createdDate, that.createdDate)
+				.append(lastModifiedDate, that.lastModifiedDate)
 				.isEquals();
 	}
 
@@ -82,6 +117,9 @@ public class DishV1Response {
 				.append(description)
 				.append(category)
 				.append(price)
+				.append(imageUrl)
+				.append(createdDate)
+				.append(lastModifiedDate)
 				.toHashCode();
 	}
 
@@ -93,6 +131,9 @@ public class DishV1Response {
 				", description='" + description + '\'' +
 				", category=" + category +
 				", price=" + price +
+				", imageUrl=" + imageUrl +
+				", createdDate=" + createdDate +
+				", lastModifiedDate=" + lastModifiedDate +
 				'}';
 	}
 }
