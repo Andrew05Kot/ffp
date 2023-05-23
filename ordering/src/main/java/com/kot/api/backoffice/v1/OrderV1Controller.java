@@ -15,11 +15,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
-
-;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(OrderV1Controller.API_URL)
@@ -46,7 +53,7 @@ public class OrderV1Controller {
 
     @Operation(summary = "Get page of existing orders")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponsePage<OrderV1Response> getAll(
+    public PageV1Response<OrderV1Response> getAll(
             @RequestParam(name = "pageIndex") Optional<Integer> pageIndex,
             @RequestParam(name = "pageSize") Optional<Integer> pageSize,
             @RequestParam(name = "sortDirection") Optional<String> sortDirection,
@@ -56,7 +63,7 @@ public class OrderV1Controller {
         Pageable pageable = getResult(pageIndex, pageSize, sort);
 
         Page<Order> fetchedPage = orderService.findAll(pageable);
-        return new ResponsePage<>(
+        return new PageV1Response<>(
                 fetchedPage.stream().map(model -> orderV1ApiMapper.modelToDto(model, parseExpandField(expand))).toList(),
                 fetchedPage.getTotalElements(),
                 pageable.getPageNumber(),

@@ -4,50 +4,47 @@ import java.util.List;
 
 public class PageV1Response<T> {
 
-	private long totalElements;
-	private long index;
-	private long size;
-	private List<T> items;
+    private List<T> items;
+    private long count;
+    private Integer pageIndex;
+    private Integer pageSize;
 
-	public PageV1Response() {
-	}
+    public PageV1Response(List<T> items, long count, Integer pageIndex, Integer pageSize) {
+        this.items = items;
+        this.count = count;
+        this.pageIndex = pageIndex;
+        this.pageSize = pageSize;
+    }
 
-	public PageV1Response(List<T> items, long totalElements, long index, long size) {
-		this.totalElements = totalElements;
-		this.items = items;
-		this.index = index;
-		this.size = size;
-	}
+    public List<T> getItems() {
+        return items;
+    }
 
-	public void setTotalElements(long totalElements) {
-		this.totalElements = totalElements;
-	}
+    public void setItems(List<T> items) {
+        this.items = items;
+    }
 
-	public void setItems(List<T> items) {
-		this.items = items;
-	}
+    public long getCount() {
+        return count;
+    }
 
-	public long getTotalElements() {
-		return totalElements;
-	}
+    public void setCount(long count) {
+        this.count = count;
+    }
 
-	public List<T> getItems() {
-		return items;
-	}
+    public Integer getPageIndex() {
+        return pageIndex;
+    }
 
-	public long getIndex() {
-		return index;
-	}
+    public void setPageIndex(Integer pageIndex) {
+        this.pageIndex = pageIndex;
+    }
 
-	public void setIndex(long index) {
-		this.index = index;
-	}
+    public Integer getPageSize() {
+        return pageSize;
+    }
 
-	public long getSize() {
-		return size;
-	}
-
-	public void setSize(long size) {
-		this.size = size;
-	}
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
 }
