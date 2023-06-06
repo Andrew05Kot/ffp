@@ -1,19 +1,12 @@
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-    fetch-registry: true
-    register-with-eureka: true
-
 server:
-  port: 8081
+  port: 8084
 spring:
   application:
-    name: dish
+    name: establishment
   datasource:
     driverClassName: org.h2.Driver
-    url: jdbc:h2:mem:micro_dish;
-    username: micro_dish_user
+    url: jdbc:h2:mem:micro_establishment;
+    username: micro_establishment_user
     password:
   jpa:
     hibernate:
@@ -24,5 +17,9 @@ spring:
   h2:
     console:
       enabled: true
-  profiles:
-    active: testdata
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eurekaserver:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true

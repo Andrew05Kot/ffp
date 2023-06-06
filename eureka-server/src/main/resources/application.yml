@@ -7,3 +7,11 @@ eureka:
   client:
     fetch-registry: false
     register-with-eureka: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    status:
+      order: DOWN, OUT_OF_SERVICE, UNKNOWN, UP
