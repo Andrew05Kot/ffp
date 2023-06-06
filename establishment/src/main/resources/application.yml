@@ -1,3 +1,22 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: establishment
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:micro_establishment;
+    username: micro_establishment_user
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
 eureka:
   client:
     service-url:
