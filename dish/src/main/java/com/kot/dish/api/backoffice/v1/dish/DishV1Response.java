@@ -2,9 +2,9 @@ package com.kot.dish.api.backoffice.v1.dish;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import com.kot.dish.api.backoffice.v1.category.CategoryV1Response;
 
 public class DishV1Response {

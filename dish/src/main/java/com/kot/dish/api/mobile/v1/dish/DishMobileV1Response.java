@@ -3,6 +3,7 @@ package com.kot.dish.api.mobile.v1.dish;
 import java.math.BigDecimal;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import com.kot.dish.api.mobile.v1.category.CategoryMobileV1Response;
 
 public class DishMobileV1Response {

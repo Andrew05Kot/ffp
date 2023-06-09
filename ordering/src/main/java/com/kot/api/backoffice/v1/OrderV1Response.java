@@ -5,8 +5,9 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import com.kot.dal.domain.PaymentMethod;
-import com.kot.intercomm.client.FraudDishV1Response;
+
+import com.kot.client.FraudDishV1Response;
+import com.kot.domain.PaymentMethod;
 
 public class OrderV1Response {
 

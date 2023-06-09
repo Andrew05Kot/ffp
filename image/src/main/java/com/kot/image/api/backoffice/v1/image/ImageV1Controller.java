@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.kot.image.api.common.ApiInfo;
 import com.kot.image.exception.MaxFileSizeException;
 import com.kot.image.exception.WrongFileFormatException;

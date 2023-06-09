@@ -3,7 +3,6 @@ package com.kot.establishment.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -11,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+
 import com.kot.establishment.api.predicates.EstablishmentPredicatesBuilder;
 import com.kot.establishment.entity.EstablishmentEntity;
 import com.kot.establishment.test_data.EstablishmentBuilder;

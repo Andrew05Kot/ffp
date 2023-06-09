@@ -1,10 +1,10 @@
 package com.kot.dish.api.backoffice.v1.category;
 
-import com.kot.dish.bll.model.Category;
+import com.kot.dish.domain.CategoryEntity;
 
 public interface CategoryV1ApiMapper {
 
-	CategoryV1Response modelToDto(Category model);
+	CategoryV1Response domainToDto(CategoryEntity model);
 
-	Category dtoToModel(CategoryV1Request dto);
+	CategoryEntity dtoToDomain(CategoryV1Request dto);
 }

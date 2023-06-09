@@ -13,8 +13,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @OpenAPIDefinition(info = @Info(title = "Establishments API", version = "1.0"))
 public class EstablishmentApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(EstablishmentApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(EstablishmentApplication.class, args);
+	}
 
 }

@@ -2,8 +2,9 @@ package com.kot.dish.api.mobile.v1.dish;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.kot.dish.api.mobile.v1.category.CategoryMobileV1ApiMapper;
-import com.kot.dish.bll.model.Dish;
+import com.kot.dish.domain.DishEntity;
 
 @Component
 public class DishMobileV1ApiMapperImpl implements DishMobileV1ApiMapper {
@@ -12,13 +13,13 @@ public class DishMobileV1ApiMapperImpl implements DishMobileV1ApiMapper {
 	private CategoryMobileV1ApiMapper categoryMapper;
 
 	@Override
-	public DishMobileV1Response modelToDto(Dish model) {
+	public DishMobileV1Response domainToDto(DishEntity entity) {
 		DishMobileV1Response response = new DishMobileV1Response();
-		response.setId(model.getId());
-		response.setName(model.getName());
-		response.setDescription(model.getDescription());
-		response.setPrice(model.getPrice());
-		response.setCategory(categoryMapper.modelToDto(model.getCategory()));
+		response.setId(entity.getId());
+		response.setName(entity.getName());
+		response.setDescription(entity.getDescription());
+		response.setPrice(entity.getPrice());
+		response.setCategory(categoryMapper.domainToDto(entity.getCategory()));
 		return response;
 	}
 }

@@ -1,10 +1,10 @@
 package com.kot.dish.api.backoffice.v1.dish;
 
-import com.kot.dish.bll.model.Dish;
+import com.kot.dish.domain.DishEntity;
 
 public interface DishV1ApiMapper {
 
-	DishV1Response modelToDto(Dish model);
+	DishV1Response domainToDto(DishEntity entity);
 
-	Dish dtoToModel(DishV1Request dto);
+	DishEntity dtoToDomain(DishV1Request dto);
 }
