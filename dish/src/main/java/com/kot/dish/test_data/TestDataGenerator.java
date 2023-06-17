@@ -1,19 +1,26 @@
 package com.kot.dish.test_data;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.kot.dish.domain.CategoryEntity;
 import com.kot.dish.domain.DishEntity;
+import com.kot.dish.domain.IngredientEntity;
+import com.kot.dish.domain.RecipeEntity;
 import com.kot.dish.repository.CategoryRepository;
 import com.kot.dish.repository.DishRepository;
+import com.kot.dish.repository.IngredientRepository;
+import com.kot.dish.repository.RecipeRepository;
 
 @Component
-//@Profile("testdata")
+@Profile("testdata")
 public class TestDataGenerator {
 
 	@Autowired
@@ -22,17 +29,31 @@ public class TestDataGenerator {
 	@Autowired
 	private DishRepository dishRepository;
 
+	@Autowired
+	private IngredientRepository ingredientRepository;
+
+	@Autowired
+	private RecipeRepository recipeRepository;
+
 	@PostConstruct
 	public void buildAndSaveDishes() {
 		Map<String, CategoryEntity> categories = buildAndSaveCategories();
 
+		buildAndSaveIngredients();
+		buildAndSaveDishes(categories);
+	}
+
+	private void buildAndSaveDishes(Map<String, CategoryEntity> categories) {
+		Map<String, DishEntity> dishes = new HashMap<>();
 		DishEntity hamburger = new DishEntity();
 		hamburger.setName("Hamburger");
 		hamburger.setCategory(categories.get("Hamburger"));
 		hamburger.setPrice(BigDecimal.valueOf(2));
 		hamburger.setDescription("A hamburger is a type of sandwich consisting of a chopped patty served inside a sliced bun. In addition to meat, a hamburger can have a large number of different seasonings, for example: ketchup and mayonnaise, lettuce, pickled cucumber, cheese or fried onion, tomato.");
 		hamburger.setImageUrl("https://live.staticflickr.com/5488/9075153360_cb9b2deded_z.jpg");
+		hamburger.setRecipe(getHamburgerRecipe(hamburger));
 		dishRepository.save(hamburger);
+
 
 		DishEntity cheeseburger = new DishEntity();
 		cheeseburger.setName("Cheeseburger");
@@ -40,6 +61,7 @@ public class TestDataGenerator {
 		cheeseburger.setPrice(BigDecimal.valueOf(2.10));
 		cheeseburger.setDescription("A cheeseburger is a hamburger topped with cheese. Traditionally, the slice of cheese is placed on top of the meat patty. The cheese is usually added to the cooking hamburger patty shortly before serving, which allows the cheese to melt. Cheeseburgers can include variations in structure, ingredients and composition. As with other hamburgers, a cheeseburger may include toppings such as lettuce, tomato, onion, pickles, bacon, mayonnaise, ketchup, and mustard.");
 		cheeseburger.setImageUrl("https://live.staticflickr.com/7334/27568788370_e101cfd3f6.jpg");
+		cheeseburger.setRecipe(getCheeseburgerRecipe(cheeseburger));
 		dishRepository.save(cheeseburger);
 
 		DishEntity doubleBurger = new DishEntity();
@@ -192,6 +214,123 @@ public class TestDataGenerator {
 		categories.put(breakfast.getName(), categoryRepository.save(breakfast));
 
 		return categories;
+	}
+
+	private void buildAndSaveIngredients() {
+		IngredientEntity groundBeef = new IngredientEntity();
+		groundBeef.setName("Ground Lean Beef");
+		groundBeef.setDescription("Lean ground beef with 7% fat content.");
+		groundBeef.setCalories(250.0);
+		groundBeef.setProteinPer100Gram(26.0);
+		groundBeef.setFatsPer100Gram(17.0);
+		groundBeef.setCarbohydratesPer100Gram(0.0);
+		ingredientRepository.save(groundBeef);
+
+		IngredientEntity egg = new IngredientEntity();
+		egg.setName("Egg");
+		egg.setDescription("Large egg.");
+		egg.setCalories(70.0);
+		egg.setProteinPer100Gram(6.0);
+		egg.setFatsPer100Gram(5.0);
+		egg.setCarbohydratesPer100Gram(0.6);
+		ingredientRepository.save(egg);
+
+		IngredientEntity mincedOnion = new IngredientEntity();
+		mincedOnion.setName("Minced Onion");
+		mincedOnion.setDescription("Finely minced onion.");
+		mincedOnion.setCalories(40.0);
+		mincedOnion.setProteinPer100Gram(1.0);
+		mincedOnion.setFatsPer100Gram(0.1);
+		mincedOnion.setCarbohydratesPer100Gram(9.0);
+		ingredientRepository.save(mincedOnion);
+
+		IngredientEntity breadCrumbs = new IngredientEntity();
+		breadCrumbs.setName("Fine Dried Bread Crumbs");
+		breadCrumbs.setDescription("Fine dried bread crumbs.");
+		breadCrumbs.setCalories(110.0);
+		breadCrumbs.setProteinPer100Gram(3.5);
+		breadCrumbs.setFatsPer100Gram(0.8);
+		breadCrumbs.setCarbohydratesPer100Gram(23.0);
+		ingredientRepository.save(breadCrumbs);
+
+		IngredientEntity worcestershireSauce = new IngredientEntity();
+		worcestershireSauce.setName("Worcestershire Sauce");
+		worcestershireSauce.setDescription("Worcestershire sauce.");
+		worcestershireSauce.setCalories(15.0);
+		worcestershireSauce.setProteinPer100Gram(0.0);
+		worcestershireSauce.setFatsPer100Gram(0.0);
+		worcestershireSauce.setCarbohydratesPer100Gram(3.0);
+		ingredientRepository.save(worcestershireSauce);
+
+		IngredientEntity garlic = new IngredientEntity();
+		garlic.setName("Garlic");
+		garlic.setDescription("Minced garlic cloves.");
+		garlic.setCalories(4.0);
+		garlic.setProteinPer100Gram(0.2);
+		garlic.setFatsPer100Gram(0.0);
+		garlic.setCarbohydratesPer100Gram(1.0);
+		ingredientRepository.save(garlic);
+
+		IngredientEntity cheese = new IngredientEntity();
+		cheese.setName("Cheese");
+		cheese.setDescription("Sliced cheese.");
+		cheese.setCalories(100.0);
+		cheese.setProteinPer100Gram(6.0);
+		cheese.setFatsPer100Gram(8.0);
+		cheese.setCarbohydratesPer100Gram(1.0);
+		ingredientRepository.save(cheese);
+	}
+
+	private RecipeEntity getHamburgerRecipe(DishEntity dish) {
+		RecipeEntity hamburgerRecipe = new RecipeEntity();
+		hamburgerRecipe.setName("Hamburger Recipe");
+		hamburgerRecipe.setDescription("A recipe for making a classic hamburger.");
+		List<IngredientEntity> hamburgerIngredients = new ArrayList<>();
+
+		IngredientEntity ingredientEntity = ingredientRepository.findByName("Ground Lean Beef");
+//		ingredientEntity.addRecipe(hamburgerRecipe);
+		hamburgerIngredients.add(ingredientEntity);
+
+		ingredientEntity = ingredientRepository.findByName("Egg");
+//		ingredientEntity.addRecipe(hamburgerRecipe);
+		hamburgerIngredients.add(ingredientEntity);
+
+		ingredientEntity = ingredientRepository.findByName("Minced Onion");
+//		ingredientEntity.addRecipe(hamburgerRecipe);
+		hamburgerIngredients.add(ingredientEntity);
+
+		ingredientEntity = ingredientRepository.findByName("Fine Dried Bread Crumbs");
+//		ingredientEntity.addRecipe(hamburgerRecipe);
+		hamburgerIngredients.add(ingredientEntity);
+
+		ingredientEntity = ingredientRepository.findByName("Worcestershire Sauce");
+//		ingredientEntity.addRecipe(hamburgerRecipe);
+		hamburgerIngredients.add(ingredientEntity);
+
+		ingredientEntity = ingredientRepository.findByName("Garlic");
+//		ingredientEntity.addRecipe(hamburgerRecipe);
+		hamburgerIngredients.add(ingredientEntity);
+
+		hamburgerRecipe.setIngredients(hamburgerIngredients);
+		hamburgerRecipe.setDish(dish);
+		return hamburgerRecipe;
+	}
+
+	private RecipeEntity getCheeseburgerRecipe(DishEntity dish) {
+		RecipeEntity cheeseburgerRecipe = new RecipeEntity();
+		cheeseburgerRecipe.setName("Cheeseburger Recipe");
+		cheeseburgerRecipe.setDescription("A recipe for making a delicious cheeseburger.");
+		List<IngredientEntity> cheeseburgerIngredients = new ArrayList<>();
+		cheeseburgerIngredients.add(ingredientRepository.findByName("Ground Lean Beef"));
+		cheeseburgerIngredients.add(ingredientRepository.findByName("Egg"));
+		cheeseburgerIngredients.add(ingredientRepository.findByName("Minced Onion"));
+		cheeseburgerIngredients.add(ingredientRepository.findByName("Fine Dried Bread Crumbs"));
+		cheeseburgerIngredients.add(ingredientRepository.findByName("Worcestershire Sauce"));
+		cheeseburgerIngredients.add(ingredientRepository.findByName("Garlic"));
+		cheeseburgerIngredients.add(ingredientRepository.findByName("Cheese"));
+		cheeseburgerRecipe.setIngredients(cheeseburgerIngredients);
+		cheeseburgerRecipe.setDish(dish);
+		return cheeseburgerRecipe;
 	}
 
 }

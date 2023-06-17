@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kot.dish.api.ApiInfo;
+import com.kot.dish.api.backoffice.v1.infrastructure.ApiV1Mapper;
 import com.kot.dish.domain.CategoryEntity;
 import com.kot.dish.service.CategoryService;
 
@@ -27,7 +28,7 @@ public class CategoryV1Controller {
 	private CategoryService categoryService;
 
 	@Autowired
-	private CategoryV1ApiMapper categoryApiMapper;
+	private ApiV1Mapper<CategoryEntity, CategoryV1Response, CategoryV1Request> categoryApiMapper;
 
 	@GetMapping("/status")
 	public ResponseEntity<?> getStatus() {

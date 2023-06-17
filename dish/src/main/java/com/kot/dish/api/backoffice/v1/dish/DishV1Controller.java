@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kot.dish.api.ApiInfo;
+import com.kot.dish.api.backoffice.v1.infrastructure.ApiV1Mapper;
+import com.kot.dish.api.backoffice.v1.infrastructure.PageV1Response;
 import com.kot.dish.domain.DishEntity;
 import com.kot.dish.service.DishService;
 
@@ -42,7 +44,7 @@ public class DishV1Controller {
 	private DishService dishService;
 
 	@Autowired
-	private DishV1ApiMapper dishAPIMapper;
+	private ApiV1Mapper<DishEntity, DishV1Response, DishV1Request> dishAPIMapper;
 
 	@GetMapping("/status")
 	public ResponseEntity<?> getStatus() {
@@ -63,7 +65,7 @@ public class DishV1Controller {
 	}
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponsePage<DishV1Response> getAll(
+	public PageV1Response<DishV1Response> getAll(
 			@RequestParam(name = "pageIndex") Optional<Integer> pageIndex,
 			@RequestParam(name = "pageSize") Optional<Integer> pageSize,
 			@RequestParam(name = "sortDirection") Optional<String> sortDirection,
@@ -74,7 +76,7 @@ public class DishV1Controller {
 
 		Page<DishEntity> fetchedPage = search.isPresent() ? dishService.findAll(search.get(), pageable) : dishService.findAll(pageable);
 
-		return new ResponsePage<>(fetchedPage.stream().map(dishAPIMapper::domainToDto).toList(),
+		return new PageV1Response<>(fetchedPage.stream().map(dishAPIMapper::domainToDto).toList(),
 				fetchedPage.getTotalElements(),
 				pageable.getPageNumber(),
 				pageable.getPageSize());

@@ -22,6 +22,8 @@ The business idea of this project is to sell burgers in Telegram client, Mobile 
 2. Run `mvn compile` command
 3. Run Api-Gateway, Eureka and another microservices which need for you
 
+## URLs (local environment)
+1. **Swagger**: http://localhost:8765/webjars/swagger-ui/index.html
 
 ## Do you have ideas?
 If you have ideas for improving the project, or you find a bug or any mistake, please become a contributor Or write to me: [kotygaandrey05@gmail.com](kotygaandrey05@gmail.com)

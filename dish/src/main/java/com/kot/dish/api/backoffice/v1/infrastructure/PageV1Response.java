@@ -1,15 +1,15 @@
-package com.kot.dish.api.backoffice.v1.dish;
+package com.kot.dish.api.backoffice.v1.infrastructure;
 
 import java.util.List;
 
-public class ResponsePage<T> {
+public class PageV1Response<T> {
 
     private List<T> items;
     private long count;
     private Integer pageIndex;
     private Integer pageSize;
 
-    public ResponsePage(List<T> items, long count, Integer pageIndex, Integer pageSize) {
+    public PageV1Response(List<T> items, long count, Integer pageIndex, Integer pageSize) {
         this.items = items;
         this.count = count;
         this.pageIndex = pageIndex;

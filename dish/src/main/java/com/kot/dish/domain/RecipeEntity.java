@@ -1,52 +1,48 @@
 package com.kot.dish.domain;
 
-import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
-@Table(name = "dish")
-public class DishEntity {
+@Table(name = "recipe")
+public class RecipeEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "name", nullable = false)
+	@MapsId
+	@OneToOne
+	@JoinColumn(name = "dish_id")
+	private DishEntity dish;
+
 	@NotBlank
+	@Column(name = "name", nullable = false)
 	private String name;
 
 	@Column(name = "description", length = 5000)
 	private String description;
 
-	@Column(name = "price", nullable = false)
-	@NotNull
-	private BigDecimal price;
-
-	@Column(name = "image_url")
-	private String imageUrl;
-
-	@ManyToOne
-	@JoinColumn(name = "category_id", nullable = false)
-	private CategoryEntity category;
-
-	@OneToOne(mappedBy = "dish", cascade = CascadeType.ALL)
-	private RecipeEntity recipe;
+	@ManyToMany
+	@JoinTable(name = "recipe_ingredient",
+			joinColumns = @JoinColumn(name = "recipe_id"),
+			inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+	private List<IngredientEntity> ingredients = new ArrayList<>();
 
 	@CreatedDate
 	@Column(name = "created_date", updatable = false)
@@ -62,6 +58,14 @@ public class DishEntity {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public DishEntity getDish() {
+		return dish;
+	}
+
+	public void setDish(DishEntity dish) {
+		this.dish = dish;
 	}
 
 	public String getName() {
@@ -80,36 +84,12 @@ public class DishEntity {
 		this.description = description;
 	}
 
-	public CategoryEntity getCategory() {
-		return category;
+	public List<IngredientEntity> getIngredients() {
+		return ingredients;
 	}
 
-	public void setCategory(CategoryEntity category) {
-		this.category = category;
-	}
-
-	public BigDecimal getPrice() {
-		return price;
-	}
-
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-
-	public RecipeEntity getRecipe() {
-		return recipe;
-	}
-
-	public void setRecipe(RecipeEntity recipe) {
-		this.recipe = recipe;
+	public void setIngredients(List<IngredientEntity> ingredients) {
+		this.ingredients = ingredients;
 	}
 
 	public Instant getCreatedDate() {
@@ -134,16 +114,14 @@ public class DishEntity {
 
 		if (o == null || getClass() != o.getClass()) return false;
 
-		DishEntity that = (DishEntity) o;
+		RecipeEntity that = (RecipeEntity) o;
 
 		return new EqualsBuilder()
 				.append(id, that.id)
+//				.append(dish, that.dish)
 				.append(name, that.name)
 				.append(description, that.description)
-				.append(category, that.category)
-				.append(price, that.price)
-				.append(imageUrl, that.imageUrl)
-				.append(recipe, that.recipe)
+				.append(ingredients, that.ingredients)
 				.append(createdDate, that.createdDate)
 				.append(lastModifiedDate, that.lastModifiedDate)
 				.isEquals();
@@ -153,12 +131,10 @@ public class DishEntity {
 	public int hashCode() {
 		return new HashCodeBuilder()
 				.append(id)
+//				.append(dish)
 				.append(name)
 				.append(description)
-				.append(category)
-				.append(price)
-				.append(imageUrl)
-				.append(recipe)
+				.append(ingredients)
 				.append(createdDate)
 				.append(lastModifiedDate)
 				.toHashCode();
@@ -166,14 +142,12 @@ public class DishEntity {
 
 	@Override
 	public String toString() {
-		return "DishEntity{" +
+		return "RecipeEntity{" +
 				"id=" + id +
+//				", dish=" + dish +
 				", name='" + name + '\'' +
 				", description='" + description + '\'' +
-				", category=" + category +
-				", price=" + price +
-				", imageUrl=" + imageUrl +
-				", recipe=" + recipe +
+				", ingredients=" + ingredients +
 				", createdDate=" + createdDate +
 				", lastModifiedDate=" + lastModifiedDate +
 				'}';
