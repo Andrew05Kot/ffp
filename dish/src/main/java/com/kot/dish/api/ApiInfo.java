@@ -17,5 +17,7 @@ public class ApiInfo {
 
 	public static final String CATEGORY_ENDPOINT = "/categories";
 
+	public static final String INGREDIENT_ENDPOINT = "/ingredients";
+
 
 }

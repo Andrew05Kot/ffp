@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -35,149 +36,164 @@ public class TestDataGenerator {
 	@Autowired
 	private RecipeRepository recipeRepository;
 
+	private Map<String, CategoryEntity> categories;
+
 	@PostConstruct
-	public void buildAndSaveDishes() {
-		Map<String, CategoryEntity> categories = buildAndSaveCategories();
+	public void generateTestData() {
+		this.categories = buildAndSaveCategories();
 
 		buildAndSaveIngredients();
-		buildAndSaveDishes(categories);
+		buildAndSaveDishes();
 	}
 
-	private void buildAndSaveDishes(Map<String, CategoryEntity> categories) {
-		Map<String, DishEntity> dishes = new HashMap<>();
+	private void buildAndSaveDishes() {
+		createAndSave("Hamburger",
+				"Hamburger",
+				BigDecimal.valueOf(2),
+				"A hamburger is a type of sandwich consisting of a chopped patty served inside a sliced bun. In addition to meat, a hamburger can have a large number of different seasonings, for example: ketchup and mayonnaise, lettuce, pickled cucumber, cheese or fried onion, tomato.",
+				"https://live.staticflickr.com/5488/9075153360_cb9b2deded_z.jpg",
+				this::getHamburgerRecipe
+		);
+
+		createAndSave("Cheeseburger",
+				"Hamburger",
+				BigDecimal.valueOf(2.10),
+				"A cheeseburger is a hamburger topped with cheese. Traditionally, the slice of cheese is placed on top of the meat patty. The cheese is usually added to the cooking hamburger patty shortly before serving, which allows the cheese to melt. Cheeseburgers can include variations in structure, ingredients and composition. As with other hamburgers, a cheeseburger may include toppings such as lettuce, tomato, onion, pickles, bacon, mayonnaise, ketchup, and mustard.",
+				"https://live.staticflickr.com/7334/27568788370_e101cfd3f6.jpg",
+				this::getCheeseburgerRecipe
+		);
+
+		createAndSave("Double burger",
+				"Hamburger",
+				BigDecimal.valueOf(3.50),
+				"Although the legendary Double Burger really needs no introduction, please allow us... Tucked in between three soft buns are two all-beef patties, cheddar cheese, ketchup, onion, pickles and iceberg lettuce. Hesburger's own paprika and cucumber mayonnaise add the crowning touch. Oh baby!",
+				"https://live.staticflickr.com/1777/42976245025_62ce57d552_k.jpg",
+				this::getDoubleBurgerRecipe
+		);
+
+		createAndSave("Mushroom burger",
+				"Hamburger",
+				BigDecimal.valueOf(3.00),
+				"For the healthy and calorie conscious folks we've got this tasty burger. A lentil, mushroom and sun dried tomato pattie packed between a whole wheat bun.",
+				null,
+				this::getMushroomBurgerRecipe
+		);
+
+		createAndSave("Bacon Cheeseburger",
+				"Hamburger",
+				BigDecimal.valueOf(3.50),
+				"This burger takes things to the next level with crispy bacon and melted cheese on top of a juicy patty.",
+				null,
+				this::getBaconCheeseburgerRecipe
+		);
+
+		createAndSave("Cheese Pizza",
+				"Pizza",
+				BigDecimal.valueOf(3.00),
+				"It should be no shocker that a classic is the statistical favorite. Cheese pizza is one of the most popular choices. It will always be a simple, unadorned masterpiece on its own.",
+				"https://live.staticflickr.com/7165/6707822395_e49eb0fd50_b.jpg",
+				this::getCheesePizzaRecipe
+		);
+
+		createAndSave("Veggie Pizza",
+				"Pizza",
+				BigDecimal.valueOf(3.00),
+				"When you want to jazz up your cheese pizza with color and texture, veggies are the perfect topping. And you’re only limited by your imagination. Everything from peppers and mushrooms, to eggplant and onions make for an exciting and tasty veggie pizza.",
+				"https://live.staticflickr.com/3002/2746214882_377a22ea38_b.jpg",
+				this::getVeggiePizzaRecipe
+		);
+
+		createAndSave("Pepperoni Pizza",
+				"Pizza",
+				BigDecimal.valueOf(2.80),
+				"There’s a reason this is one of the most popular types of pizza. Who doesn’t love biting into a crispy, salty round of pepperoni?",
+				null,
+				this::getPepperoniPizzaRecipe
+		);
+
+
+		createAndSave("Margherita Pizza",
+				"Pizza",
+				BigDecimal.valueOf(3.05),
+				"Deceptively simple, the Margherita pizza is made with basil, fresh mozzarella, and tomatoes. There’s a reason it’s an Italian staple and one of the most popular types of pizza in the country.",
+				"https://live.staticflickr.com/8699/17144434218_8324b5d89c_b.jpg",
+				this::getMargheritaPizzaRecipe
+		);
+
+		createAndSave("Meat Lovers Pizza",
+				"Pizza",
+				BigDecimal.valueOf(4.00),
+				"This pizza is loaded with pepperoni, sausage, bacon, and ham for a hearty and satisfying meal.",
+				"https://live.staticflickr.com/4025/4547182511_42e46a9818_b.jpg",
+				this::getMeatLoversPizzaRecipe
+		);
+
+		createAndSave("Latte",
+				"Coffee",
+				BigDecimal.valueOf(1.00),
+				"This classic drink is typically 1/3 espresso and 2/3 steamed milk, topped with a thin layer of foam, but coffee shops have come up with seemingly endless customizations. You can experiment with flavored syrups like vanilla and pumpkin spice or create a nondairy version by using oat milk. Skilled baristas often swirl the foam into latte art!",
+				"https://live.staticflickr.com/5553/14122661794_2374c45868_b.jpg",
+				this::getLatteRecipe
+		);
+
+		createAndSave("Cappuccino",
+				"Coffee",
+				BigDecimal.valueOf(0.75),
+				"This espresso-based drink is similar to a latte, but the frothy top layer is thicker. The standard ratio is equal parts espresso, steamed milk, and foam. It's often served in a 6-ounce cup (smaller than a latte cup) and can be topped with a sprinkling of cinnamon.",
+				"https://live.staticflickr.com/65535/51145487162_a019ceb695_b.jpg",
+				this::getCappuccinoRecipe
+		);
+
+		createAndSave("Americano",
+				"Coffee",
+				BigDecimal.valueOf(0.75),
+				"Order this drink and you'll get a shot of espresso diluted with hot water.",
+				null,
+				this::getAmericanoRecipe
+		);
+
+		createAndSave("Flat White",
+				"Coffee",
+				BigDecimal.valueOf(1.10),
+				"Like the latte, this drink consists of espresso and steamed milk, but the ratio of espresso to milk is higher. Baristas also fold the milk as it steams, which creates a more velvety texture. The flat white has roots in Australia and New Zealand.",
+				null,
+				this::getFlatWhiteRecipe
+		);
+
+		createAndSave("Iced Coffee",
+				"Coffee",
+				BigDecimal.valueOf(1.50),
+				"A refreshing way to enjoy your coffee on a hot day. Brewed coffee poured over ice and served with your choice of cream and sugar.",
+				"https://live.staticflickr.com/8785/17833846288_4c1df9d221_b.jpg",
+				this::getIcedCoffeeRecipe
+		);
+
+		createAndSave("Breakfast Burrito",
+				"Breakfast",
+				BigDecimal.valueOf(4.00),
+				"Start your day off right with this breakfast burrito filled with scrambled eggs, cheese, potatoes, and your choice of bacon or sausage.",
+				"https://live.staticflickr.com/8487/8288501304_45ccfb5443_b.jpg",
+				this::getBreakfastBurritoRecipe
+		);
+
+		createAndSave("Pancakes",
+				"Breakfast",
+				BigDecimal.valueOf(3.00),
+				"A classic breakfast dish, pancakes are made with a fluffy batter and served with butter and syrup. Add toppings like berries, whipped cream, or chocolate chips for a sweet twist.",
+				"https://live.staticflickr.com/7662/16958480458_f678f57241_c.jpg",
+				this::getPancakesRecipe
+		);
+	}
+
+	private void createAndSave(String name, String categoryName, BigDecimal price, String description, String imageUrl, Function<DishEntity, RecipeEntity> recipeProvider) {
 		DishEntity hamburger = new DishEntity();
-		hamburger.setName("Hamburger");
-		hamburger.setCategory(categories.get("Hamburger"));
-		hamburger.setPrice(BigDecimal.valueOf(2));
-		hamburger.setDescription("A hamburger is a type of sandwich consisting of a chopped patty served inside a sliced bun. In addition to meat, a hamburger can have a large number of different seasonings, for example: ketchup and mayonnaise, lettuce, pickled cucumber, cheese or fried onion, tomato.");
-		hamburger.setImageUrl("https://live.staticflickr.com/5488/9075153360_cb9b2deded_z.jpg");
-		hamburger.setRecipe(getHamburgerRecipe(hamburger));
+		hamburger.setName(name);
+		hamburger.setCategory(categories.get(categoryName));
+		hamburger.setPrice(price);
+		hamburger.setDescription(description);
+		hamburger.setImageUrl(imageUrl);
+		hamburger.setRecipe(recipeProvider.apply(hamburger));
 		dishRepository.save(hamburger);
-
-
-		DishEntity cheeseburger = new DishEntity();
-		cheeseburger.setName("Cheeseburger");
-		cheeseburger.setCategory(categories.get("Hamburger"));
-		cheeseburger.setPrice(BigDecimal.valueOf(2.10));
-		cheeseburger.setDescription("A cheeseburger is a hamburger topped with cheese. Traditionally, the slice of cheese is placed on top of the meat patty. The cheese is usually added to the cooking hamburger patty shortly before serving, which allows the cheese to melt. Cheeseburgers can include variations in structure, ingredients and composition. As with other hamburgers, a cheeseburger may include toppings such as lettuce, tomato, onion, pickles, bacon, mayonnaise, ketchup, and mustard.");
-		cheeseburger.setImageUrl("https://live.staticflickr.com/7334/27568788370_e101cfd3f6.jpg");
-		cheeseburger.setRecipe(getCheeseburgerRecipe(cheeseburger));
-		dishRepository.save(cheeseburger);
-
-		DishEntity doubleBurger = new DishEntity();
-		doubleBurger.setName("Double burger");
-		doubleBurger.setCategory(categories.get("Hamburger"));
-		doubleBurger.setPrice(BigDecimal.valueOf(3.50));
-		doubleBurger.setDescription("Although the legendary Double Burger really needs no introduction, please allow us... Tucked in between three soft buns are two all-beef patties, cheddar cheese, ketchup, onion, pickles and iceberg lettuce. Hesburger's own paprika and cucumber mayonnaise add the crowning touch. Oh baby!");
-		doubleBurger.setImageUrl("https://live.staticflickr.com/1777/42976245025_62ce57d552_k.jpg");
-		dishRepository.save(doubleBurger);
-
-		DishEntity mushroomBurger = new DishEntity();
-		mushroomBurger.setName("Mushroom Burger");
-		mushroomBurger.setCategory(categories.get("Hamburger"));
-		mushroomBurger.setPrice(BigDecimal.valueOf(3.00));
-		mushroomBurger.setDescription("For the healthy and calorie conscious folks we've got this tasty burger. A lentil, mushroom and sun dried tomato pattie packed between a whole wheat bun.");
-		dishRepository.save(mushroomBurger);
-
-		DishEntity baconCheeseburger = new DishEntity();
-		baconCheeseburger.setName("Bacon Cheeseburger");
-		baconCheeseburger.setCategory(categories.get("Hamburger"));
-		baconCheeseburger.setPrice(BigDecimal.valueOf(3.50));
-		baconCheeseburger.setDescription("This burger takes things to the next level with crispy bacon and melted cheese on top of a juicy patty.");
-		dishRepository.save(baconCheeseburger);
-
-		DishEntity cheesePizza = new DishEntity();
-		cheesePizza.setName("Cheese Pizza");
-		cheesePizza.setCategory(categories.get("Pizza"));
-		cheesePizza.setPrice(BigDecimal.valueOf(2.50));
-		cheesePizza.setDescription("It should be no shocker that a classic is the statistical favorite. Cheese pizza is one of the most popular choices. It will always be a simple, unadorned masterpiece on its own.");
-		cheesePizza.setImageUrl("https://live.staticflickr.com/7165/6707822395_e49eb0fd50_b.jpg");
-		dishRepository.save(cheesePizza);
-
-		DishEntity veggiePizza = new DishEntity();
-		veggiePizza.setName("Veggie Pizza");
-		veggiePizza.setCategory(categories.get("Pizza"));
-		veggiePizza.setPrice(BigDecimal.valueOf(2.50));
-		veggiePizza.setDescription("When you want to jazz up your cheese pizza with color and texture, veggies are the perfect topping. And you’re only limited by your imagination. Everything from peppers and mushrooms, to eggplant and onions make for an exciting and tasty veggie pizza.");
-		veggiePizza.setImageUrl("https://live.staticflickr.com/3002/2746214882_377a22ea38_b.jpg");
-		dishRepository.save(veggiePizza);
-
-		DishEntity pepperoniPizza = new DishEntity();
-		pepperoniPizza.setName("Pepperoni Pizza");
-		pepperoniPizza.setCategory(categories.get("Pizza"));
-		pepperoniPizza.setPrice(BigDecimal.valueOf(2.70));
-		pepperoniPizza.setDescription("There’s a reason this is one of the most popular types of pizza. Who doesn’t love biting into a crispy, salty round of pepperoni?");
-		dishRepository.save(pepperoniPizza);
-
-		DishEntity margheritaPizza = new DishEntity();
-		margheritaPizza.setName("Margherita Pizza");
-		margheritaPizza.setCategory(categories.get("Pizza"));
-		margheritaPizza.setPrice(BigDecimal.valueOf(3.0));
-		margheritaPizza.setDescription("Deceptively simple, the Margherita pizza is made with basil, fresh mozzarella, and tomatoes. There’s a reason it’s an Italian staple and one of the most popular types of pizza in the country.");
-		margheritaPizza.setImageUrl("https://live.staticflickr.com/8699/17144434218_8324b5d89c_b.jpg");
-		dishRepository.save(margheritaPizza);
-
-		DishEntity meatLoversPizza = new DishEntity();
-		meatLoversPizza.setName("Meat Lovers Pizza");
-		meatLoversPizza.setCategory(categories.get("Pizza"));
-		meatLoversPizza.setPrice(BigDecimal.valueOf(3.50));
-		meatLoversPizza.setDescription("This pizza is loaded with pepperoni, sausage, bacon, and ham for a hearty and satisfying meal.");
-		meatLoversPizza.setImageUrl("https://live.staticflickr.com/4025/4547182511_42e46a9818_b.jpg");
-		dishRepository.save(meatLoversPizza);
-
-		DishEntity latte = new DishEntity();
-		latte.setName("Latte");
-		latte.setCategory(categories.get("Coffee"));
-		latte.setPrice(BigDecimal.valueOf(1.0));
-		latte.setDescription("This classic drink is typically 1/3 espresso and 2/3 steamed milk, topped with a thin layer of foam, but coffee shops have come up with seemingly endless customizations. You can experiment with flavored syrups like vanilla and pumpkin spice or create a nondairy version by using oat milk. Skilled baristas often swirl the foam into latte art!");
-		latte.setImageUrl("https://live.staticflickr.com/5553/14122661794_2374c45868_b.jpg");
-		dishRepository.save(latte);
-
-		DishEntity cappuccino = new DishEntity();
-		cappuccino.setName("Cappuccino");
-		cappuccino.setCategory(categories.get("Coffee"));
-		cappuccino.setPrice(BigDecimal.valueOf(0.75));
-		cappuccino.setDescription("This espresso-based drink is similar to a latte, but the frothy top layer is thicker. The standard ratio is equal parts espresso, steamed milk, and foam. It's often served in a 6-ounce cup (smaller than a latte cup) and can be topped with a sprinkling of cinnamon.");
-		cappuccino.setImageUrl("https://live.staticflickr.com/65535/51145487162_a019ceb695_b.jpg");
-		dishRepository.save(cappuccino);
-
-		DishEntity americano = new DishEntity();
-		americano.setName("Americano");
-		americano.setCategory(categories.get("Coffee"));
-		americano.setPrice(BigDecimal.valueOf(0.75));
-		americano.setDescription("Order this drink and you'll get a shot of espresso diluted with hot water.");
-		dishRepository.save(americano);
-
-		DishEntity flatWhite = new DishEntity();
-		flatWhite.setName("Flat White");
-		flatWhite.setCategory(categories.get("Coffee"));
-		flatWhite.setPrice(BigDecimal.valueOf(1.10));
-		flatWhite.setDescription("Like the latte, this drink consists of espresso and steamed milk, but the ratio of espresso to milk is higher. Baristas also fold the milk as it steams, which creates a more velvety texture. The flat white has roots in Australia and New Zealand.");
-		dishRepository.save(flatWhite);
-
-		DishEntity icedCoffee = new DishEntity();
-		icedCoffee.setName("Iced Coffee");
-		icedCoffee.setCategory(categories.get("Coffee"));
-		icedCoffee.setPrice(BigDecimal.valueOf(1.50));
-		icedCoffee.setDescription("A refreshing way to enjoy your coffee on a hot day. Brewed coffee poured over ice and served with your choice of cream and sugar.");
-		icedCoffee.setImageUrl("https://live.staticflickr.com/8785/17833846288_4c1df9d221_b.jpg");
-		dishRepository.save(icedCoffee);
-
-		DishEntity breakfastBurrito = new DishEntity();
-		breakfastBurrito.setName("Breakfast Burrito");
-		breakfastBurrito.setCategory(categories.get("Breakfast"));
-		breakfastBurrito.setPrice(BigDecimal.valueOf(4.00));
-		breakfastBurrito.setDescription("Start your day off right with this breakfast burrito filled with scrambled eggs, cheese, potatoes, and your choice of bacon or sausage.");
-		breakfastBurrito.setImageUrl("https://live.staticflickr.com/8487/8288501304_45ccfb5443_b.jpg");
-		dishRepository.save(breakfastBurrito);
-
-		DishEntity pancakes = new DishEntity();
-		pancakes.setName("Pancakes");
-		pancakes.setCategory(categories.get("Breakfast"));
-		pancakes.setPrice(BigDecimal.valueOf(3.00));
-		pancakes.setDescription("A classic breakfast dish, pancakes are made with a fluffy batter and served with butter and syrup. Add toppings like berries, whipped cream, or chocolate chips for a sweet twist.");
-		pancakes.setImageUrl("https://live.staticflickr.com/7662/16958480458_f678f57241_c.jpg");
-		dishRepository.save(pancakes);
 	}
 
 	public Map<String, CategoryEntity> buildAndSaveCategories() {
@@ -217,68 +233,55 @@ public class TestDataGenerator {
 	}
 
 	private void buildAndSaveIngredients() {
-		IngredientEntity groundBeef = new IngredientEntity();
-		groundBeef.setName("Ground Lean Beef");
-		groundBeef.setDescription("Lean ground beef with 7% fat content.");
-		groundBeef.setCalories(250.0);
-		groundBeef.setProteinPer100Gram(26.0);
-		groundBeef.setFatsPer100Gram(17.0);
-		groundBeef.setCarbohydratesPer100Gram(0.0);
-		ingredientRepository.save(groundBeef);
+		saveIngredient("Ground Lean Beef", "Lean ground beef with 7% fat content.", 250.0, 26.0, 17.0, 0.0);
+		saveIngredient("Egg", "Large egg.", 70.0, 6.0, 5.0, 0.6);
+		saveIngredient("Minced Onion", "Finely minced onion.", 40.0, 1.0, 0.1, 9.0);
+		saveIngredient("Fine Dried Bread Crumbs", "Fine dried bread crumbs.", 110.0, 3.5, 0.8, 23.0);
+		saveIngredient("Worcestershire Sauce", "Worcestershire sauce.", 15.0, 0.0, 0.0, 3.0);
+		saveIngredient("Garlic", "Minced garlic cloves.", 4.0, 0.2, 0.0, 1.0);
+		saveIngredient("Cheese", "Sliced cheese.", 100.0, 6.0, 8.0, 1.0);
+		saveIngredient("Portobello Mushrooms", "Large portobello mushrooms, stems removed.", 35.0, 2.0, 0.5, 7.0);
+		saveIngredient("Onion", "Medium-sized onion, sliced.", 44.0, 1.0, 0.1, 10.0);
+		saveIngredient("Olive Oil", "Extra virgin olive oil.", 120.0, 0.0, 14.0, 0.0);
+		saveIngredient("Bacon", "Crispy bacon strips.", 42.0, 3.0, 3.3, 0.0);
+		saveIngredient("Pizza Dough", "Fresh pizza dough.", 285.0, 7.5, 1.8, 58.0);
+		saveIngredient("Pizza Sauce", "Tomato-based pizza sauce.", 50.0, 1.0, 1.5, 9.0);
+		saveIngredient("Mozzarella Cheese", "Shredded mozzarella cheese.", 250.0, 18.0, 22.0, 2.0);
+		saveIngredient("Parmesan Cheese", "Grated Parmesan cheese.", 431.0, 38.0, 29.0, 4.0);
+		saveIngredient("Bell Peppers", "Assorted bell peppers, sliced.", 31.0, 0.9, 0.3, 7.6);
+		saveIngredient("Mushrooms", "Fresh mushrooms, sliced.", 22.0, 3.1, 0.3, 3.3);
+		saveIngredient("Red Onion", "Red onion, thinly sliced.", 40.0, 1.1, 0.1, 9.3);
+		saveIngredient("Black Olives", "Sliced black olives.", 115.0, 0.8, 11.0, 6.3);
+		saveIngredient("Pepperoni", "Sliced pepperoni.", 504.0, 22.0, 45.0, 2.0);
+		saveIngredient("Fresh Basil", "Fresh basil leaves.", 23.0, 3.2, 0.6, 2.7);
+		saveIngredient("Italian Sausage", "Sliced Italian sausage.", 285.0, 13.0, 25.0, 1.0);
+		saveIngredient("Ham", "Sliced ham.", 120.0, 17.0, 4.0, 2.0);
+		saveIngredient("Espresso", "Strong brewed coffee.", 2.0, 0.2, 0.0, 0.3);
+		saveIngredient("Milk", "Steamed milk.", 60.0, 3.0, 3.5, 4.8);
+		saveIngredient("Foam", "Layer of foam on top.", 10.0, 0.1, 0.0, 2.5);
+		saveIngredient("Cocoa Powder", "Unsweetened cocoa powder for dusting.", 12.0, 1.4, 0.8, 3.6);
+		saveIngredient("Coffee", "Brewed coffee, cooled.", 2.0, 0.2, 0.0, 0.3);
+		saveIngredient("Ice Cubes", "Frozen water cubes.", 0.0, 0.0, 0.0, 0.0);
+		saveIngredient("Sweetener (optional)", "Optional sweetener such as sugar or syrup.", 20.0, 0.0, 0.0, 5.0);
+		saveIngredient("Tortilla", "Flour tortilla.", 120.0, 3.0, 2.0, 22.0);
+		saveIngredient("Eggs", "Large eggs.", 70.0, 6.0, 5.0, 0.6);
+		saveIngredient("Cheddar Cheese", "Shredded cheddar cheese.", 110.0, 7.0, 9.0, 1.0);
+		saveIngredient("All-Purpose Flour", "Regular all-purpose flour.", 364.0, 10.3, 1.2, 76.3);
+		saveIngredient("Sugar", "Granulated white sugar.", 387.0, 0.0, 0.0, 99.8);
+		saveIngredient("Baking Powder", "Leavening agent for pancakes.", 5.0, 0.0, 0.0, 2.2);
+		saveIngredient("Salt", "Table salt for flavor.", 0.0, 0.0, 0.0, 0.0);
+		saveIngredient("Butter", "Unsalted butter, melted.", 717.0, 0.9, 81.1, 0.1);
+	}
 
-		IngredientEntity egg = new IngredientEntity();
-		egg.setName("Egg");
-		egg.setDescription("Large egg.");
-		egg.setCalories(70.0);
-		egg.setProteinPer100Gram(6.0);
-		egg.setFatsPer100Gram(5.0);
-		egg.setCarbohydratesPer100Gram(0.6);
-		ingredientRepository.save(egg);
-
-		IngredientEntity mincedOnion = new IngredientEntity();
-		mincedOnion.setName("Minced Onion");
-		mincedOnion.setDescription("Finely minced onion.");
-		mincedOnion.setCalories(40.0);
-		mincedOnion.setProteinPer100Gram(1.0);
-		mincedOnion.setFatsPer100Gram(0.1);
-		mincedOnion.setCarbohydratesPer100Gram(9.0);
-		ingredientRepository.save(mincedOnion);
-
-		IngredientEntity breadCrumbs = new IngredientEntity();
-		breadCrumbs.setName("Fine Dried Bread Crumbs");
-		breadCrumbs.setDescription("Fine dried bread crumbs.");
-		breadCrumbs.setCalories(110.0);
-		breadCrumbs.setProteinPer100Gram(3.5);
-		breadCrumbs.setFatsPer100Gram(0.8);
-		breadCrumbs.setCarbohydratesPer100Gram(23.0);
-		ingredientRepository.save(breadCrumbs);
-
-		IngredientEntity worcestershireSauce = new IngredientEntity();
-		worcestershireSauce.setName("Worcestershire Sauce");
-		worcestershireSauce.setDescription("Worcestershire sauce.");
-		worcestershireSauce.setCalories(15.0);
-		worcestershireSauce.setProteinPer100Gram(0.0);
-		worcestershireSauce.setFatsPer100Gram(0.0);
-		worcestershireSauce.setCarbohydratesPer100Gram(3.0);
-		ingredientRepository.save(worcestershireSauce);
-
-		IngredientEntity garlic = new IngredientEntity();
-		garlic.setName("Garlic");
-		garlic.setDescription("Minced garlic cloves.");
-		garlic.setCalories(4.0);
-		garlic.setProteinPer100Gram(0.2);
-		garlic.setFatsPer100Gram(0.0);
-		garlic.setCarbohydratesPer100Gram(1.0);
-		ingredientRepository.save(garlic);
-
-		IngredientEntity cheese = new IngredientEntity();
-		cheese.setName("Cheese");
-		cheese.setDescription("Sliced cheese.");
-		cheese.setCalories(100.0);
-		cheese.setProteinPer100Gram(6.0);
-		cheese.setFatsPer100Gram(8.0);
-		cheese.setCarbohydratesPer100Gram(1.0);
-		ingredientRepository.save(cheese);
+	private void saveIngredient(String name, String description, double calories, double protein, double fats, double carbohydrates) {
+		IngredientEntity ingredient = new IngredientEntity();
+		ingredient.setName(name);
+		ingredient.setDescription(description);
+		ingredient.setCalories(calories);
+		ingredient.setProteinPer100Gram(protein);
+		ingredient.setFatsPer100Gram(fats);
+		ingredient.setCarbohydratesPer100Gram(carbohydrates);
+		ingredientRepository.save(ingredient);
 	}
 
 	private RecipeEntity getHamburgerRecipe(DishEntity dish) {
@@ -286,31 +289,11 @@ public class TestDataGenerator {
 		hamburgerRecipe.setName("Hamburger Recipe");
 		hamburgerRecipe.setDescription("A recipe for making a classic hamburger.");
 		List<IngredientEntity> hamburgerIngredients = new ArrayList<>();
-
-		IngredientEntity ingredientEntity = ingredientRepository.findByName("Ground Lean Beef");
-//		ingredientEntity.addRecipe(hamburgerRecipe);
-		hamburgerIngredients.add(ingredientEntity);
-
-		ingredientEntity = ingredientRepository.findByName("Egg");
-//		ingredientEntity.addRecipe(hamburgerRecipe);
-		hamburgerIngredients.add(ingredientEntity);
-
-		ingredientEntity = ingredientRepository.findByName("Minced Onion");
-//		ingredientEntity.addRecipe(hamburgerRecipe);
-		hamburgerIngredients.add(ingredientEntity);
-
-		ingredientEntity = ingredientRepository.findByName("Fine Dried Bread Crumbs");
-//		ingredientEntity.addRecipe(hamburgerRecipe);
-		hamburgerIngredients.add(ingredientEntity);
-
-		ingredientEntity = ingredientRepository.findByName("Worcestershire Sauce");
-//		ingredientEntity.addRecipe(hamburgerRecipe);
-		hamburgerIngredients.add(ingredientEntity);
-
-		ingredientEntity = ingredientRepository.findByName("Garlic");
-//		ingredientEntity.addRecipe(hamburgerRecipe);
-		hamburgerIngredients.add(ingredientEntity);
-
+		hamburgerIngredients.add(ingredientRepository.findByName("Ground Lean Beef"));
+		hamburgerIngredients.add(ingredientRepository.findByName("Minced Onion"));
+		hamburgerIngredients.add(ingredientRepository.findByName("Fine Dried Bread Crumbs"));
+		hamburgerIngredients.add(ingredientRepository.findByName("Worcestershire Sauce"));
+		hamburgerIngredients.add(ingredientRepository.findByName("Garlic"));
 		hamburgerRecipe.setIngredients(hamburgerIngredients);
 		hamburgerRecipe.setDish(dish);
 		return hamburgerRecipe;
@@ -331,6 +314,243 @@ public class TestDataGenerator {
 		cheeseburgerRecipe.setIngredients(cheeseburgerIngredients);
 		cheeseburgerRecipe.setDish(dish);
 		return cheeseburgerRecipe;
+	}
+
+	private RecipeEntity getDoubleBurgerRecipe(DishEntity dish) {
+		RecipeEntity recipe = new RecipeEntity();
+		recipe.setName("Double Burger");
+		recipe.setDescription("A recipe for making a double burger. Use Ground Lean Beef X2!!!");
+		List<IngredientEntity> ingredients = new ArrayList<>();
+		ingredients.add(ingredientRepository.findByName("Ground Lean Beef"));
+		ingredients.add(ingredientRepository.findByName("Minced Onion"));
+		ingredients.add(ingredientRepository.findByName("Fine Dried Bread Crumbs"));
+		ingredients.add(ingredientRepository.findByName("Worcestershire Sauce"));
+		ingredients.add(ingredientRepository.findByName("Garlic"));
+
+		recipe.setIngredients(ingredients);
+		recipe.setDish(dish);
+		return recipe;
+	}
+
+	private RecipeEntity getMushroomBurgerRecipe(DishEntity dish) {
+		RecipeEntity mushroomBurgerRecipe = new RecipeEntity();
+		mushroomBurgerRecipe.setName("Mushroom Burger Recipe");
+		mushroomBurgerRecipe.setDescription("A recipe for making a delicious mushroom burger.");
+		List<IngredientEntity> mushroomBurgerIngredients = new ArrayList<>();
+		mushroomBurgerIngredients.add(ingredientRepository.findByName("Portobello Mushrooms"));
+		mushroomBurgerIngredients.add(ingredientRepository.findByName("Onion"));
+		mushroomBurgerIngredients.add(ingredientRepository.findByName("Garlic"));
+		mushroomBurgerIngredients.add(ingredientRepository.findByName("Olive Oil"));
+		mushroomBurgerIngredients.add(ingredientRepository.findByName("Burger Buns"));
+		mushroomBurgerIngredients.add(ingredientRepository.findByName("Lettuce"));
+		mushroomBurgerIngredients.add(ingredientRepository.findByName("Tomato"));
+		mushroomBurgerIngredients.add(ingredientRepository.findByName("Cheese"));
+		mushroomBurgerRecipe.setIngredients(mushroomBurgerIngredients);
+		mushroomBurgerRecipe.setDish(dish);
+		return mushroomBurgerRecipe;
+	}
+
+	private RecipeEntity getBaconCheeseburgerRecipe(DishEntity dish) {
+		RecipeEntity baconCheeseburgerRecipe = new RecipeEntity();
+		baconCheeseburgerRecipe.setName("Bacon Cheeseburger Recipe");
+		baconCheeseburgerRecipe.setDescription("A recipe for a delicious bacon cheeseburger.");
+		List<IngredientEntity> baconCheeseburgerIngredients = new ArrayList<>();
+		baconCheeseburgerIngredients.add(ingredientRepository.findByName("Ground Lean Beef"));
+		baconCheeseburgerIngredients.add(ingredientRepository.findByName("Bacon"));
+		baconCheeseburgerIngredients.add(ingredientRepository.findByName("Cheese"));
+		baconCheeseburgerIngredients.add(ingredientRepository.findByName("Onion"));
+		baconCheeseburgerIngredients.add(ingredientRepository.findByName("Lettuce"));
+		baconCheeseburgerIngredients.add(ingredientRepository.findByName("Tomato"));
+		baconCheeseburgerIngredients.add(ingredientRepository.findByName("Pickles"));
+		baconCheeseburgerIngredients.add(ingredientRepository.findByName("Mayonnaise"));
+		baconCheeseburgerIngredients.add(ingredientRepository.findByName("Ketchup"));
+		baconCheeseburgerIngredients.add(ingredientRepository.findByName("Mustard"));
+		baconCheeseburgerIngredients.add(ingredientRepository.findByName("Burger Buns"));
+		baconCheeseburgerRecipe.setIngredients(baconCheeseburgerIngredients);
+		baconCheeseburgerRecipe.setDish(dish);
+		return baconCheeseburgerRecipe;
+	}
+
+	private RecipeEntity getCheesePizzaRecipe(DishEntity dish) {
+		RecipeEntity cheesePizzaRecipe = new RecipeEntity();
+		cheesePizzaRecipe.setName("Cheese Pizza Recipe");
+		cheesePizzaRecipe.setDescription("A recipe for a delicious cheese pizza.");
+		List<IngredientEntity> cheesePizzaIngredients = new ArrayList<>();
+		cheesePizzaIngredients.add(ingredientRepository.findByName("Pizza Dough"));
+		cheesePizzaIngredients.add(ingredientRepository.findByName("Pizza Sauce"));
+		cheesePizzaIngredients.add(ingredientRepository.findByName("Mozzarella Cheese"));
+		cheesePizzaIngredients.add(ingredientRepository.findByName("Parmesan Cheese"));
+		cheesePizzaIngredients.add(ingredientRepository.findByName("Olive Oil"));
+		cheesePizzaRecipe.setIngredients(cheesePizzaIngredients);
+		cheesePizzaRecipe.setDish(dish);
+		return cheesePizzaRecipe;
+	}
+
+	private RecipeEntity getVeggiePizzaRecipe(DishEntity dish) {
+		RecipeEntity veggiePizzaRecipe = new RecipeEntity();
+		veggiePizzaRecipe.setName("Veggie Pizza Recipe");
+		veggiePizzaRecipe.setDescription("A recipe for a delicious veggie pizza.");
+		List<IngredientEntity> veggiePizzaIngredients = new ArrayList<>();
+		veggiePizzaIngredients.add(ingredientRepository.findByName("Pizza Dough"));
+		veggiePizzaIngredients.add(ingredientRepository.findByName("Pizza Sauce"));
+		veggiePizzaIngredients.add(ingredientRepository.findByName("Mozzarella Cheese"));
+		veggiePizzaIngredients.add(ingredientRepository.findByName("Bell Peppers"));
+		veggiePizzaIngredients.add(ingredientRepository.findByName("Mushrooms"));
+		veggiePizzaIngredients.add(ingredientRepository.findByName("Red Onion"));
+		veggiePizzaIngredients.add(ingredientRepository.findByName("Black Olives"));
+		veggiePizzaIngredients.add(ingredientRepository.findByName("Olive Oil"));
+		veggiePizzaRecipe.setIngredients(veggiePizzaIngredients);
+		veggiePizzaRecipe.setDish(dish);
+		return veggiePizzaRecipe;
+	}
+
+	private RecipeEntity getPepperoniPizzaRecipe(DishEntity dish) {
+		RecipeEntity pepperoniPizzaRecipe = new RecipeEntity();
+		pepperoniPizzaRecipe.setName("Pepperoni Pizza Recipe");
+		pepperoniPizzaRecipe.setDescription("A recipe for a delicious pepperoni pizza.");
+		List<IngredientEntity> pepperoniPizzaIngredients = new ArrayList<>();
+		pepperoniPizzaIngredients.add(ingredientRepository.findByName("Pizza Dough"));
+		pepperoniPizzaIngredients.add(ingredientRepository.findByName("Pizza Sauce"));
+		pepperoniPizzaIngredients.add(ingredientRepository.findByName("Mozzarella Cheese"));
+		pepperoniPizzaIngredients.add(ingredientRepository.findByName("Pepperoni"));
+		pepperoniPizzaIngredients.add(ingredientRepository.findByName("Olive Oil"));
+		pepperoniPizzaRecipe.setIngredients(pepperoniPizzaIngredients);
+		pepperoniPizzaRecipe.setDish(dish);
+		return pepperoniPizzaRecipe;
+	}
+
+	private RecipeEntity getMargheritaPizzaRecipe(DishEntity dish) {
+		RecipeEntity margheritaPizzaRecipe = new RecipeEntity();
+		margheritaPizzaRecipe.setName("Margherita Pizza Recipe");
+		margheritaPizzaRecipe.setDescription("A recipe for a classic Margherita pizza.");
+		List<IngredientEntity> margheritaPizzaIngredients = new ArrayList<>();
+		margheritaPizzaIngredients.add(ingredientRepository.findByName("Pizza Dough"));
+		margheritaPizzaIngredients.add(ingredientRepository.findByName("Pizza Sauce"));
+		margheritaPizzaIngredients.add(ingredientRepository.findByName("Mozzarella Cheese"));
+		margheritaPizzaIngredients.add(ingredientRepository.findByName("Fresh Basil"));
+		margheritaPizzaIngredients.add(ingredientRepository.findByName("Olive Oil"));
+		margheritaPizzaRecipe.setIngredients(margheritaPizzaIngredients);
+		margheritaPizzaRecipe.setDish(dish);
+		return margheritaPizzaRecipe;
+	}
+
+	private RecipeEntity getMeatLoversPizzaRecipe(DishEntity dish) {
+		RecipeEntity meatLoversPizzaRecipe = new RecipeEntity();
+		meatLoversPizzaRecipe.setName("Meat Lovers Pizza Recipe");
+		meatLoversPizzaRecipe.setDescription("A recipe for a hearty Meat Lovers pizza.");
+		List<IngredientEntity> meatLoversPizzaIngredients = new ArrayList<>();
+		meatLoversPizzaIngredients.add(ingredientRepository.findByName("Pizza Dough"));
+		meatLoversPizzaIngredients.add(ingredientRepository.findByName("Pizza Sauce"));
+		meatLoversPizzaIngredients.add(ingredientRepository.findByName("Mozzarella Cheese"));
+		meatLoversPizzaIngredients.add(ingredientRepository.findByName("Pepperoni"));
+		meatLoversPizzaIngredients.add(ingredientRepository.findByName("Italian Sausage"));
+		meatLoversPizzaIngredients.add(ingredientRepository.findByName("Bacon"));
+		meatLoversPizzaIngredients.add(ingredientRepository.findByName("Ham"));
+		meatLoversPizzaIngredients.add(ingredientRepository.findByName("Olive Oil"));
+		meatLoversPizzaRecipe.setIngredients(meatLoversPizzaIngredients);
+		meatLoversPizzaRecipe.setDish(dish);
+		return meatLoversPizzaRecipe;
+	}
+
+	private RecipeEntity getLatteRecipe(DishEntity dish) {
+		RecipeEntity latteRecipe = new RecipeEntity();
+		latteRecipe.setName("Latte Recipe");
+		latteRecipe.setDescription("A recipe for making a classic latte.");
+		List<IngredientEntity> latteIngredients = new ArrayList<>();
+		latteIngredients.add(ingredientRepository.findByName("Espresso"));
+		latteIngredients.add(ingredientRepository.findByName("Milk"));
+		latteIngredients.add(ingredientRepository.findByName("Foam"));
+		latteRecipe.setIngredients(latteIngredients);
+		latteRecipe.setDish(dish);
+		return latteRecipe;
+	}
+
+	private RecipeEntity getCappuccinoRecipe(DishEntity dish) {
+		RecipeEntity cappuccinoRecipe = new RecipeEntity();
+		cappuccinoRecipe.setName("Cappuccino Recipe");
+		cappuccinoRecipe.setDescription("A recipe for making a classic cappuccino.");
+		List<IngredientEntity> cappuccinoIngredients = new ArrayList<>();
+		cappuccinoIngredients.add(ingredientRepository.findByName("Espresso"));
+		cappuccinoIngredients.add(ingredientRepository.findByName("Milk"));
+		cappuccinoIngredients.add(ingredientRepository.findByName("Foam"));
+		cappuccinoIngredients.add(ingredientRepository.findByName("Cocoa Powder"));
+		cappuccinoRecipe.setIngredients(cappuccinoIngredients);
+		cappuccinoRecipe.setDish(dish);
+		return cappuccinoRecipe;
+	}
+
+	private RecipeEntity getAmericanoRecipe(DishEntity dish) {
+		RecipeEntity americanoRecipe = new RecipeEntity();
+		americanoRecipe.setName("Americano Recipe");
+		americanoRecipe.setDescription("A recipe for making a classic Americano.");
+		List<IngredientEntity> americanoIngredients = new ArrayList<>();
+		americanoIngredients.add(ingredientRepository.findByName("Espresso"));
+		americanoRecipe.setIngredients(americanoIngredients);
+		americanoRecipe.setDish(dish);
+		return americanoRecipe;
+	}
+
+	private RecipeEntity getFlatWhiteRecipe(DishEntity dish) {
+		RecipeEntity flatWhiteRecipe = new RecipeEntity();
+		flatWhiteRecipe.setName("Flat White Recipe");
+		flatWhiteRecipe.setDescription("A recipe for making a delicious flat white.");
+		List<IngredientEntity> flatWhiteIngredients = new ArrayList<>();
+		flatWhiteIngredients.add(ingredientRepository.findByName("Espresso"));
+		flatWhiteIngredients.add(ingredientRepository.findByName("Milk"));
+		flatWhiteRecipe.setIngredients(flatWhiteIngredients);
+		flatWhiteRecipe.setDish(dish);
+		return flatWhiteRecipe;
+	}
+
+	private RecipeEntity getIcedCoffeeRecipe(DishEntity dish) {
+		RecipeEntity icedCoffeeRecipe = new RecipeEntity();
+		icedCoffeeRecipe.setName("Iced Coffee Recipe");
+		icedCoffeeRecipe.setDescription("A recipe for making refreshing iced coffee.");
+		List<IngredientEntity> icedCoffeeIngredients = new ArrayList<>();
+		icedCoffeeIngredients.add(ingredientRepository.findByName("Coffee"));
+		icedCoffeeIngredients.add(ingredientRepository.findByName("Ice Cubes"));
+		icedCoffeeIngredients.add(ingredientRepository.findByName("Milk"));
+		icedCoffeeIngredients.add(ingredientRepository.findByName("Sweetener (optional)"));
+		icedCoffeeRecipe.setIngredients(icedCoffeeIngredients);
+		icedCoffeeRecipe.setDish(dish);
+		return icedCoffeeRecipe;
+	}
+
+	private RecipeEntity getBreakfastBurritoRecipe(DishEntity dish) {
+		RecipeEntity breakfastBurritoRecipe = new RecipeEntity();
+		breakfastBurritoRecipe.setName("Breakfast Burrito Recipe");
+		breakfastBurritoRecipe.setDescription("A recipe for a delicious breakfast burrito.");
+		List<IngredientEntity> breakfastBurritoIngredients = new ArrayList<>();
+		breakfastBurritoIngredients.add(ingredientRepository.findByName("Tortilla"));
+		breakfastBurritoIngredients.add(ingredientRepository.findByName("Eggs"));
+		breakfastBurritoIngredients.add(ingredientRepository.findByName("Bacon"));
+		breakfastBurritoIngredients.add(ingredientRepository.findByName("Cheddar Cheese"));
+		breakfastBurritoIngredients.add(ingredientRepository.findByName("Bell Peppers"));
+		breakfastBurritoIngredients.add(ingredientRepository.findByName("Onion"));
+		breakfastBurritoIngredients.add(ingredientRepository.findByName("Salsa"));
+		breakfastBurritoIngredients.add(ingredientRepository.findByName("Salt"));
+		breakfastBurritoIngredients.add(ingredientRepository.findByName("Pepper"));
+		breakfastBurritoIngredients.add(ingredientRepository.findByName("Oil"));
+		breakfastBurritoRecipe.setIngredients(breakfastBurritoIngredients);
+		breakfastBurritoRecipe.setDish(dish);
+		return breakfastBurritoRecipe;
+	}
+
+	private RecipeEntity getPancakesRecipe(DishEntity dish) {
+		RecipeEntity pancakesRecipe = new RecipeEntity();
+		pancakesRecipe.setName("Pancakes Recipe");
+		pancakesRecipe.setDescription("A recipe for fluffy and delicious pancakes.");
+		List<IngredientEntity> pancakesIngredients = new ArrayList<>();
+		pancakesIngredients.add(ingredientRepository.findByName("All-Purpose Flour"));
+		pancakesIngredients.add(ingredientRepository.findByName("Sugar"));
+		pancakesIngredients.add(ingredientRepository.findByName("Baking Powder"));
+		pancakesIngredients.add(ingredientRepository.findByName("Salt"));
+		pancakesIngredients.add(ingredientRepository.findByName("Milk"));
+		pancakesIngredients.add(ingredientRepository.findByName("Eggs"));
+		pancakesIngredients.add(ingredientRepository.findByName("Butter"));
+		pancakesRecipe.setIngredients(pancakesIngredients);
+		pancakesRecipe.setDish(dish);
+		return pancakesRecipe;
 	}
 
 }
