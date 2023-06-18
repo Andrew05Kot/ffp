@@ -19,6 +19,10 @@ public class IngredientV1ApiMapperImpl implements ApiV1Mapper<IngredientEntity, 
 		response.setCalories(entity.getCalories());
 		response.setSugarPer100Gram(entity.getSugarPer100Gram());
 		response.setFatsPer100Gram(entity.getFatsPer100Gram());
+		response.setSugarPer100Gram(entity.getSugarPer100Gram());
+		response.setProteinPer100Gram(entity.getProteinPer100Gram());
+		response.setCarbonDioxidePer100Gram(entity.getCarbonDioxidePer100Gram());
+		response.setCarbohydratesPer100Gram(entity.getCarbohydratesPer100Gram());
 		response.setCreatedDate(entity.getCreatedDate());
 		response.setLastModifiedDate(entity.getLastModifiedDate());
 		return response;

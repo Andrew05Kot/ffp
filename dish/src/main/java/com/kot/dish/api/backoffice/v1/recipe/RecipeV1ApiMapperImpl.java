@@ -25,7 +25,6 @@ public class RecipeV1ApiMapperImpl implements RecipeV1ApiMapper {
 		response.setCreatedDate(entity.getCreatedDate());
 		response.setLastModifiedDate(entity.getLastModifiedDate());
 		if (entity.getIngredients() != null && entity.getIngredients().size() > 0) {
-			System.out.println("Yes!");
 			response.setIngredients(
 					entity.getIngredients().stream().map(ingredientEntity -> ingredientMapper.domainToDto(ingredientEntity, null)).toList()
 			);

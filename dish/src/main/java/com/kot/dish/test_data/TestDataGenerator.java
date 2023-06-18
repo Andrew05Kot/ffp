@@ -233,47 +233,47 @@ public class TestDataGenerator {
 	}
 
 	private void buildAndSaveIngredients() {
-		saveIngredient("Ground Lean Beef", "Lean ground beef with 7% fat content.", 250.0, 26.0, 17.0, 0.0);
-		saveIngredient("Egg", "Large egg.", 70.0, 6.0, 5.0, 0.6);
-		saveIngredient("Minced Onion", "Finely minced onion.", 40.0, 1.0, 0.1, 9.0);
-		saveIngredient("Fine Dried Bread Crumbs", "Fine dried bread crumbs.", 110.0, 3.5, 0.8, 23.0);
-		saveIngredient("Worcestershire Sauce", "Worcestershire sauce.", 15.0, 0.0, 0.0, 3.0);
-		saveIngredient("Garlic", "Minced garlic cloves.", 4.0, 0.2, 0.0, 1.0);
-		saveIngredient("Cheese", "Sliced cheese.", 100.0, 6.0, 8.0, 1.0);
-		saveIngredient("Portobello Mushrooms", "Large portobello mushrooms, stems removed.", 35.0, 2.0, 0.5, 7.0);
-		saveIngredient("Onion", "Medium-sized onion, sliced.", 44.0, 1.0, 0.1, 10.0);
-		saveIngredient("Olive Oil", "Extra virgin olive oil.", 120.0, 0.0, 14.0, 0.0);
-		saveIngredient("Bacon", "Crispy bacon strips.", 42.0, 3.0, 3.3, 0.0);
-		saveIngredient("Pizza Dough", "Fresh pizza dough.", 285.0, 7.5, 1.8, 58.0);
-		saveIngredient("Pizza Sauce", "Tomato-based pizza sauce.", 50.0, 1.0, 1.5, 9.0);
-		saveIngredient("Mozzarella Cheese", "Shredded mozzarella cheese.", 250.0, 18.0, 22.0, 2.0);
-		saveIngredient("Parmesan Cheese", "Grated Parmesan cheese.", 431.0, 38.0, 29.0, 4.0);
-		saveIngredient("Bell Peppers", "Assorted bell peppers, sliced.", 31.0, 0.9, 0.3, 7.6);
-		saveIngredient("Mushrooms", "Fresh mushrooms, sliced.", 22.0, 3.1, 0.3, 3.3);
-		saveIngredient("Red Onion", "Red onion, thinly sliced.", 40.0, 1.1, 0.1, 9.3);
-		saveIngredient("Black Olives", "Sliced black olives.", 115.0, 0.8, 11.0, 6.3);
-		saveIngredient("Pepperoni", "Sliced pepperoni.", 504.0, 22.0, 45.0, 2.0);
-		saveIngredient("Fresh Basil", "Fresh basil leaves.", 23.0, 3.2, 0.6, 2.7);
-		saveIngredient("Italian Sausage", "Sliced Italian sausage.", 285.0, 13.0, 25.0, 1.0);
-		saveIngredient("Ham", "Sliced ham.", 120.0, 17.0, 4.0, 2.0);
-		saveIngredient("Espresso", "Strong brewed coffee.", 2.0, 0.2, 0.0, 0.3);
-		saveIngredient("Milk", "Steamed milk.", 60.0, 3.0, 3.5, 4.8);
-		saveIngredient("Foam", "Layer of foam on top.", 10.0, 0.1, 0.0, 2.5);
-		saveIngredient("Cocoa Powder", "Unsweetened cocoa powder for dusting.", 12.0, 1.4, 0.8, 3.6);
-		saveIngredient("Coffee", "Brewed coffee, cooled.", 2.0, 0.2, 0.0, 0.3);
-		saveIngredient("Ice Cubes", "Frozen water cubes.", 0.0, 0.0, 0.0, 0.0);
-		saveIngredient("Sweetener (optional)", "Optional sweetener such as sugar or syrup.", 20.0, 0.0, 0.0, 5.0);
-		saveIngredient("Tortilla", "Flour tortilla.", 120.0, 3.0, 2.0, 22.0);
-		saveIngredient("Eggs", "Large eggs.", 70.0, 6.0, 5.0, 0.6);
-		saveIngredient("Cheddar Cheese", "Shredded cheddar cheese.", 110.0, 7.0, 9.0, 1.0);
-		saveIngredient("All-Purpose Flour", "Regular all-purpose flour.", 364.0, 10.3, 1.2, 76.3);
-		saveIngredient("Sugar", "Granulated white sugar.", 387.0, 0.0, 0.0, 99.8);
-		saveIngredient("Baking Powder", "Leavening agent for pancakes.", 5.0, 0.0, 0.0, 2.2);
-		saveIngredient("Salt", "Table salt for flavor.", 0.0, 0.0, 0.0, 0.0);
-		saveIngredient("Butter", "Unsalted butter, melted.", 717.0, 0.9, 81.1, 0.1);
+		saveIngredient("Ground Lean Beef", "Lean ground beef with 7% fat content.", 250.0, 26.0, 17.0, 0.0, 2.5, 0.0);
+		saveIngredient("Egg", "Large egg.", 70.0, 6.0, 5.0, 0.6, 0.2, 0.0);
+		saveIngredient("Minced Onion", "Finely minced onion.", 40.0, 1.0, 0.1, 9.0, 0.5, 0.0);
+		saveIngredient("Fine Dried Bread Crumbs", "Fine dried bread crumbs.", 110.0, 3.5, 0.8, 23.0, 1.0, 0.0);
+		saveIngredient("Worcestershire Sauce", "Worcestershire sauce.", 15.0, 0.0, 0.0, 3.0, 0.3, 0.0);
+		saveIngredient("Garlic", "Minced garlic cloves.", 4.0, 0.2, 0.0, 1.0, 0.1, 0.0);
+		saveIngredient("Cheese", "Sliced cheese.", 100.0, 6.0, 8.0, 1.0, 0.2, 0.0);
+		saveIngredient("Portobello Mushrooms", "Large portobello mushrooms, stems removed.", 35.0, 2.0, 0.5, 7.0, 0.7, 0.0);
+		saveIngredient("Onion", "Medium-sized onion, sliced.", 44.0, 1.0, 0.1, 10.0, 0.3, 0.0);
+		saveIngredient("Olive Oil", "Extra virgin olive oil.", 120.0, 0.0, 14.0, 0.0, 0.1, 0.0);
+		saveIngredient("Bacon", "Crispy bacon strips.", 42.0, 3.0, 3.3, 0.0, 0.4, 0.0);
+		saveIngredient("Pizza Dough", "Fresh pizza dough.", 285.0, 7.5, 1.8, 58.0, 2.0, 0.0);
+		saveIngredient("Pizza Sauce", "Tomato-based pizza sauce.", 50.0, 1.0, 1.5, 9.0, 0.5, 0.0);
+		saveIngredient("Mozzarella Cheese", "Shredded mozzarella cheese.", 250.0, 18.0, 22.0, 2.0, 1.5, 0.0);
+		saveIngredient("Parmesan Cheese", "Grated Parmesan cheese.", 431.0, 38.0, 29.0, 4.0, 2.0, 0.0);
+		saveIngredient("Bell Peppers", "Assorted bell peppers, sliced.", 31.0, 0.9, 0.3, 7.6, 0.6, 0.0);
+		saveIngredient("Mushrooms", "Fresh mushrooms, sliced.", 22.0, 3.1, 0.3, 3.3, 0.2, 0.0);
+		saveIngredient("Red Onion", "Red onion, thinly sliced.", 40.0, 1.1, 0.1, 9.3, 0.5, 0.0);
+		saveIngredient("Black Olives", "Sliced black olives.", 115.0, 0.8, 11.0, 6.3, 1.2, 0.0);
+		saveIngredient("Pepperoni", "Sliced pepperoni.", 504.0, 22.0, 45.0, 2.0, 2.5, 0.0);
+		saveIngredient("Fresh Basil", "Fresh basil leaves.", 23.0, 3.2, 0.6, 2.7, 0.8, 0.0);
+		saveIngredient("Italian Sausage", "Sliced Italian sausage.", 285.0, 13.0, 25.0, 1.0, 1.5, 0.0);
+		saveIngredient("Ham", "Sliced ham.", 120.0, 17.0, 4.0, 2.0, 0.7, 0.0);
+		saveIngredient("Espresso", "Strong brewed coffee.", 2.0, 0.2, 0.0, 0.3, 0.1, 0.0);
+		saveIngredient("Milk", "Steamed milk.", 60.0, 3.0, 3.5, 4.8, 0.2, 0.0);
+		saveIngredient("Foam", "Layer of foam on top.", 10.0, 0.1, 0.0, 2.5, 0.1, 0.0);
+		saveIngredient("Cocoa Powder", "Unsweetened cocoa powder for dusting.", 12.0, 1.4, 0.8, 3.6, 0.3, 0.0);
+		saveIngredient("Coffee", "Brewed coffee, cooled.", 2.0, 0.2, 0.0, 0.3, 0.1, 0.0);
+		saveIngredient("Ice Cubes", "Frozen water cubes.", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+		saveIngredient("Sweetener (optional)", "Optional sweetener such as sugar or syrup.", 20.0, 0.0, 0.0, 5.0, 1.0, 0.0);
+		saveIngredient("Tortilla", "Flour tortilla.", 120.0, 3.0, 2.0, 22.0, 0.5, 0.0);
+		saveIngredient("Eggs", "Large eggs.", 70.0, 6.0, 5.0, 0.6, 0.2, 0.0);
+		saveIngredient("Cheddar Cheese", "Shredded cheddar cheese.", 110.0, 7.0, 9.0, 1.0, 0.3, 0.0);
+		saveIngredient("All-Purpose Flour", "Regular all-purpose flour.", 364.0, 10.3, 1.2, 76.3, 2.5, 0.0);
+		saveIngredient("Sugar", "Granulated white sugar.", 387.0, 0.0, 0.0, 99.8, 2.0, 99.8);
+		saveIngredient("Baking Powder", "Leavening agent for pancakes.", 5.0, 0.0, 0.0, 2.2, 0.1, 2.2);
+		saveIngredient("Salt", "Table salt for flavor.", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+		saveIngredient("Butter", "Unsalted butter, melted.", 717.0, 0.9, 81.1, 0.1, 0.4, 0.0);
 	}
 
-	private void saveIngredient(String name, String description, double calories, double protein, double fats, double carbohydrates) {
+	private void saveIngredient(String name, String description, double calories, double protein, double fats, double carbohydrates, double carbonDioxide, double sugarPer100Gram) {
 		IngredientEntity ingredient = new IngredientEntity();
 		ingredient.setName(name);
 		ingredient.setDescription(description);
@@ -281,6 +281,8 @@ public class TestDataGenerator {
 		ingredient.setProteinPer100Gram(protein);
 		ingredient.setFatsPer100Gram(fats);
 		ingredient.setCarbohydratesPer100Gram(carbohydrates);
+		ingredient.setCarbonDioxidePer100Gram(carbonDioxide);
+		ingredient.setSugarPer100Gram(sugarPer100Gram);
 		ingredientRepository.save(ingredient);
 	}
 
