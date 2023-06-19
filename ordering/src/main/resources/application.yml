@@ -1,3 +1,27 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: ordering
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:micro_order;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: micro_order_user
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+  profiles:
+    active: testdata
+  cloud:
+    discovery:
+      enabled: true
 eureka:
   client:
     service-url:

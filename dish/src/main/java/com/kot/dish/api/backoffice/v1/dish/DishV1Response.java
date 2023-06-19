@@ -2,10 +2,11 @@ package com.kot.dish.api.backoffice.v1.dish;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import com.kot.dish.api.backoffice.v1.category.CategoryV1Response;
+import com.kot.dish.api.backoffice.v1.recipe.RecipeV1Response;
 
 public class DishV1Response {
 
@@ -24,6 +25,8 @@ public class DishV1Response {
 	private Instant createdDate;
 
 	private Instant lastModifiedDate;
+
+	private RecipeV1Response recipe;
 
 	public Long getId() {
 		return id;
@@ -89,6 +92,14 @@ public class DishV1Response {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
+	public RecipeV1Response getRecipe() {
+		return recipe;
+	}
+
+	public void setRecipe(RecipeV1Response recipe) {
+		this.recipe = recipe;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -106,6 +117,7 @@ public class DishV1Response {
 				.append(imageUrl, that.imageUrl)
 				.append(createdDate, that.createdDate)
 				.append(lastModifiedDate, that.lastModifiedDate)
+				.append(recipe, that.recipe)
 				.isEquals();
 	}
 
@@ -120,6 +132,7 @@ public class DishV1Response {
 				.append(imageUrl)
 				.append(createdDate)
 				.append(lastModifiedDate)
+				.append(recipe)
 				.toHashCode();
 	}
 
@@ -134,6 +147,7 @@ public class DishV1Response {
 				", imageUrl=" + imageUrl +
 				", createdDate=" + createdDate +
 				", lastModifiedDate=" + lastModifiedDate +
+				", recipe=" + recipe +
 				'}';
 	}
 }

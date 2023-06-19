@@ -6,7 +6,8 @@ import javax.validation.constraints.Size;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import com.kot.dal.domain.PaymentMethod;
+
+import com.kot.domain.PaymentMethod;
 
 public class OrderMobileV1Request {
 

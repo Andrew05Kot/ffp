@@ -1,20 +1,18 @@
 package com.kot.dish.api.mobile.v1.category;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.kot.dish.api.ApiInfo;
-import com.kot.dish.bll.model.Category;
-import com.kot.dish.bll.service.CategoryService;
+import com.kot.dish.domain.CategoryEntity;
+import com.kot.dish.service.CategoryService;
 
 @RestController
 @RequestMapping(CategoryMobileV1Controller.API_URL)
@@ -36,16 +34,16 @@ public class CategoryMobileV1Controller {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<CategoryMobileV1Response> getById(@PathVariable Long id) {
-		Category model = categoryService.findById(id);
-		return new ResponseEntity<>(categoryApiMapper.modelToDto(model), HttpStatus.OK);
+		CategoryEntity model = categoryService.findById(id);
+		return new ResponseEntity<>(categoryApiMapper.domainToDto(model), HttpStatus.OK);
 	}
 
 	@GetMapping("/")
 	public ResponseEntity<List<CategoryMobileV1Response>> getAll() {
-		List<Category> dishEntities = categoryService.findAll().getContent();
+		List<CategoryEntity> dishEntities = categoryService.findAll().getContent();
 		List<CategoryMobileV1Response> dishResponses = dishEntities
 				.stream()
-				.map(model -> categoryApiMapper.modelToDto(model))
+				.map(model -> categoryApiMapper.domainToDto(model))
 				.toList();
 		return new ResponseEntity<>(dishResponses, HttpStatus.OK);
 	}

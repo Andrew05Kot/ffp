@@ -1,7 +1,6 @@
 package com.kot.dish.api.backoffice.v1.category;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,9 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.kot.dish.api.ApiInfo;
-import com.kot.dish.bll.model.Category;
-import com.kot.dish.bll.service.CategoryService;
+import com.kot.dish.api.backoffice.v1.infrastructure.ApiV1Mapper;
+import com.kot.dish.domain.CategoryEntity;
+import com.kot.dish.service.CategoryService;
 
 @RestController
 @RequestMapping(CategoryV1Controller.API_URL)
@@ -27,7 +28,7 @@ public class CategoryV1Controller {
 	private CategoryService categoryService;
 
 	@Autowired
-	private CategoryV1ApiMapper categoryApiMapper;
+	private ApiV1Mapper<CategoryEntity, CategoryV1Response, CategoryV1Request> categoryApiMapper;
 
 	@GetMapping("/status")
 	public ResponseEntity<?> getStatus() {
@@ -36,22 +37,22 @@ public class CategoryV1Controller {
 
 	@PostMapping("/")
 	public ResponseEntity<CategoryV1Response> create(@RequestBody CategoryV1Request request) {
-		Category model = categoryService.save(categoryApiMapper.dtoToModel(request));
-		return new ResponseEntity<>(categoryApiMapper.modelToDto(model), HttpStatus.OK);
+		CategoryEntity model = categoryService.save(categoryApiMapper.dtoToDomain(request));
+		return new ResponseEntity<>(categoryApiMapper.domainToDto(model), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<CategoryV1Response> getById(@PathVariable Long id) {
-		Category model = categoryService.findById(id);
-		return new ResponseEntity<>(categoryApiMapper.modelToDto(model), HttpStatus.OK);
+		CategoryEntity model = categoryService.findById(id);
+		return new ResponseEntity<>(categoryApiMapper.domainToDto(model), HttpStatus.OK);
 	}
 
 	@GetMapping("/")
 	public ResponseEntity<List<CategoryV1Response>> getAll() {
-		List<Category> models = categoryService.findAll().getContent();
+		List<CategoryEntity> models = categoryService.findAll().getContent();
 		List<CategoryV1Response> dishResponses = models
 				.stream()
-				.map(model -> categoryApiMapper.modelToDto(model))
+				.map(model -> categoryApiMapper.domainToDto(model))
 				.toList();
 		return new ResponseEntity<>(dishResponses, HttpStatus.OK);
 	}

@@ -7,14 +7,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.kot.api.ApiInfo;
-import com.kot.api.backoffice.v1.OrderV1Controller;
-import com.kot.bll.order.OrderService;
+import com.kot.service.order.OrderService;
 
 @RestController
 @RequestMapping(OrderMobileV1Controller.API_URL)
@@ -35,7 +34,7 @@ public class OrderMobileV1Controller {
 			@Parameter(description = "Order to create. Cannot null or empty.",
 					required = true, schema = @Schema(implementation = OrderMobileV1Request.class))
 			@RequestBody OrderMobileV1Request request) {
-		orderService.save(orderMobileV1Mapper.dtoToModel(request));
+		orderService.save(orderMobileV1Mapper.dtoToDomain(request));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

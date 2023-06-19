@@ -1,13 +1,14 @@
 package com.kot.api.mobile.v1;
 
 import org.springframework.stereotype.Component;
-import com.kot.bll.order.Order;
+
+import com.kot.domain.OrderEntity;
 
 @Component
 public class OrderMobileV1Mapper {
 
-	public Order dtoToModel(OrderMobileV1Request dto) {
-		Order model = new Order();
+	public OrderEntity dtoToDomain(OrderMobileV1Request dto) {
+		OrderEntity model = new OrderEntity();
 		model.setTotalPrice(dto.getTotalPrice());
 		model.setCardName(dto.getCardName());
 		model.setCardNumber(dto.getCardNumber());
