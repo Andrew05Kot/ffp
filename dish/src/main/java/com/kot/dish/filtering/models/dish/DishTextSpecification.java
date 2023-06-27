@@ -1,4 +1,4 @@
-package com.kot.dish.filtering;
+package com.kot.dish.filtering.models.dish;
 
 import java.io.Serial;
 import java.util.ArrayList;
@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.kot.dish.domain.DishEntity;
+import com.kot.dish.filtering.criteria_parser.FilteringCriteria;
 
 public class DishTextSpecification implements Specification<DishEntity> {
 

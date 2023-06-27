@@ -1,4 +1,4 @@
-package com.kot.dish.filtering;
+package com.kot.dish.filtering.criteria_parser;
 
 import java.io.Serializable;
 

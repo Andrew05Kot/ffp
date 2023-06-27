@@ -1,4 +1,6 @@
-package com.kot.dish.filtering;
+package com.kot.dish.filtering.criteria_parser;
+
+import com.kot.dish.filtering.exception.IllegalFilteringOperationException;
 
 public enum FilteringOperation {
 

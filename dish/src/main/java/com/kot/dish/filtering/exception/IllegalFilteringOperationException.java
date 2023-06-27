@@ -1,4 +1,4 @@
-package com.kot.dish.filtering;
+package com.kot.dish.filtering.exception;
 
 import java.io.Serial;
 import java.io.Serializable;

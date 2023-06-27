@@ -1,5 +1,6 @@
 package com.kot.dish.dao;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,24 +34,14 @@ public class DishDao {
 		return dishRepository.findAll(filter, pageable);
 	}
 
-	public Page<DishEntity> findAll(Specification specification) {
-		return (Page<DishEntity>) dishRepository.findAll(specification);
+	public List<DishEntity> findAll(Specification<DishEntity> specification) {
+		return dishRepository.findAll(specification);
 	}
 
 	public Page<DishEntity> findAll(Pageable pageable) {
-		Specification<DishEntity> specification = addSpecifications().and(addAdditionalSpecificationsForGet());
-
 		Sort sort = pageable.getSort();
 		PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 
-		return dishRepository.findAll(specification, pageRequest);
-	}
-
-	protected Specification<DishEntity> addSpecifications() {
-		return Specification.where(null);
-	}
-
-	protected Specification<DishEntity> addAdditionalSpecificationsForGet() {
-		return null;
+		return dishRepository.findAll(pageRequest);
 	}
 }

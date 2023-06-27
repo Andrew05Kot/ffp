@@ -1,4 +1,4 @@
-package com.kot.dish.filtering;
+package com.kot.dish.filtering.criteria_parser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
+
+import com.kot.dish.filtering.exception.IllegalFilteringOperationException;
 
 @Service
 public class FilteringCriteriaParser {
@@ -48,7 +50,6 @@ public class FilteringCriteriaParser {
 					} else {
 						convertedValue = conversionService.convert(value, filterableProperty.get().expectedType());
 					}
-					// check if a FilterableOperation is supported
 					if (!filterableProperty.get().operators().contains(operation)) {
 						throw new IllegalFilteringOperationException("Operation '" + operation + "' is not supported for property " + key);
 					}

@@ -1,4 +1,4 @@
-package com.kot.dish.filtering;
+package com.kot.dish.filtering.specification_builder;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -8,6 +8,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.jpa.domain.Specification;
+
+import com.kot.dish.filtering.criteria_parser.FilteringCriteria;
+import com.kot.dish.filtering.criteria_parser.FilteringOperation;
 
 public class StringComparisonSpecification<Entity> implements Specification<Entity> {
 

@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.kot.dish.dao.DishDao;
 import com.kot.dish.domain.DishEntity;
-import com.kot.dish.filtering.DishSpecificationsBuilder;
-import com.kot.dish.filtering.FilteringCriteria;
-import com.kot.dish.filtering.FilteringCriteriaParser;
+import com.kot.dish.filtering.criteria_parser.FilteringCriteria;
+import com.kot.dish.filtering.criteria_parser.FilteringCriteriaParser;
+import com.kot.dish.filtering.models.dish.DishSpecificationsBuilder;
 
 @Service
 public class DishService {
@@ -45,10 +45,9 @@ public class DishService {
 		return dishDao.findAll(filter, pageable);
 	}
 
-	public Page<DishEntity> findAll(Specification<DishEntity> specification) {
+	public List<DishEntity> findAll(Specification<DishEntity> specification) {
 		return dishDao.findAll(specification);
 	}
-
 
 	public Page<DishEntity> findAll(Pageable pageable) {
 		return dishDao.findAll(pageable);
@@ -58,7 +57,7 @@ public class DishService {
 		Specification<DishEntity> filteringSpecification = null;
 		if (filter != null) {
 			List<FilteringCriteria> searchCriteria = searchCriteriaParser.parseSearchCriteria(filter,
-					this.dishSpecificationsBuilder.getFilterableProperties());
+					this.dishSpecificationsBuilder.getAllowedFilterableProperties());
 			filteringSpecification = this.dishSpecificationsBuilder.buildSpecification(searchCriteria);
 		}
 		return filteringSpecification;
