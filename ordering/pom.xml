@@ -116,6 +116,16 @@
                 </configuration>
             </plugin>
 
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.kot.ordering.OrderingApplication</mainClass>
+                    <layout>JAR</layout>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>com.mysema.maven</groupId>
                 <artifactId>apt-maven-plugin</artifactId>
