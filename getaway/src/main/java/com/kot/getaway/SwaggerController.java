@@ -1,10 +1,4 @@
-package com.kot.apigetaway;
-
-import org.springdoc.core.AbstractSwaggerUiConfigProperties;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+package com.kot.getaway;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -12,6 +6,11 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import org.springdoc.core.AbstractSwaggerUiConfigProperties;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SwaggerController {

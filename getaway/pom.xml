@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>com.kot</groupId>
-    <artifactId>api-getaway</artifactId>
+    <artifactId>getaway</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>api-getaway</name>
     <description>api-getaway</description>
@@ -22,6 +22,7 @@
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
@@ -81,7 +82,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.kot.apigetaway.ApiGetawayApplication</mainClass>
+                    <mainClass>com.kot.apigetaway.GetawayApplication</mainClass>
                     <layout>JAR</layout>
                 </configuration>
             </plugin>

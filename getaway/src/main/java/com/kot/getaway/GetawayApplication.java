@@ -1,15 +1,19 @@
-package com.kot.apigetaway;
+package com.kot.getaway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.context.annotation.Import;
+import org.springframework.web.reactive.config.EnableWebFlux;
 
 @SpringBootApplication
 @EnableEurekaClient
-public class ApiGetawayApplication {
+@EnableWebFlux
+@Import(GatewayCorsConfig.class)
+public class GetawayApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ApiGetawayApplication.class, args);
+		SpringApplication.run(GetawayApplication.class, args);
 	}
 
 }
