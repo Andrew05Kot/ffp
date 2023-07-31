@@ -1,19 +1,19 @@
 package com.kot.getaway;
 
+import java.util.Collections;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
-import org.springframework.web.reactive.config.WebFluxConfigurer;
+import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
-public class GatewayCorsConfig implements WebFluxConfigurer {
+public class GatewayCorsConfig {
 
 	@Bean
 	public CorsWebFilter corsWebFilter() {
 		CorsConfiguration corsConfig = new CorsConfiguration();
-		corsConfig.addAllowedOrigin("http://localhost:4200");
+		corsConfig.setAllowedOrigins(Collections.singletonList("http://localhost:4200")); // Set the allowed origin explicitly
 		corsConfig.addAllowedHeader("*");
 		corsConfig.addAllowedMethod("*");
 
