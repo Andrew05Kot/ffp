@@ -32,6 +32,12 @@ public class EstablishmentEntity {
     @Column(name = "house_number")
     private String houseNumber;
 
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
+
     @CreatedDate
     @Column(name = "created_date", updatable = false)
     private Instant createdDate = Instant.now();
@@ -80,6 +86,22 @@ public class EstablishmentEntity {
         this.houseNumber = houseNumber;
     }
 
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
     public Instant getCreatedDate() {
         return createdDate;
     }
@@ -109,6 +131,8 @@ public class EstablishmentEntity {
             .append(city, that.city)
             .append(street, that.street)
             .append(houseNumber, that.houseNumber)
+            .append(latitude, that.latitude)
+            .append(longitude, that.longitude)
             .append(createdDate, that.createdDate)
             .append(lastModifiedDate, that.lastModifiedDate)
             .isEquals();
@@ -121,6 +145,8 @@ public class EstablishmentEntity {
             .append(city)
             .append(street)
             .append(houseNumber)
+            .append(latitude)
+            .append(longitude)
             .append(createdDate)
             .append(lastModifiedDate)
             .toHashCode();
@@ -133,6 +159,8 @@ public class EstablishmentEntity {
             ", country='" + country + '\'' +
             ", city='" + city + '\'' +
             ", street='" + street + '\'' +
+            ", latitude='" + latitude + '\'' +
+            ", longitude='" + longitude + '\'' +
             ", houseNumber='" + houseNumber + '\'' +
             ", createdDate='" + createdDate + '\'' +
             ", lastModifiedDate='" + lastModifiedDate + '\'' +

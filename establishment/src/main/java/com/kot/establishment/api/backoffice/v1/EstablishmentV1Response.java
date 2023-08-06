@@ -18,6 +18,10 @@ public class EstablishmentV1Response {
 
 	private String houseNumber;
 
+	private Double latitude;
+
+	private Double longitude;
+
 	private Instant createdDate;
 
 	private Instant lastModifiedDate;
@@ -28,6 +32,8 @@ public class EstablishmentV1Response {
 		this.city = entity.getCity();
 		this.street = entity.getStreet();
 		this.houseNumber = entity.getHouseNumber();
+		this.latitude = entity.getLatitude();
+		this.longitude = entity.getLongitude();
 		this.createdDate = entity.getCreatedDate();
 		this.lastModifiedDate = entity.getLastModifiedDate();
 	}
@@ -88,6 +94,22 @@ public class EstablishmentV1Response {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -101,6 +123,8 @@ public class EstablishmentV1Response {
 				.append(city, that.city)
 				.append(street, that.street)
 				.append(houseNumber, that.houseNumber)
+				.append(longitude, that.longitude)
+				.append(latitude, that.latitude)
 				.append(createdDate, that.createdDate)
 				.append(lastModifiedDate, that.lastModifiedDate)
 				.isEquals();
@@ -113,6 +137,8 @@ public class EstablishmentV1Response {
 				.append(city)
 				.append(street)
 				.append(houseNumber)
+				.append(longitude)
+				.append(latitude)
 				.append(createdDate)
 				.append(lastModifiedDate)
 				.toHashCode();
@@ -126,6 +152,8 @@ public class EstablishmentV1Response {
 				", city='" + city + '\'' +
 				", street='" + street + '\'' +
 				", houseNumber='" + houseNumber + '\'' +
+				", latitude='" + latitude + '\'' +
+				", longitude='" + longitude + '\'' +
 				", createdDate=" + createdDate +
 				", lastModifiedDate=" + lastModifiedDate +
 				'}';
