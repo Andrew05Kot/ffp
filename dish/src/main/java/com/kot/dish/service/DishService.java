@@ -37,6 +37,7 @@ public class DishService {
 	}
 
 	public Page<DishEntity> findAll(String search, Pageable pageable) {
+		System.out.println(search);
 		Specification<DishEntity> specification = buildSpecification(search);
 		return dishDao.findAll(specification, pageable);
 	}
