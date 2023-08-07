@@ -1,5 +1,8 @@
 package com.kot.establishment.filtering.criteria_parser;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +32,9 @@ public class FilteringCriteriaParser {
 	}
 
 	public List<FilteringCriteria> parseSearchCriteria(String searchQuery, List<FilteringProperty> filterableProperties) {
-		String[] searchParams = searchQuery.split(",");
+		String decodedQuery = doubleDecode(searchQuery);
+
+		String[] searchParams = decodedQuery.split(",");
 		List<FilteringCriteria> searchCriteria = new ArrayList<>();
 
 		for (String searchParameter : searchParams) {
@@ -61,5 +66,10 @@ public class FilteringCriteriaParser {
 			}
 		}
 		return searchCriteria;
+	}
+
+	private String doubleDecode(String encodedQuery) {
+		String firstDecode = URLDecoder.decode(encodedQuery, StandardCharsets.UTF_8);
+		return URLDecoder.decode(firstDecode, StandardCharsets.UTF_8);
 	}
 }

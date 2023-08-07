@@ -73,7 +73,6 @@ public class EstablishmentV1Controller {
 		Sort sort = getSort(sortDirection, sortField);
 		Pageable pageable = getResult(pageIndex, pageSize, sort);
 
-
 		Page<EstablishmentEntity> fetchedPage = search.isPresent() ? establishmentService.findAll(search.get(), pageable) : establishmentService.findAll(pageable);
 		return new ResponsePage<>(fetchedPage.stream().map(EstablishmentV1Response::new).toList(),
 				fetchedPage.getTotalElements(),

@@ -19,7 +19,6 @@ public class DoubleComparisonSpecification<Entity> implements Specification<Enti
 		this.searchCriteria = searchCriteria;
 	}
 
-
 	@Override
 	public Predicate toPredicate(Root<Entity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 		Double searchValue = Double.valueOf(searchCriteria.value().toString());
