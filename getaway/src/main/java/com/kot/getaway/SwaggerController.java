@@ -27,7 +27,6 @@ public class SwaggerController {
 		String url = new URI(uri.getScheme(), uri.getAuthority(), null, null, null).toString();
 		Map<String, Object> swaggerConfig = new LinkedHashMap<>();
 		List<AbstractSwaggerUiConfigProperties.SwaggerUrl> swaggerUrls = new LinkedList<>();
-		System.out.println("Services = " + discoveryClient.getServices());
 		discoveryClient.getServices().forEach(serviceName ->
 				swaggerUrls.add(
 						new AbstractSwaggerUiConfigProperties.SwaggerUrl(serviceName, url + "/" + serviceName + "/v3/api-docs", serviceName)

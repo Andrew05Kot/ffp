@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -84,6 +85,15 @@ public class DishV1Controller {
 	public List<DishV1Response> getAll() {
 		Page<DishEntity> fetchedPage = dishService.findAll();
 		return fetchedPage.stream().map(dishAPIMapper::domainToDto).toList();
+	}
+
+	@PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<DishV1Response> update(@PathVariable Long id,
+												 @RequestBody DishV1Request request) {
+		DishEntity entity = dishService.findById(id);
+		dishAPIMapper.copyProperties(request, entity);
+		entity = dishService.save(dishAPIMapper.dtoToDomain(request));
+		return new ResponseEntity<>(dishAPIMapper.domainToDto(entity), HttpStatus.OK);
 	}
 
 	private static Pageable getResult(Optional<Integer> pageIndex, Optional<Integer> pageSize, Sort sort) {

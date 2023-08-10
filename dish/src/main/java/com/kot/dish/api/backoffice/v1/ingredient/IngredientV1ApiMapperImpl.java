@@ -44,4 +44,9 @@ public class IngredientV1ApiMapperImpl implements ApiV1Mapper<IngredientEntity, 
 		return entity;
 	}
 
+	@Override
+	public void copyProperties(IngredientV1Response ingredientV1Response, IngredientEntity ingredientEntity) {
+
+	}
+
 }

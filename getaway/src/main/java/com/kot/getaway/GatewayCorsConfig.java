@@ -13,7 +13,7 @@ public class GatewayCorsConfig {
 	@Bean
 	public CorsWebFilter corsWebFilter() {
 		CorsConfiguration corsConfig = new CorsConfiguration();
-		corsConfig.setAllowedOrigins(Collections.singletonList("http://localhost:4200")); // Set the allowed origin explicitly
+		corsConfig.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
 		corsConfig.addAllowedHeader("*");
 		corsConfig.addAllowedMethod("*");
 

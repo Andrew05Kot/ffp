@@ -2,7 +2,6 @@ package com.kot.establishment.api.backoffice.v1;
 
 import java.util.Optional;
 import javax.validation.groups.Default;
-import com.querydsl.core.types.Predicate;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
