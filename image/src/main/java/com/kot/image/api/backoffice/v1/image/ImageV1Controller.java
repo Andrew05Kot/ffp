@@ -28,12 +28,16 @@ import com.kot.image.exception.WrongFileFormatException;
 @Tag(name = "Backoffice API V1 for sending files to the Blob storage")
 public class ImageV1Controller {
 
-	public static final String API_URL = ApiInfo.API_PREFIX + ApiInfo.BACKOFFICE_VERSION_V1 + ApiInfo.IMAGE_ENDPOINT;
+	public static final String API_URL = ApiInfo.API_PREFIX
+			+ ApiInfo.BACKOFFICE_VERSION_V1
+			+ ApiInfo.IMAGE_ENDPOINT;
 
 	@Autowired
 	private ImageV1ApiService imageV1ApiService;
 
-	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/upload",
+			consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "406", description = "Not acceptable format of file"),
@@ -41,7 +45,8 @@ public class ImageV1Controller {
 			@ApiResponse(responseCode = "200", description = "Successful processed file")
 	})
 	@Operation(description = "Upload image file")
-	public ImageV1Response upload(@RequestParam("file") MultipartFile file) throws WrongFileFormatException, MaxFileSizeException, IOException {
+	public ImageV1Response upload(@RequestParam("file") MultipartFile file)
+			throws WrongFileFormatException, MaxFileSizeException, IOException {
 		return imageV1ApiService.uploadFile(file);
 	}
 

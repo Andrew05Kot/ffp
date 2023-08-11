@@ -92,7 +92,7 @@ public class DishV1Controller {
 												 @RequestBody DishV1Request request) {
 		DishEntity entity = dishService.findById(id);
 		dishAPIMapper.copyProperties(request, entity);
-		entity = dishService.save(dishAPIMapper.dtoToDomain(request));
+		entity = dishService.save(entity);
 		return new ResponseEntity<>(dishAPIMapper.domainToDto(entity), HttpStatus.OK);
 	}
 
