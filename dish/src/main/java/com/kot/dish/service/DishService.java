@@ -24,8 +24,12 @@ public class DishService {
 
 	private final DishSpecificationsBuilder dishSpecificationsBuilder = new DishSpecificationsBuilder();
 
-	public DishEntity save(DishEntity dish) {
-		return dishDao.save(dish, dish.getId());
+	public DishEntity create(DishEntity dish) {
+		return dishDao.create(dish);
+	}
+
+	public DishEntity update(DishEntity dish, Long id) {
+		return dishDao.update(dish, id);
 	}
 
 	public DishEntity findById(Long id) {

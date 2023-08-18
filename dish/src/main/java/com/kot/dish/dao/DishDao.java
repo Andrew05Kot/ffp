@@ -18,7 +18,11 @@ public class DishDao {
 	@Autowired
 	private DishRepository dishRepository;
 
-	public DishEntity save(DishEntity entity, Long id) {
+	public DishEntity create(DishEntity entity) {
+		return this.dishRepository.save(entity);
+	}
+
+	public DishEntity update(DishEntity entity, Long id) {
 		return this.dishRepository.save(entity);
 	}
 

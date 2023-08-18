@@ -53,7 +53,7 @@ public class DishV1Controller {
 
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<DishV1Response> create(@RequestBody DishV1Request request) {
-		DishEntity model = dishService.save(dishAPIMapper.dtoToDomain(request));
+		DishEntity model = dishService.create(dishAPIMapper.dtoToDomain(request));
 		return new ResponseEntity<>(dishAPIMapper.domainToDto(model), HttpStatus.OK);
 	}
 
@@ -92,7 +92,7 @@ public class DishV1Controller {
 												 @RequestBody DishV1Request request) {
 		DishEntity entity = dishService.findById(id);
 		dishAPIMapper.copyProperties(request, entity);
-		entity = dishService.save(entity);
+		entity = dishService.update(entity, entity.getId());
 		return new ResponseEntity<>(dishAPIMapper.domainToDto(entity), HttpStatus.OK);
 	}
 
