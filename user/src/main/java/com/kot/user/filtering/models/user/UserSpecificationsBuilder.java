@@ -20,7 +20,11 @@ public class UserSpecificationsBuilder extends EntityFilterSpecificationsBuilder
 				new FilteringProperty("lastName",
 						String.class,
 						StringComparisonSpecificationBuilder.SUPPORTED_OPERATORS,
-						new StringComparisonSpecificationBuilder<UserEntity>())
+						new StringComparisonSpecificationBuilder<UserEntity>()),
+				new FilteringProperty("fullName",
+						String.class,
+						UserFullNameSpecificationBuilder.SUPPORTED_OPERATORS,
+						new UserFullNameSpecificationBuilder<UserEntity>())
 		);
 	}
 }

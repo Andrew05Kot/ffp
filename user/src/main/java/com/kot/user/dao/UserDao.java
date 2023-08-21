@@ -4,9 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +14,8 @@ import com.kot.user.repository.UserRepository;
 @Service
 public class UserDao {
 
-	@Autowired private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
 	public UserEntity create(UserEntity entity) {
 		return userRepository.save(entity);
@@ -43,9 +42,6 @@ public class UserDao {
 	}
 
 	public Page<UserEntity> findAll(Pageable pageable) {
-		Sort sort = pageable.getSort();
-		PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
-
-		return userRepository.findAll(pageRequest);
+		return userRepository.findAll(pageable);
 	}
 }

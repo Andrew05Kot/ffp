@@ -48,15 +48,8 @@ public class OrderDao {
 	}
 
 	public Page<OrderEntity> findAll(Pageable pageable) {
-
 		Specification<OrderEntity> specification = addSpecifications().and(addAdditionalSpecificationsForGet());
-
-		Sort sort = pageable.getSort();
-		PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
-
-		Page<OrderEntity> page = orderRepository.findAll(specification, pageRequest);
-
-		return page;
+		return orderRepository.findAll(specification, pageable);
 	}
 
 	protected Specification<OrderEntity> addSpecifications() {

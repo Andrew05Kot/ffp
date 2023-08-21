@@ -6,9 +6,7 @@ import javax.persistence.EntityNotFoundException;
 import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -62,10 +60,7 @@ public class EstablishmentDao {
 	}
 
 	public Page<EstablishmentEntity> findAll(Pageable pageable) {
-		Sort sort = pageable.getSort();
-		PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
-
-		return establishmentRepository.findAll(pageRequest);
+		return establishmentRepository.findAll(pageable);
 	}
 
 }

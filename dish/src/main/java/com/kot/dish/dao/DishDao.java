@@ -3,9 +3,7 @@ package com.kot.dish.dao;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -43,9 +41,6 @@ public class DishDao {
 	}
 
 	public Page<DishEntity> findAll(Pageable pageable) {
-		Sort sort = pageable.getSort();
-		PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
-
-		return dishRepository.findAll(pageRequest);
+		return dishRepository.findAll(pageable);
 	}
 }

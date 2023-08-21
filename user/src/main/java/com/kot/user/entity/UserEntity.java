@@ -1,5 +1,6 @@
 package com.kot.user.entity;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -11,6 +12,8 @@ import javax.persistence.TemporalType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity(name = "ffp_user")
 public class UserEntity {
@@ -42,76 +45,92 @@ public class UserEntity {
 	@Column(name = "house_number")
 	private String houseNumber;
 
+	@CreatedDate
+	@Column(name = "created_date", updatable = false)
+	private Instant createdDate = Instant.now();
+
+	@LastModifiedDate
+	@Column(name = "last_modified_date")
+	private Instant lastModifiedDate = Instant.now();
+
 	public UUID getId() {
 		return id;
 	}
 
-	public UserEntity setId(UUID id) {
+	public void setId(UUID id) {
 		this.id = id;
-		return this;
 	}
 
 	public String getFirstName() {
 		return firstName;
 	}
 
-	public UserEntity setFirstName(String firstName) {
+	public void setFirstName(String firstName) {
 		this.firstName = firstName;
-		return this;
 	}
 
 	public String getLastName() {
 		return lastName;
 	}
 
-	public UserEntity setLastName(String lastName) {
+	public void setLastName(String lastName) {
 		this.lastName = lastName;
-		return this;
 	}
 
 	public Date getBirthday() {
 		return birthday;
 	}
 
-	public UserEntity setBirthday(Date birthday) {
+	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
-		return this;
 	}
 
 	public String getCountry() {
 		return country;
 	}
 
-	public UserEntity setCountry(String country) {
+	public void setCountry(String country) {
 		this.country = country;
-		return this;
 	}
 
 	public String getCity() {
 		return city;
 	}
 
-	public UserEntity setCity(String city) {
+	public void setCity(String city) {
 		this.city = city;
-		return this;
 	}
 
 	public String getStreet() {
 		return street;
 	}
 
-	public UserEntity setStreet(String street) {
+	public void setStreet(String street) {
 		this.street = street;
-		return this;
 	}
 
 	public String getHouseNumber() {
 		return houseNumber;
 	}
 
-	public UserEntity setHouseNumber(String houseNumber) {
+	public void setHouseNumber(String houseNumber) {
 		this.houseNumber = houseNumber;
-		return this;
+	}
+
+	public Instant getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Instant createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Instant getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Instant lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
 
 	@Override
@@ -125,6 +144,8 @@ public class UserEntity {
 				", city='" + city + '\'' +
 				", street='" + street + '\'' +
 				", houseNumber='" + houseNumber + '\'' +
+				", createdDate='" + createdDate + '\'' +
+				", lastModifiedDate='" + lastModifiedDate + '\'' +
 				'}';
 	}
 
@@ -145,6 +166,8 @@ public class UserEntity {
 				.append(city, that.city)
 				.append(street, that.street)
 				.append(houseNumber, that.houseNumber)
+				.append(createdDate, that.createdDate)
+				.append(lastModifiedDate, that.lastModifiedDate)
 				.isEquals();
 	}
 
@@ -159,6 +182,8 @@ public class UserEntity {
 				.append(city)
 				.append(street)
 				.append(houseNumber)
+				.append(createdDate)
+				.append(lastModifiedDate)
 				.toHashCode();
 	}
 }
