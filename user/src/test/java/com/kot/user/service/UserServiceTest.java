@@ -3,10 +3,9 @@ package com.kot.user.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +19,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import com.kot.user.dao.UserDao;
 import com.kot.user.entity.UserEntity;
+import com.kot.user.filtering.criteria_parser.FilteringCriteriaParser;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -29,6 +29,9 @@ public class UserServiceTest {
 
 	@Mock
 	private UserDao userDao;
+
+	@Mock
+	private FilteringCriteriaParser filteringCriteriaParser;
 
 	@BeforeEach
 	public void setUp() {
@@ -86,12 +89,14 @@ public class UserServiceTest {
 
 	@Test
 	public void testFindAllWithSpecification() {
-		Specification<UserEntity> specification = mock(Specification.class);
-		List<UserEntity> mockUsers = new ArrayList<>();
-		when(userDao.findAll(specification)).thenReturn(mockUsers);
+		Specification<UserEntity> filter = mock(Specification.class);
+		Pageable pageable = mock(Pageable.class);
+		Page<UserEntity> mockPage = mock(Page.class);
+		when(userDao.findAll(filter, pageable)).thenReturn(mockPage);
 
-		List<UserEntity> resultUsers = userService.findAll(specification);
-		assertEquals(mockUsers, resultUsers);
+		Page<UserEntity> resultPage = userService.findAll(filter, pageable);
+		verify(userDao).findAll(filter, pageable);
+		assertEquals(mockPage, resultPage);
 	}
 
 	@Test
