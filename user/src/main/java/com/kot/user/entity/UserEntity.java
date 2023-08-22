@@ -45,6 +45,9 @@ public class UserEntity {
 	@Column(name = "house_number")
 	private String houseNumber;
 
+	@Column(name = "image_Url")
+	private String imageUrl;
+
 	@CreatedDate
 	@Column(name = "created_date", updatable = false)
 	private Instant createdDate = Instant.now();
@@ -117,6 +120,14 @@ public class UserEntity {
 		this.houseNumber = houseNumber;
 	}
 
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
 	public Instant getCreatedDate() {
 		return createdDate;
 	}
@@ -143,6 +154,7 @@ public class UserEntity {
 				", country='" + country + '\'' +
 				", city='" + city + '\'' +
 				", street='" + street + '\'' +
+				", imageUrl='" + imageUrl + '\'' +
 				", houseNumber='" + houseNumber + '\'' +
 				", createdDate='" + createdDate + '\'' +
 				", lastModifiedDate='" + lastModifiedDate + '\'' +
@@ -166,6 +178,7 @@ public class UserEntity {
 				.append(city, that.city)
 				.append(street, that.street)
 				.append(houseNumber, that.houseNumber)
+				.append(imageUrl, that.imageUrl)
 				.append(createdDate, that.createdDate)
 				.append(lastModifiedDate, that.lastModifiedDate)
 				.isEquals();
@@ -182,6 +195,7 @@ public class UserEntity {
 				.append(city)
 				.append(street)
 				.append(houseNumber)
+				.append(imageUrl)
 				.append(createdDate)
 				.append(lastModifiedDate)
 				.toHashCode();

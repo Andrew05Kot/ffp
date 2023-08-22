@@ -3,7 +3,6 @@ package com.kot.establishment.dao;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
-import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,14 +24,6 @@ public class EstablishmentDao {
 
 	public EstablishmentEntity findById(Long id) {
 		Optional<EstablishmentEntity> establishmentEntity = establishmentRepository.findById(id);
-		if (establishmentEntity.isEmpty()) {
-			throw new EntityNotFoundException();
-		}
-		return establishmentEntity.get();
-	}
-
-	public EstablishmentEntity findOne(Predicate predicate) {
-		Optional<EstablishmentEntity> establishmentEntity = establishmentRepository.findOne(predicate);
 		if (establishmentEntity.isEmpty()) {
 			throw new EntityNotFoundException();
 		}

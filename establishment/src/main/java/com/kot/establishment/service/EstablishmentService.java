@@ -1,7 +1,6 @@
 package com.kot.establishment.service;
 
 import java.util.List;
-import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,10 +34,6 @@ public class EstablishmentService {
 
 	public EstablishmentEntity findById(Long id) {
 		return establishmentDao.findById(id);
-	}
-
-	public EstablishmentEntity findOne(Predicate predicate) {
-		return establishmentDao.findOne(predicate);
 	}
 
 	public void delete(Long id) {

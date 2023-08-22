@@ -18,6 +18,7 @@ public class UserV1ApiMapperImpl implements UserV1ApiMapper {
 		response.setCity(entity.getCity());
 		response.setStreet(entity.getStreet());
 		response.setHouseNumber(entity.getHouseNumber());
+		response.setImageUrl(entity.getImageUrl());
 		response.setCreatedDate(entity.getCreatedDate());
 		response.setLastModifiedDate(entity.getLastModifiedDate());
 		return response;

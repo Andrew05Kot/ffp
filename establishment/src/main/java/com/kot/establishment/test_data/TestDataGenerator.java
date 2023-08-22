@@ -218,7 +218,7 @@ public class TestDataGenerator {
 		establishmentRepository.save(establishmentBuilder
 				.setCountry("Ukraine")
 				.setCity("Kryvyi Rih")
-				.setStreet("Haharina ave.")
+				.setStreet("Haharina ave")
 				.setHouseNumber("2")
 				.setLatitude(47.87193)
 				.setLongitude(33.24150)

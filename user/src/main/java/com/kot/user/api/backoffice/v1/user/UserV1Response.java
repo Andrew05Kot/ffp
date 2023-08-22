@@ -16,6 +16,7 @@ public class UserV1Response {
 	private String city;
 	private String street;
 	private String houseNumber;
+	private String imageUrl;
 	private Instant createdDate;
 	private Instant lastModifiedDate;
 
@@ -99,6 +100,14 @@ public class UserV1Response {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -115,6 +124,7 @@ public class UserV1Response {
 				.append(city, response.city)
 				.append(street, response.street)
 				.append(houseNumber, response.houseNumber)
+				.append(imageUrl, response.imageUrl)
 				.append(createdDate, response.createdDate)
 				.append(lastModifiedDate, response.lastModifiedDate)
 				.isEquals();
@@ -130,6 +140,7 @@ public class UserV1Response {
 				.append(city)
 				.append(street)
 				.append(houseNumber)
+				.append(imageUrl)
 				.append(createdDate)
 				.append(lastModifiedDate)
 				.toHashCode();
@@ -146,6 +157,7 @@ public class UserV1Response {
 				", city='" + city + '\'' +
 				", street='" + street + '\'' +
 				", houseNumber='" + houseNumber + '\'' +
+				", imageUrl='" + imageUrl + '\'' +
 				", createdDate=" + createdDate +
 				", lastModifiedDate=" + lastModifiedDate +
 				'}';
