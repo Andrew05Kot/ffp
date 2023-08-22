@@ -43,7 +43,10 @@ public class UserV1Controller {
 	@GetMapping("/{id}")
 	public ResponseEntity<UserV1Response> getById(@PathVariable String id) {
 		UserEntity entity = userService.findById(id);
-		return new ResponseEntity<>(userV1ApiMapper.domainToDto(entity), HttpStatus.OK);
+		if (entity != null) {
+			return new ResponseEntity<>(userV1ApiMapper.domainToDto(entity), HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -67,7 +70,7 @@ public class UserV1Controller {
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/unpaged")
 	public List<UserV1Response> getAll() {
 		Page<UserEntity> fetchedPage = userService.findAll();
-		return fetchedPage.stream().map(userV1ApiMapper::domainToDto).toList();
+		return fetchedPage.getContent().stream().map(userV1ApiMapper::domainToDto).toList();
 	}
 
 	private static Pageable getResult(Optional<Integer> pageIndex, Optional<Integer> pageSize, Sort sort) {

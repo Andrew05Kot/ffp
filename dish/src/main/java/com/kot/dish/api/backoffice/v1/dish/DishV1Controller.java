@@ -84,7 +84,7 @@ public class DishV1Controller {
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/unpaged")
 	public List<DishV1Response> getAll() {
 		Page<DishEntity> fetchedPage = dishService.findAll();
-		return fetchedPage.stream().map(dishAPIMapper::domainToDto).toList();
+		return fetchedPage.getContent().stream().map(dishAPIMapper::domainToDto).toList();
 	}
 
 	@PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

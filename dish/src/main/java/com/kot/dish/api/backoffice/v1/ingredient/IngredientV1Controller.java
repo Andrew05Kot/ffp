@@ -69,7 +69,7 @@ public class IngredientV1Controller {
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/unpaged")
 	public List<IngredientV1Response> getAll() {
 		Page<IngredientEntity> fetchedPage = ingredientService.findAll();
-		return fetchedPage.stream().map(ingredientV1Mapper::domainToDto).toList();
+		return fetchedPage.getContent().stream().map(ingredientV1Mapper::domainToDto).toList();
 	}
 
 	private static Pageable getResult(Optional<Integer> pageIndex, Optional<Integer> pageSize, Sort sort) {
