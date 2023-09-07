@@ -1,10 +1,8 @@
 package com.kot.user.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +13,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 
 import com.kot.user.dao.UserDao;
 import com.kot.user.entity.UserEntity;
@@ -24,88 +21,85 @@ import com.kot.user.filtering.criteria_parser.FilteringCriteriaParser;
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
-	@InjectMocks
-	private UserService userService;
+    @InjectMocks
+    private UserService userService;
 
-	@Mock
-	private UserDao userDao;
+    @Mock
+    private UserDao userDao;
 
-	@Mock
-	private FilteringCriteriaParser filteringCriteriaParser;
+    @Mock
+    private FilteringCriteriaParser filteringCriteriaParser;
 
-	@BeforeEach
-	public void setUp() {
-		MockitoAnnotations.openMocks(this);
-	}
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
-	@Test
-	public void testCreate() {
-		UserEntity user = new UserEntity();
-		when(userDao.create(user)).thenReturn(user);
+    @Test
+    public void testCreate() {
+        UserEntity user = new UserEntity();
+        when(userDao.create(user)).thenReturn(user);
 
-		UserEntity createdUser = userService.create(user);
-		assertEquals(user, createdUser);
-	}
+        UserEntity createdUser = userService.create(user);
+        assertEquals(user, createdUser);
+    }
 
-	@Test
-	public void testUpdate() {
-		UserEntity user = new UserEntity();
-		String userId = "123";
-		when(userDao.update(user, userId)).thenReturn(user);
+    @Test
+    public void testUpdate() {
+        UserEntity user = new UserEntity();
+        String userId = "123";
+        when(userDao.update(user, userId)).thenReturn(user);
 
-		UserEntity updatedUser = userService.update(user, userId);
-		assertEquals(user, updatedUser);
-	}
+        UserEntity updatedUser = userService.update(user, userId);
+        assertEquals(user, updatedUser);
+    }
 
-	@Test
-	public void testFindById() {
-		String userId = "123";
-		UserEntity user = new UserEntity();
-		when(userDao.findById(userId)).thenReturn(user);
+    @Test
+    public void testFindById() {
+        String userId = "123";
+        UserEntity user = new UserEntity();
+        when(userDao.findById(userId)).thenReturn(user);
 
-		UserEntity foundUser = userService.findById(userId);
-		assertEquals(user, foundUser);
-	}
+        UserEntity foundUser = userService.findById(userId);
+        assertEquals(user, foundUser);
+    }
 
-	@Test
-	public void testFindAllDefault() {
-		Page<UserEntity> mockPage = mock(Page.class);
-		when(userDao.findAll(any(Specification.class), any(Pageable.class))).thenReturn(mockPage);
+    @Test
+    public void testFindAllDefault() {
+        Page<UserEntity> mockPage = mock(Page.class);
+        when(userDao.findAll(any(), any())).thenReturn(mockPage);
 
-		Page<UserEntity> resultPage = userService.findAll();
-		assertEquals(mockPage, resultPage);
-	}
+        Page<UserEntity> resultPage = userService.findAll("filter test", Pageable.unpaged());
+        assertEquals(mockPage, resultPage);
+    }
 
-	@Test
-	public void testFindAllWithFilterAndPageable() {
-		Specification<UserEntity> filter = mock(Specification.class);
-		Pageable pageable = mock(Pageable.class);
-		Page<UserEntity> mockPage = mock(Page.class);
-		when(userDao.findAll(filter, pageable)).thenReturn(mockPage);
+    @Test
+    public void testFindAllWithFilterAndPageable() {
+        Pageable pageable = mock(Pageable.class);
+        Page<UserEntity> mockPage = mock(Page.class);
+        when(userDao.findAll(anyString(), eq(pageable))).thenReturn(mockPage);
 
-		Page<UserEntity> resultPage = userService.findAll(filter, pageable);
-		assertEquals(mockPage, resultPage);
-	}
+        Page<UserEntity> resultPage = userService.findAll("rand filter", pageable);
+        assertEquals(mockPage, resultPage);
+    }
 
-	@Test
-	public void testFindAllWithSpecification() {
-		Specification<UserEntity> filter = mock(Specification.class);
-		Pageable pageable = mock(Pageable.class);
-		Page<UserEntity> mockPage = mock(Page.class);
-		when(userDao.findAll(filter, pageable)).thenReturn(mockPage);
+    @Test
+    public void testFindAllWithSpecification() {
+        Pageable pageable = mock(Pageable.class);
+        Page<UserEntity> mockPage = mock(Page.class);
+        when(userDao.findAll(anyString(), eq(pageable))).thenReturn(mockPage);
+        Page<UserEntity> resultPage = userService.findAll("rand filter", pageable);
+        verify(userDao).findAll(eq("rand filter"), eq(pageable));
+        assertEquals(mockPage, resultPage);
+    }
 
-		Page<UserEntity> resultPage = userService.findAll(filter, pageable);
-		verify(userDao).findAll(filter, pageable);
-		assertEquals(mockPage, resultPage);
-	}
+    @Test
+    public void testFindAllPageable() {
+        Pageable pageable = mock(Pageable.class);
+        Page<UserEntity> mockPage = mock(Page.class);
+        when(userDao.findAll(pageable)).thenReturn(mockPage);
 
-	@Test
-	public void testFindAllPageable() {
-		Pageable pageable = mock(Pageable.class);
-		Page<UserEntity> mockPage = mock(Page.class);
-		when(userDao.findAll(pageable)).thenReturn(mockPage);
-
-		Page<UserEntity> resultPage = userService.findAll(pageable);
-		assertEquals(mockPage, resultPage);
-	}
+        Page<UserEntity> resultPage = userService.findAll(pageable);
+        assertEquals(mockPage, resultPage);
+    }
 }

@@ -1,4 +1,4 @@
-package com.kot.ordering.domain;
+package com.kot.ordering.entity;
 
 public enum PaymentMethod {
 

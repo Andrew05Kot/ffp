@@ -22,7 +22,7 @@ import com.kot.dish.repository.RecipeRepository;
 
 @Component
 @Profile("testdata")
-public class TestDataGenerator {
+public class DishesTestDataGenerator {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
@@ -111,7 +111,6 @@ public class TestDataGenerator {
 				this::getPepperoniPizzaRecipe
 		);
 
-
 		createAndSave("Margherita Pizza",
 				"Pizza",
 				BigDecimal.valueOf(3.05),
@@ -186,14 +185,14 @@ public class TestDataGenerator {
 	}
 
 	private void createAndSave(String name, String categoryName, BigDecimal price, String description, String imageUrl, Function<DishEntity, RecipeEntity> recipeProvider) {
-		DishEntity hamburger = new DishEntity();
-		hamburger.setName(name);
-		hamburger.setCategory(categories.get(categoryName));
-		hamburger.setPrice(price);
-		hamburger.setDescription(description);
-		hamburger.setImageUrl(imageUrl);
-		hamburger.setRecipe(recipeProvider.apply(hamburger));
-		dishRepository.save(hamburger);
+		DishEntity dishEntity = new DishEntity();
+		dishEntity.setName(name);
+		dishEntity.setCategory(categories.get(categoryName));
+		dishEntity.setPrice(price);
+		dishEntity.setDescription(description);
+		dishEntity.setImageUrl(imageUrl);
+		dishEntity.setRecipe(recipeProvider.apply(dishEntity));
+		dishRepository.save(dishEntity);
 	}
 
 	public Map<String, CategoryEntity> buildAndSaveCategories() {

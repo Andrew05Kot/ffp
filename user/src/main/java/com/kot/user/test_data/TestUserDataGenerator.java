@@ -6,12 +6,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.kot.user.entity.UserEntity;
 import com.kot.user.repository.UserRepository;
 
 @Component
+@Profile("demo")
 public class TestUserDataGenerator {
 
 	@Autowired
@@ -57,7 +59,8 @@ public class TestUserDataGenerator {
 
 	private void buildAndSaveUsers() {
 		for (int i = 0; i < 5000; i++) {
-			createAndSave();
+			UserEntity userEntity = createAndSave();
+			System.out.println(userEntity.getId());
 		}
 	}
 

@@ -1,62 +1,113 @@
 package com.kot.ordering.service.order;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.time.ZonedDateTime;
 import java.util.List;
-import com.kot.ordering.dao.OrderDao;
-import com.kot.ordering.domain.OrderEntity;
-import com.querydsl.core.types.dsl.BooleanExpression;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import com.kot.ordering.client.DishV1Client;
+import com.kot.ordering.client.FraudDishV1Response;
+import com.kot.ordering.dao.OrderDao;
+import com.kot.ordering.entity.OrderEntity;
+import com.kot.ordering.model.Order;
+import com.kot.ordering.service.delivery_address.DeliveryAddressService;
+import com.kot.ordering.service.user_detail.UserDetailService;
 
 @Service
 public class OrderService {
 
-	@Autowired
-	private OrderDao orderDao;
+    @Autowired
+    private OrderDao orderDao;
 
-	public OrderEntity save(OrderEntity model) {
-		model.setLastModifiedDate(ZonedDateTime.now());
-		return orderDao.save(model, model.getId());
-	}
+    @Autowired
+    private DishV1Client dishV1Client;
 
-	public OrderEntity findById(Long id) {
-		return orderDao.findById(id);
-	}
+    @Autowired
+    private DeliveryAddressService deliveryAddressService;
 
-	public Page<OrderEntity> findAll() {
-		return orderDao.findAll();
-	}
+    @Autowired
+    private UserDetailService userDetailService;
 
-	public Page<OrderEntity> findAll(Sort sort) {
-		return orderDao.findAll();
-	}
+    public OrderEntity create(Order model) {
+        model.setTotalPrice(calculateTotalPrice(model.getSelectedDishes()));
+        model.setLastModifiedDate(ZonedDateTime.now());
 
-	public List<OrderEntity> findAll(Sort sort, BooleanExpression booleanExpression) {
-		return orderDao.findAll(booleanExpression);
-	}
+        OrderEntity entity = orderDao.create(model.getEntity());
 
-	public List<OrderEntity> findAllList(Sort sort) {
-		return orderDao.findAll(sort);
-	}
+        onCreatedOrder(entity, model);
 
-	public List<OrderEntity> findAll(BooleanExpression booleanExpression) {
-		return orderDao.findAll(booleanExpression);
-	}
+        return entity;
+    }
 
-	public Page<OrderEntity> findAll(Specification<OrderEntity> specification) {
-		return orderDao.findAll(specification);
-	}
+    private void onCreatedOrder(OrderEntity entity, Order model) {
+        if (model.getDeliveryAddress() != null) {
+            entity.setDeliveryAddress(deliveryAddressService.create(model.getDeliveryAddress(), entity));
+        }
+        if (model.getUserDetail() != null) {
+            entity.setUserDetail(userDetailService.create(model.getUserDetail(), entity));
+        }
+    }
 
-	public Page<OrderEntity> findAll(Pageable pageable) {
-		return orderDao.findAll(pageable);
-	}
+    private BigDecimal calculateTotalPrice(List<Long> selectedDishesIds) {
+        BigDecimal totalPrice = BigDecimal.ZERO;
+        MathContext mc = new MathContext(3);
+        for (Long dishId : selectedDishesIds) {
+            FraudDishV1Response dish = dishV1Client.getDishById(dishId);
+            totalPrice = totalPrice.add(dish.getPrice(), mc);
+        }
+        return totalPrice;
+    }
 
-	public Page<OrderEntity> findAll(Specification<OrderEntity> filter, Pageable pageable) {
-		return orderDao.findAll(filter, pageable);
-	}
+    public Order findById(UUID id) {
+        OrderEntity entity = orderDao.findById(id);
+        return new Order(entity);
+    }
+
+    public Page<Order> findAll() {
+        Page<OrderEntity> orderEntitiesPage = orderDao.findAll();
+        List<Order> ordersPage = orderEntitiesPage
+                .getContent()
+                .stream()
+                .map(Order::new)
+                .toList();
+
+        return new PageImpl<>(ordersPage, orderEntitiesPage.getPageable(), orderEntitiesPage.getTotalElements());
+    }
+
+    public Page<Order> findAll(String search, Pageable pageable) {
+        Page<OrderEntity> orderEntitiesPage = orderDao.findAll(search, pageable);
+        List<Order> ordersPage = orderEntitiesPage
+                .getContent()
+                .stream()
+                .map(Order::new)
+                .toList();
+
+        return new PageImpl<>(ordersPage, orderEntitiesPage.getPageable(), orderEntitiesPage.getTotalElements());
+    }
+
+    public List<Order> findAll(String search) {
+        return orderDao.findAll(search)
+                .stream()
+                .map(Order::new)
+                .toList();
+
+    }
+
+    public Page<Order> findAll(Pageable pageable) {
+        Page<OrderEntity> orderEntitiesPage = orderDao.findAll(pageable);
+        List<Order> ordersPage = orderEntitiesPage
+                .getContent()
+                .stream()
+                .map(Order::new)
+                .toList();
+
+        return new PageImpl<>(ordersPage, orderEntitiesPage.getPageable(), orderEntitiesPage.getTotalElements());
+    }
 
 }

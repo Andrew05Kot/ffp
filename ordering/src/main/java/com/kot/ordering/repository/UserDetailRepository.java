@@ -6,10 +6,14 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import com.kot.ordering.entity.OrderEntity;
+import com.kot.ordering.entity.UserDetailEntity;
 
 @Repository
-public interface OrderRepository extends CrudRepository<OrderEntity, UUID>,
-        JpaSpecificationExecutor<OrderEntity>,
-        PagingAndSortingRepository<OrderEntity, UUID> {
+public interface UserDetailRepository extends CrudRepository<UserDetailEntity, UUID>,
+        JpaSpecificationExecutor<UserDetailEntity>,
+        PagingAndSortingRepository<UserDetailEntity, UUID> {
+
+    UserDetailEntity findByOrder_Id(UUID orderId);
+
 }
+

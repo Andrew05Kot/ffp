@@ -3,15 +3,18 @@ package com.kot.ordering.api.backoffice.v1;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.UUID;
+
 import com.kot.ordering.client.FraudDishV1Response;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import com.kot.ordering.domain.PaymentMethod;
+import com.kot.ordering.entity.PaymentMethod;
+import com.kot.ordering.model.UserDetail;
 
 public class OrderV1Response {
 
-	private Long id;
+	private UUID id;
 
 	private ZonedDateTime createdDate;
 
@@ -33,11 +36,13 @@ public class OrderV1Response {
 
 	private List<String> selectedCategories;
 
-	public Long getId() {
+	private UserDetail userDetail;
+
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
@@ -119,6 +124,14 @@ public class OrderV1Response {
 
 	public void setSelectedCategories(List<String> selectedCategories) {
 		this.selectedCategories = selectedCategories;
+	}
+
+	public UserDetail getUserDetail() {
+		return userDetail;
+	}
+
+	public void setUserDetail(UserDetail userDetail) {
+		this.userDetail = userDetail;
 	}
 
 	@Override

@@ -18,186 +18,215 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Entity(name = "ffp_user")
 public class UserEntity {
 
-	@Id
-	@GeneratedValue(generator = "uuid-hibernate-generator")
-	@GenericGenerator(name = "uuid-hibernate-generator", strategy = "org.hibernate.id.UUIDGenerator")
-	private UUID id;
+    @Id
+    @GeneratedValue(generator = "uuid-hibernate-generator")
+    @GenericGenerator(name = "uuid-hibernate-generator", strategy = "org.hibernate.id.UUIDGenerator")
+    private UUID id;
 
-	@Column(name = "first_name")
-	private String firstName;
+    @Column(name = "first_name")
+    private String firstName;
 
-	@Column(name = "last_name")
-	private String lastName;
+    @Column(name = "last_name")
+    private String lastName;
 
-	@Column(name = "birthday")
-	@Temporal(TemporalType.DATE)
-	private Date birthday;
+    @Column(name = "email")
+    private String email;
 
-	@Column(name = "country")
-	private String country;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
-	@Column(name = "city")
-	private String city;
+    @Column(name = "birthday")
+    @Temporal(TemporalType.DATE)
+    private Date birthday;
 
-	@Column(name = "street")
-	private String street;
+    @Column(name = "country")
+    private String country;
 
-	@Column(name = "house_number")
-	private String houseNumber;
+    @Column(name = "city")
+    private String city;
 
-	@Column(name = "image_Url")
-	private String imageUrl;
+    @Column(name = "street")
+    private String street;
 
-	@CreatedDate
-	@Column(name = "created_date", updatable = false)
-	private Instant createdDate = Instant.now();
+    @Column(name = "house_number")
+    private String houseNumber;
 
-	@LastModifiedDate
-	@Column(name = "last_modified_date")
-	private Instant lastModifiedDate = Instant.now();
+    @Column(name = "image_Url")
+    private String imageUrl;
 
-	public UUID getId() {
-		return id;
-	}
+    @CreatedDate
+    @Column(name = "created_date", updatable = false)
+    private Instant createdDate = Instant.now();
 
-	public void setId(UUID id) {
-		this.id = id;
-	}
+    @LastModifiedDate
+    @Column(name = "last_modified_date")
+    private Instant lastModifiedDate = Instant.now();
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public UUID getId() {
+        return id;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public Date getBirthday() {
-		return birthday;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public String getCountry() {
-		return country;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
-	public String getStreet() {
-		return street;
-	}
+    public Date getBirthday() {
+        return birthday;
+    }
 
-	public void setStreet(String street) {
-		this.street = street;
-	}
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
 
-	public String getHouseNumber() {
-		return houseNumber;
-	}
+    public String getCountry() {
+        return country;
+    }
 
-	public void setHouseNumber(String houseNumber) {
-		this.houseNumber = houseNumber;
-	}
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
-	public String getImageUrl() {
-		return imageUrl;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public Instant getCreatedDate() {
-		return createdDate;
-	}
+    public String getStreet() {
+        return street;
+    }
 
-	public void setCreatedDate(Instant createdDate) {
-		this.createdDate = createdDate;
-	}
+    public void setStreet(String street) {
+        this.street = street;
+    }
 
-	public Instant getLastModifiedDate() {
-		return lastModifiedDate;
-	}
+    public String getHouseNumber() {
+        return houseNumber;
+    }
 
-	public void setLastModifiedDate(Instant lastModifiedDate) {
-		this.lastModifiedDate = lastModifiedDate;
-	}
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
+    }
 
-	@Override
-	public String toString() {
-		return "UserEntity{" +
-				"id='" + id + '\'' +
-				", firstName='" + firstName + '\'' +
-				", lastName='" + lastName + '\'' +
-				", birthday=" + birthday +
-				", country='" + country + '\'' +
-				", city='" + city + '\'' +
-				", street='" + street + '\'' +
-				", imageUrl='" + imageUrl + '\'' +
-				", houseNumber='" + houseNumber + '\'' +
-				", createdDate='" + createdDate + '\'' +
-				", lastModifiedDate='" + lastModifiedDate + '\'' +
-				'}';
-	}
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
-		if (o == null || getClass() != o.getClass()) return false;
+    public Instant getCreatedDate() {
+        return createdDate;
+    }
 
-		UserEntity that = (UserEntity) o;
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
+    }
 
-		return new EqualsBuilder()
-				.append(id, that.id)
-				.append(firstName, that.firstName)
-				.append(lastName, that.lastName)
-				.append(birthday, that.birthday)
-				.append(country, that.country)
-				.append(city, that.city)
-				.append(street, that.street)
-				.append(houseNumber, that.houseNumber)
-				.append(imageUrl, that.imageUrl)
-				.append(createdDate, that.createdDate)
-				.append(lastModifiedDate, that.lastModifiedDate)
-				.isEquals();
-	}
+    public Instant getLastModifiedDate() {
+        return lastModifiedDate;
+    }
 
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder()
-				.append(id)
-				.append(firstName)
-				.append(lastName)
-				.append(birthday)
-				.append(country)
-				.append(city)
-				.append(street)
-				.append(houseNumber)
-				.append(imageUrl)
-				.append(createdDate)
-				.append(lastModifiedDate)
-				.toHashCode();
-	}
+    public void setLastModifiedDate(Instant lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserEntity that = (UserEntity) o;
+
+        return new EqualsBuilder()
+                .append(id, that.id)
+                .append(firstName, that.firstName)
+                .append(lastName, that.lastName)
+                .append(email, that.email)
+                .append(phoneNumber, that.phoneNumber)
+                .append(birthday, that.birthday)
+                .append(country, that.country)
+                .append(city, that.city)
+                .append(street, that.street)
+                .append(houseNumber, that.houseNumber)
+                .append(imageUrl, that.imageUrl)
+                .append(createdDate, that.createdDate)
+                .append(lastModifiedDate, that.lastModifiedDate)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(id)
+                .append(firstName)
+                .append(lastName)
+                .append(email)
+                .append(phoneNumber)
+                .append(birthday)
+                .append(country)
+                .append(city)
+                .append(street)
+                .append(houseNumber)
+                .append(imageUrl)
+                .append(createdDate)
+                .append(lastModifiedDate)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", birthday=" + birthday +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", houseNumber='" + houseNumber + '\'' +
+                ", createdDate='" + createdDate + '\'' +
+                ", lastModifiedDate='" + lastModifiedDate + '\'' +
+                '}';
+    }
+
 }
