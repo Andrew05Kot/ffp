@@ -12,7 +12,7 @@ import com.kot.ordering.api.mobile.v1.user_details.UserDetailV1MobileResponse;
 import com.kot.ordering.client.FraudDishV1Response;
 import com.kot.ordering.entity.PaymentMethod;
 
-public class OrderMobileV1Response {
+public class OrderV1MobileResponse {
 
     private UUID id;
 
@@ -150,7 +150,7 @@ public class OrderMobileV1Response {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        OrderMobileV1Response that = (OrderMobileV1Response) o;
+        OrderV1MobileResponse that = (OrderV1MobileResponse) o;
 
         return new EqualsBuilder().append(id, that.id)
                 .append(createdDate, that.createdDate)

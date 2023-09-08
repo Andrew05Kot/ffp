@@ -5,12 +5,14 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
+import com.kot.ordering.api.backoffice.v1.delevery_address.DeliveryAddressV1Response;
+import com.kot.ordering.api.backoffice.v1.user_details.UserDetailV1Response;
+import com.kot.ordering.api.mobile.v1.user_details.UserDetailV1MobileResponse;
 import com.kot.ordering.client.FraudDishV1Response;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.kot.ordering.entity.PaymentMethod;
-import com.kot.ordering.model.UserDetail;
 
 public class OrderV1Response {
 
@@ -36,7 +38,9 @@ public class OrderV1Response {
 
 	private List<String> selectedCategories;
 
-	private UserDetail userDetail;
+	private UserDetailV1Response userDetail;
+
+	private DeliveryAddressV1Response deliveryAddress;
 
 	public UUID getId() {
 		return id;
@@ -126,12 +130,20 @@ public class OrderV1Response {
 		this.selectedCategories = selectedCategories;
 	}
 
-	public UserDetail getUserDetail() {
+	public UserDetailV1Response getUserDetail() {
 		return userDetail;
 	}
 
-	public void setUserDetail(UserDetail userDetail) {
+	public void setUserDetail(UserDetailV1Response userDetail) {
 		this.userDetail = userDetail;
+	}
+
+	public DeliveryAddressV1Response getDeliveryAddress() {
+		return deliveryAddress;
+	}
+
+	public void setDeliveryAddress(DeliveryAddressV1Response deliveryAddress) {
+		this.deliveryAddress = deliveryAddress;
 	}
 
 	@Override
@@ -153,6 +165,8 @@ public class OrderV1Response {
 				.append(paymentMethod, that.paymentMethod)
 				.append(selectedDishes, that.selectedDishes)
 				.append(selectedCategories, that.selectedCategories)
+				.append(userDetail, that.userDetail)
+				.append(deliveryAddress, that.deliveryAddress)
 				.isEquals();
 	}
 
@@ -169,6 +183,8 @@ public class OrderV1Response {
 				.append(paymentMethod)
 				.append(selectedCategories)
 				.append(selectedDishes)
+				.append(userDetail)
+				.append(deliveryAddress)
 				.toHashCode();
 	}
 
@@ -186,6 +202,8 @@ public class OrderV1Response {
 				", paymentMethod=" + paymentMethod +
 				", selectedDishes=" + selectedDishes +
 				", selectedCategories=" + selectedCategories +
+				", userDetail=" + userDetail +
+				", deliveryAddress=" + deliveryAddress +
 				'}';
 	}
 }

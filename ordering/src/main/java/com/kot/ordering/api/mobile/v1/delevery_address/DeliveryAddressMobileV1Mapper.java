@@ -18,17 +18,6 @@ public class DeliveryAddressMobileV1Mapper {
         return model;
     }
 
-    public DeliveryAddressV1MobileResponse modelToDto(DeliveryAddress model) {
-        DeliveryAddressV1MobileResponse response = new DeliveryAddressV1MobileResponse();
-        response.setId(model.getId());
-        response.setCountry(model.getCountry());
-        response.setCity(model.getCity());
-        response.setStreet(model.getStreet());
-        response.setHouseNumber(model.getHouseNumber());
-        response.setAdditionalInfo(model.getAdditionalInfo());
-        return response;
-    }
-
     public DeliveryAddressV1MobileResponse domainToDto(DeliveryAddressEntity entity) {
         DeliveryAddressV1MobileResponse response = new DeliveryAddressV1MobileResponse();
         response.setId(entity.getId());

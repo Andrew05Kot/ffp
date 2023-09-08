@@ -48,6 +48,7 @@ public class TestOrderBuilder {
 
     public Order build() {
         Order order = new Order();
+        order.setId(this.id);
         order.setTotalPrice(this.totalPrice);
         order.setCardName(this.cardName);
         order.setCardNumber(this.cardNumber);

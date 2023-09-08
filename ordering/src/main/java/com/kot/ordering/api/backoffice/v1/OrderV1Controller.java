@@ -59,12 +59,15 @@ public class OrderV1Controller {
     }
 
     @Operation(summary = "Get an order by its id")
-    @GetMapping("/{id}")
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<OrderV1Response> getById(
             @Parameter(description = "Id of order to be searched")
             @PathVariable UUID id) {
         Order model = orderService.findById(id);
-        return new ResponseEntity<>(orderV1ApiMapper.domainToDto(model, new ArrayList<>()), HttpStatus.OK);
+        if (model != null) {
+            return new ResponseEntity<>(orderV1ApiMapper.domainToDto(model, new ArrayList<>()), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @Operation(summary = "Get a Map of sales statistics in advance for each month.\n" +

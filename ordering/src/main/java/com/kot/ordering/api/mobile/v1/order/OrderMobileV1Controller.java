@@ -32,7 +32,7 @@ public class OrderMobileV1Controller {
 
     @Operation(summary = "Create a new order", tags = {"order"})
     @PostMapping()
-    public ResponseEntity<OrderMobileV1Response> create(
+    public ResponseEntity<OrderV1MobileResponse> create(
             @Parameter(description = "Order to create. Cannot null or empty.",
                     required = true, schema = @Schema(implementation = OrderMobileV1Request.class))
             @RequestBody OrderMobileV1Request request) {

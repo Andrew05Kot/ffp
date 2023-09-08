@@ -30,8 +30,8 @@ public class OrderMobileV1Mapper {
         return model;
     }
 
-    public OrderMobileV1Response modelToDto(Order order) {
-        OrderMobileV1Response model = new OrderMobileV1Response();
+    public OrderV1MobileResponse modelToDto(Order order) {
+        OrderV1MobileResponse model = new OrderV1MobileResponse();
         model.setId(order.getId());
         model.setCardName(order.getCardName());
         model.setCardNumber(order.getCardNumber());
@@ -39,13 +39,13 @@ public class OrderMobileV1Mapper {
         model.setExpiration(order.getExpiration());
         model.setCvv(order.getCvv());
         model.setPaymentMethod(order.getPaymentMethod());
-        model.setDeliveryAddress(deliveryAddressMobileV1Mapper.modelToDto(order.getDeliveryAddress()));
-        model.setUserDetail(userDetailMobileV1Mapper.modelToDto(order.getUserDetail()));
+        model.setDeliveryAddress(deliveryAddressMobileV1Mapper.domainToDto(order.getDeliveryAddress().getEntity()));
+        model.setUserDetail(userDetailMobileV1Mapper.domainToDto(order.getUserDetail().getEntity()));
         return model;
     }
 
-    public OrderMobileV1Response domainToDto(OrderEntity order) {
-        OrderMobileV1Response response = new OrderMobileV1Response();
+    public OrderV1MobileResponse domainToDto(OrderEntity order) {
+        OrderV1MobileResponse response = new OrderV1MobileResponse();
         response.setId(order.getId());
         response.setCardName(order.getCardName());
         response.setCardNumber(order.getCardNumber());

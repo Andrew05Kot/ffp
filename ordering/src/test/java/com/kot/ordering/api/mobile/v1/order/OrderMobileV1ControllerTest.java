@@ -24,9 +24,7 @@ import com.kot.ordering.api.mobile.v1.delevery_address.DeliveryAddressV1MobileRe
 import com.kot.ordering.api.mobile.v1.delevery_address.DeliveryAddressV1MobileResponse;
 import com.kot.ordering.api.mobile.v1.user_details.UserDetailV1MobileRequest;
 import com.kot.ordering.api.mobile.v1.user_details.UserDetailV1MobileResponse;
-import com.kot.ordering.builder.TestDeliveryAddressBuilder;
 import com.kot.ordering.builder.TestOrderBuilder;
-import com.kot.ordering.builder.TestUserDetailBuilder;
 import com.kot.ordering.model.DeliveryAddress;
 import com.kot.ordering.model.Order;
 import com.kot.ordering.model.UserDetail;
@@ -42,9 +40,6 @@ class OrderMobileV1ControllerTest {
 
     @Autowired
     private MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter;
-
-    @Autowired
-    private OrderMobileV1Mapper orderMobileV1Mapper;
 
     @MockBean
     private OrderService orderService;
@@ -72,8 +67,9 @@ class OrderMobileV1ControllerTest {
         verify(orderService).create(any());
     }
 
-    private OrderMobileV1Response getExpectedOrderMobileV1Response() {
-        OrderMobileV1Response response = new OrderMobileV1Response();
+    private OrderV1MobileResponse getExpectedOrderMobileV1Response() {
+        OrderV1MobileResponse response = new OrderV1MobileResponse();
+        response.setId(TEST_ORDER.getId());
         response.setTotalPrice(TEST_ORDER.getTotalPrice());
         response.setCardName(TEST_ORDER.getCardName());
         response.setCardNumber(TEST_ORDER.getCardNumber());
