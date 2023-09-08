@@ -13,7 +13,7 @@ import com.kot.user.entity.UserEntity;
 import com.kot.user.repository.UserRepository;
 
 @Component
-@Profile("demo")
+//@Profile("demo")
 public class TestUserDataGenerator {
 
 	@Autowired

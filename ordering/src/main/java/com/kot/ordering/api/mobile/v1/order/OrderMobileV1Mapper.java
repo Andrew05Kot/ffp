@@ -44,17 +44,17 @@ public class OrderMobileV1Mapper {
         return model;
     }
 
-    public OrderV1MobileResponse domainToDto(OrderEntity order) {
+    public OrderV1MobileResponse domainToDto(OrderEntity orderEntity) {
         OrderV1MobileResponse response = new OrderV1MobileResponse();
-        response.setId(order.getId());
-        response.setCardName(order.getCardName());
-        response.setCardNumber(order.getCardNumber());
-        response.setTotalPrice(order.getTotalPrice());
-        response.setExpiration(order.getExpiration());
-        response.setCvv(order.getCvv());
-        response.setPaymentMethod(order.getPaymentMethod());
-        response.setDeliveryAddress(deliveryAddressMobileV1Mapper.domainToDto(order.getDeliveryAddress()));
-        response.setUserDetail(userDetailMobileV1Mapper.domainToDto(order.getUserDetail()));
+        response.setId(orderEntity.getId());
+        response.setCardName(orderEntity.getCardName());
+        response.setCardNumber(orderEntity.getCardNumber());
+        response.setTotalPrice(orderEntity.getTotalPrice());
+        response.setExpiration(orderEntity.getExpiration());
+        response.setCvv(orderEntity.getCvv());
+        response.setPaymentMethod(orderEntity.getPaymentMethod());
+        response.setDeliveryAddress(deliveryAddressMobileV1Mapper.domainToDto(orderEntity.getDeliveryAddress()));
+        response.setUserDetail(userDetailMobileV1Mapper.domainToDto(orderEntity.getUserDetail()));
 //        model.setSelectedDishes(order.getSelectedDishes());
         return response;
     }

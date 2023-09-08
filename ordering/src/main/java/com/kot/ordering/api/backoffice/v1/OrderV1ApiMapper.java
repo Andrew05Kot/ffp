@@ -37,8 +37,12 @@ public class OrderV1ApiMapper {
         response.setPaymentMethod(order.getPaymentMethod());
         response.setTotalPrice(order.getTotalPrice());
         response.setCvv(order.getCvv());
-        response.setDeliveryAddress(deliveryAddressV1Mapper.domainToDto(order.getDeliveryAddress().getEntity()));
-        response.setUserDetail(userDetailV1Mapper.domainToDto(order.getUserDetail().getEntity()));
+        if (order.getDeliveryAddress() != null) {
+            response.setDeliveryAddress(deliveryAddressV1Mapper.domainToDto(order.getDeliveryAddress().getEntity()));
+        }
+        if (order.getUserDetail() != null) {
+            response.setUserDetail(userDetailV1Mapper.domainToDto(order.getUserDetail().getEntity()));
+        }
         expandResponse(response, order, expandFields);
         return response;
     }
