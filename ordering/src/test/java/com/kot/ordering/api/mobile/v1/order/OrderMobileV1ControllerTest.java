@@ -20,10 +20,10 @@ import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.kot.ordering.api.mobile.v1.delevery_address.DeliveryAddressV1MobileRequest;
-import com.kot.ordering.api.mobile.v1.delevery_address.DeliveryAddressV1MobileResponse;
-import com.kot.ordering.api.mobile.v1.user_details.UserDetailV1MobileRequest;
-import com.kot.ordering.api.mobile.v1.user_details.UserDetailV1MobileResponse;
+import com.kot.ordering.api.mobile.v1.delevery_address.DeliveryAddressMobileV1Request;
+import com.kot.ordering.api.mobile.v1.delevery_address.DeliveryAddressMobileV1Response;
+import com.kot.ordering.api.mobile.v1.user_details.UserDetailMobileV1Request;
+import com.kot.ordering.api.mobile.v1.user_details.UserDetailMobileV1Response;
 import com.kot.ordering.builder.TestOrderBuilder;
 import com.kot.ordering.model.DeliveryAddress;
 import com.kot.ordering.model.Order;
@@ -67,8 +67,8 @@ class OrderMobileV1ControllerTest {
         verify(orderService).create(any());
     }
 
-    private OrderV1MobileResponse getExpectedOrderMobileV1Response() {
-        OrderV1MobileResponse response = new OrderV1MobileResponse();
+    private OrderMobileV1Response getExpectedOrderMobileV1Response() {
+        OrderMobileV1Response response = new OrderMobileV1Response();
         response.setId(TEST_ORDER.getId());
         response.setTotalPrice(TEST_ORDER.getTotalPrice());
         response.setCardName(TEST_ORDER.getCardName());
@@ -76,13 +76,13 @@ class OrderMobileV1ControllerTest {
         response.setExpiration(TEST_ORDER.getExpiration());
         response.setCvv(TEST_ORDER.getCvv());
         response.setPaymentMethod(TEST_ORDER.getPaymentMethod());
-        response.setDeliveryAddress(getExpectedDeliveryAddressV1MobileResponse());
-        response.setUserDetail(getExpectedUserDetailV1MobileResponse());
+        response.setDeliveryAddress(getExpectedDeliveryAddressMobileV1Response());
+        response.setUserDetail(getExpectedUserDetailMobileV1Response());
         return response;
     }
 
-    private DeliveryAddressV1MobileResponse getExpectedDeliveryAddressV1MobileResponse() {
-        DeliveryAddressV1MobileResponse response = new DeliveryAddressV1MobileResponse();
+    private DeliveryAddressMobileV1Response getExpectedDeliveryAddressMobileV1Response() {
+        DeliveryAddressMobileV1Response response = new DeliveryAddressMobileV1Response();
         response.setCountry(TEST_DELIVERY_ADDRESS.getCountry());
         response.setCity(TEST_DELIVERY_ADDRESS.getCity());
         response.setStreet(TEST_DELIVERY_ADDRESS.getStreet());
@@ -91,8 +91,8 @@ class OrderMobileV1ControllerTest {
         return response;
     }
 
-    private UserDetailV1MobileResponse getExpectedUserDetailV1MobileResponse() {
-        UserDetailV1MobileResponse response = new UserDetailV1MobileResponse();
+    private UserDetailMobileV1Response getExpectedUserDetailMobileV1Response() {
+        UserDetailMobileV1Response response = new UserDetailMobileV1Response();
         response.setFirstName(TEST_USER_DETAIL.getFirstName());
         response.setLastName(TEST_USER_DETAIL.getLastName());
         response.setEmail(TEST_USER_DETAIL.getEmail());
@@ -108,15 +108,15 @@ class OrderMobileV1ControllerTest {
         request.setExpiration(TEST_ORDER.getExpiration());
         request.setCvv(TEST_ORDER.getCvv());
         request.setPaymentMethod(TEST_ORDER.getPaymentMethod());
-        request.setUserDetail(getValidUserDetailV1MobileRequest());
-        request.setDeliveryAddress(getDeliveryAddressV1MobileRequest());
+        request.setUserDetail(getValidUserDetailMobileV1Request());
+        request.setDeliveryAddress(getDeliveryAddressMobileV1Request());
         request.setUserId("1L");
         request.setDishIds(TEST_ORDER.getSelectedDishes());
         return request;
     }
 
-    private DeliveryAddressV1MobileRequest getDeliveryAddressV1MobileRequest() {
-        DeliveryAddressV1MobileRequest request = new DeliveryAddressV1MobileRequest();
+    private DeliveryAddressMobileV1Request getDeliveryAddressMobileV1Request() {
+        DeliveryAddressMobileV1Request request = new DeliveryAddressMobileV1Request();
         request.setCountry(TEST_DELIVERY_ADDRESS.getCountry());
         request.setCity(TEST_DELIVERY_ADDRESS.getCity());
         request.setHouseNumber(TEST_DELIVERY_ADDRESS.getHouseNumber());
@@ -124,8 +124,8 @@ class OrderMobileV1ControllerTest {
         return request;
     }
 
-    private UserDetailV1MobileRequest getValidUserDetailV1MobileRequest() {
-        UserDetailV1MobileRequest request = new UserDetailV1MobileRequest();
+    private UserDetailMobileV1Request getValidUserDetailMobileV1Request() {
+        UserDetailMobileV1Request request = new UserDetailMobileV1Request();
         request.setFirstName(TEST_USER_DETAIL.getFirstName());
         request.setLastName(TEST_USER_DETAIL.getLastName());
         request.setEmail(TEST_USER_DETAIL.getEmail());

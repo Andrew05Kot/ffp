@@ -1,15 +1,25 @@
 package com.kot.ordering.api.mobile.v1.user_details;
 
+import java.util.UUID;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class UserDetailV1MobileRequest {
+public class UserDetailMobileV1Response {
 
+    private UUID id;
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
     private String imageUrl;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -55,9 +65,10 @@ public class UserDetailV1MobileRequest {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof UserDetailV1MobileRequest that)) return false;
+        if (!(o instanceof UserDetailMobileV1Response that)) return false;
 
         return new EqualsBuilder()
+                .append(getId(), that.getId())
                 .append(getFirstName(), that.getFirstName())
                 .append(getLastName(), that.getLastName())
                 .append(getEmail(), that.getEmail())
@@ -69,6 +80,7 @@ public class UserDetailV1MobileRequest {
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
+                .append(getId())
                 .append(getFirstName())
                 .append(getLastName())
                 .append(getEmail())
@@ -79,8 +91,9 @@ public class UserDetailV1MobileRequest {
 
     @Override
     public String toString() {
-        return "UserDetailsV1Request{" +
-                "firstName='" + firstName + '\'' +
+        return "UserDetailMobileV1Response{" +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +

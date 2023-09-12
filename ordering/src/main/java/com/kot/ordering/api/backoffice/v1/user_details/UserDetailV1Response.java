@@ -91,7 +91,7 @@ public class UserDetailV1Response {
 
     @Override
     public String toString() {
-        return "UserDetailV1MobileResponse{" +
+        return "UserDetailMobileV1Response{" +
                 "id='" + id + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

@@ -29,7 +29,6 @@ import com.kot.ordering.client.FraudCategoryV1Response;
 import com.kot.ordering.client.FraudDishV1Response;
 import com.kot.ordering.dao.OrderDao;
 import com.kot.ordering.entity.DeliveryAddressEntity;
-import com.kot.ordering.entity.OrderEntity;
 import com.kot.ordering.entity.PaymentMethod;
 import com.kot.ordering.entity.UserDetailEntity;
 import com.kot.ordering.model.DeliveryAddress;

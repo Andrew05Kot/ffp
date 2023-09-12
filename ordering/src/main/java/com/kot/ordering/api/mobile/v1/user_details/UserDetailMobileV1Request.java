@@ -1,25 +1,28 @@
 package com.kot.ordering.api.mobile.v1.user_details;
 
-import java.util.UUID;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class UserDetailV1MobileResponse {
+@OpenAPIDefinition(info = @Info(title = "User Details Mobile V1 API", version = "1.0", description = "API for user's data of requested orders"))
+public class UserDetailMobileV1Request {
 
-    private UUID id;
+    @Schema(description = "The first name of the user")
     private String firstName;
+
+    @Schema(description = "The last name of the user")
     private String lastName;
+
+    @Schema(description = "The email address of the user")
     private String email;
+
+    @Schema(description = "The phone number of the user")
     private String phoneNumber;
+
+    @Schema(description = "The URL of the user's profile image")
     private String imageUrl;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -65,10 +68,9 @@ public class UserDetailV1MobileResponse {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof UserDetailV1MobileResponse that)) return false;
+        if (!(o instanceof UserDetailMobileV1Request that)) return false;
 
         return new EqualsBuilder()
-                .append(getId(), that.getId())
                 .append(getFirstName(), that.getFirstName())
                 .append(getLastName(), that.getLastName())
                 .append(getEmail(), that.getEmail())
@@ -80,7 +82,6 @@ public class UserDetailV1MobileResponse {
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .append(getId())
                 .append(getFirstName())
                 .append(getLastName())
                 .append(getEmail())
@@ -91,9 +92,8 @@ public class UserDetailV1MobileResponse {
 
     @Override
     public String toString() {
-        return "UserDetailV1MobileResponse{" +
-                "id='" + id + '\'' +
-                ", firstName='" + firstName + '\'' +
+        return "UserDetailsV1Request{" +
+                "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +

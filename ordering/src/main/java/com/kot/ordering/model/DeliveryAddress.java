@@ -2,6 +2,8 @@ package com.kot.ordering.model;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.kot.ordering.entity.DeliveryAddressEntity;
 
@@ -16,7 +18,8 @@ public class DeliveryAddress {
     private ZonedDateTime createdDate;
     private ZonedDateTime lastModifiedDate;
 
-    public DeliveryAddress() {}
+    public DeliveryAddress() {
+    }
 
     public DeliveryAddress(DeliveryAddressEntity entity) {
         setId(entity.getId());
@@ -36,6 +39,8 @@ public class DeliveryAddress {
         entity.setStreet(this.street);
         entity.setHouseNumber(this.houseNumber);
         entity.setAdditionalInfo(this.additionalInfo);
+        entity.setCreatedDate(this.createdDate);
+        entity.setLastModifiedDate(this.lastModifiedDate);
         return entity;
     }
 
@@ -101,5 +106,51 @@ public class DeliveryAddress {
 
     public void setLastModifiedDate(ZonedDateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof DeliveryAddress that)) return false;
+
+        return new EqualsBuilder()
+                .append(getId(), that.getId())
+                .append(getCountry(), that.getCountry())
+                .append(getCity(), that.getCity())
+                .append(getStreet(), that.getStreet())
+                .append(getHouseNumber(), that.getHouseNumber())
+                .append(getAdditionalInfo(), that.getAdditionalInfo())
+                .append(getCreatedDate(), that.getCreatedDate())
+                .append(getLastModifiedDate(), that.getLastModifiedDate())
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getId())
+                .append(getCountry())
+                .append(getCity())
+                .append(getStreet())
+                .append(getHouseNumber())
+                .append(getAdditionalInfo())
+                .append(getCreatedDate())
+                .append(getLastModifiedDate())
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "DeliveryAddress{" +
+                "id=" + id +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", houseNumber='" + houseNumber + '\'' +
+                ", additionalInfo='" + additionalInfo + '\'' +
+                ", createdDate=" + createdDate +
+                ", lastModifiedDate=" + lastModifiedDate +
+                '}';
     }
 }

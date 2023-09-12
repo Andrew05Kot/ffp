@@ -48,11 +48,12 @@ public class OrderStatisticService {
 
         MathContext mc = new MathContext(3);
 
+
         return orders.stream().collect(Collectors.toMap(
                 order -> order.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM")),
-                order -> calculateTotal(order.getSelectedDishes()
+                order -> calculateTotal(order.getDishesToOrder()
                         .parallelStream()
-                        .map(dishId -> getDishResponseById(dishes, dishId))
+                        .map(dishToOrder -> getDishResponseById(dishes, dishToOrder.getDishId()))
                         .toList()),
                 (a, b) -> a.add(b, mc),
                 TreeMap::new

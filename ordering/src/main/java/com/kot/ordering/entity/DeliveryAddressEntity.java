@@ -6,7 +6,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
-@Entity(name = "delivery_address")
+@Entity
+@Table(name = "delivery_address")
 public class DeliveryAddressEntity extends BaseEntity {
 
     @Id
@@ -93,33 +94,31 @@ public class DeliveryAddressEntity extends BaseEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof DeliveryAddressEntity entity)) return false;
 
-        DeliveryAddressEntity that = (DeliveryAddressEntity) o;
-
-        return new EqualsBuilder()
-                .append(id, that.id)
+        return new EqualsBuilder().append(getId(), entity.getId())
+                .append(getCountry(), entity.getCountry())
+                .append(getCity(), entity.getCity())
+                .append(getStreet(), entity.getStreet())
+                .append(getHouseNumber(), entity.getHouseNumber())
+                .append(getAdditionalInfo(), entity.getAdditionalInfo())
+                .append(getOrder(), entity.getOrder())
                 .append(getCreatedDate(), getLastModifiedDate())
                 .append(getLastModifiedDate(), getLastModifiedDate())
-                .append(country, that.country)
-                .append(city, that.city)
-                .append(street, that.street)
-                .append(houseNumber, that.houseNumber)
-                .append(order, that.order)
-                .append(additionalInfo, that.additionalInfo)
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder()
-                .append(id)
-                .append(country)
-                .append(city)
-                .append(street)
-                .append(houseNumber)
-                .append(order)
-                .append(additionalInfo)
+        return new HashCodeBuilder().append(getId())
+                .append(getCountry())
+                .append(getCity())
+                .append(getStreet())
+                .append(getHouseNumber())
+                .append(getAdditionalInfo())
+                .append(getOrder())
+                .append(getCreatedDate())
+                .append(getLastModifiedDate())
                 .toHashCode();
     }
 

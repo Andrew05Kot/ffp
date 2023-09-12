@@ -4,206 +4,182 @@ import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
-
-import com.kot.ordering.api.backoffice.v1.delevery_address.DeliveryAddressV1Response;
-import com.kot.ordering.api.backoffice.v1.user_details.UserDetailV1Response;
-import com.kot.ordering.api.mobile.v1.user_details.UserDetailV1MobileResponse;
-import com.kot.ordering.client.FraudDishV1Response;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import com.kot.ordering.api.backoffice.v1.delevery_address.DeliveryAddressV1Response;
+import com.kot.ordering.api.backoffice.v1.dishes_list.DishToOrderV1Response;
+import com.kot.ordering.api.backoffice.v1.user_details.UserDetailV1Response;
+import com.kot.ordering.client.FraudDishV1Response;
+import com.kot.ordering.entity.OrderStatus;
 import com.kot.ordering.entity.PaymentMethod;
 
 public class OrderV1Response {
 
-	private UUID id;
+    private UUID id;
+    private BigDecimal totalPrice;
 
-	private ZonedDateTime createdDate;
+    private PaymentMethod paymentMethod;
 
-	private ZonedDateTime lastModifiedDate;
+    private List<FraudDishV1Response> selectedDishes;
 
-	private BigDecimal totalPrice;
+    private List<String> selectedCategories;
 
-	private String cardName;
+    private UserDetailV1Response userDetail;
 
-	private String cardNumber;
+    private DeliveryAddressV1Response deliveryAddress;
 
-	private String expiration;
+    private OrderStatus orderStatus;
 
-	private String cvv;
+    private List<DishToOrderV1Response> dishesToOrder;
 
-	private PaymentMethod paymentMethod;
+    @Schema(description = "Date and time when the order was created", accessMode = Schema.AccessMode.READ_ONLY)
+    private ZonedDateTime createdDate;
 
-	private List<FraudDishV1Response> selectedDishes;
+    @Schema(description = "Date and time when the order was last modified", accessMode = Schema.AccessMode.READ_ONLY)
+    private ZonedDateTime lastModifiedDate;
 
-	private List<String> selectedCategories;
+    public UUID getId() {
+        return id;
+    }
 
-	private UserDetailV1Response userDetail;
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
-	private DeliveryAddressV1Response deliveryAddress;
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
 
-	public UUID getId() {
-		return id;
-	}
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 
-	public void setId(UUID id) {
-		this.id = id;
-	}
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
 
-	public ZonedDateTime getCreatedDate() {
-		return createdDate;
-	}
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
 
-	public void setCreatedDate(ZonedDateTime createdDate) {
-		this.createdDate = createdDate;
-	}
+    public List<FraudDishV1Response> getSelectedDishes() {
+        return selectedDishes;
+    }
 
-	public ZonedDateTime getLastModifiedDate() {
-		return lastModifiedDate;
-	}
+    public void setSelectedDishes(List<FraudDishV1Response> selectedDishes) {
+        this.selectedDishes = selectedDishes;
+    }
 
-	public void setLastModifiedDate(ZonedDateTime lastModifiedDate) {
-		this.lastModifiedDate = lastModifiedDate;
-	}
+    public List<String> getSelectedCategories() {
+        return selectedCategories;
+    }
 
-	public BigDecimal getTotalPrice() {
-		return totalPrice;
-	}
+    public void setSelectedCategories(List<String> selectedCategories) {
+        this.selectedCategories = selectedCategories;
+    }
 
-	public void setTotalPrice(BigDecimal totalPrice) {
-		this.totalPrice = totalPrice;
-	}
+    public UserDetailV1Response getUserDetail() {
+        return userDetail;
+    }
 
-	public String getCardName() {
-		return cardName;
-	}
+    public void setUserDetail(UserDetailV1Response userDetail) {
+        this.userDetail = userDetail;
+    }
 
-	public void setCardName(String cardName) {
-		this.cardName = cardName;
-	}
+    public DeliveryAddressV1Response getDeliveryAddress() {
+        return deliveryAddress;
+    }
 
-	public String getCardNumber() {
-		return cardNumber;
-	}
+    public void setDeliveryAddress(DeliveryAddressV1Response deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
 
-	public void setCardNumber(String cardNumber) {
-		this.cardNumber = cardNumber;
-	}
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
 
-	public String getExpiration() {
-		return expiration;
-	}
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
 
-	public void setExpiration(String expiration) {
-		this.expiration = expiration;
-	}
+    public List<DishToOrderV1Response> getDishesToOrder() {
+        return dishesToOrder;
+    }
 
-	public String getCvv() {
-		return cvv;
-	}
+    public void setDishesToOrder(List<DishToOrderV1Response> dishesToOrder) {
+        this.dishesToOrder = dishesToOrder;
+    }
 
-	public void setCvv(String cvv) {
-		this.cvv = cvv;
-	}
+    public ZonedDateTime getCreatedDate() {
+        return createdDate;
+    }
 
-	public PaymentMethod getPaymentMethod() {
-		return paymentMethod;
-	}
+    public void setCreatedDate(ZonedDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
 
-	public void setPaymentMethod(PaymentMethod paymentMethod) {
-		this.paymentMethod = paymentMethod;
-	}
+    public ZonedDateTime getLastModifiedDate() {
+        return lastModifiedDate;
+    }
 
-	public List<FraudDishV1Response> getSelectedDishes() {
-		return selectedDishes;
-	}
+    public void setLastModifiedDate(ZonedDateTime lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
 
-	public void setSelectedDishes(List<FraudDishV1Response> selectedDishes) {
-		this.selectedDishes = selectedDishes;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-	public List<String> getSelectedCategories() {
-		return selectedCategories;
-	}
+        if (!(o instanceof OrderV1Response that)) return false;
 
-	public void setSelectedCategories(List<String> selectedCategories) {
-		this.selectedCategories = selectedCategories;
-	}
+        return new EqualsBuilder()
+                .append(getId(), that.getId())
+                .append(getTotalPrice(), that.getTotalPrice())
+                .append(getPaymentMethod(), that.getPaymentMethod())
+                .append(getSelectedDishes(), that.getSelectedDishes())
+                .append(getSelectedCategories(), that.getSelectedCategories())
+                .append(getUserDetail(), that.getUserDetail())
+                .append(getDeliveryAddress(), that.getDeliveryAddress())
+                .append(getOrderStatus(), that.getOrderStatus())
+                .append(getDishesToOrder(), that.getDishesToOrder())
+                .append(getCreatedDate(), that.getCreatedDate())
+                .append(getLastModifiedDate(), that.getLastModifiedDate())
+                .isEquals();
+    }
 
-	public UserDetailV1Response getUserDetail() {
-		return userDetail;
-	}
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getId())
+                .append(getTotalPrice())
+                .append(getPaymentMethod())
+                .append(getSelectedDishes())
+                .append(getSelectedCategories())
+                .append(getUserDetail())
+                .append(getDeliveryAddress())
+                .append(getOrderStatus())
+                .append(getDishesToOrder())
+                .append(getCreatedDate())
+                .append(getLastModifiedDate())
+                .toHashCode();
+    }
 
-	public void setUserDetail(UserDetailV1Response userDetail) {
-		this.userDetail = userDetail;
-	}
-
-	public DeliveryAddressV1Response getDeliveryAddress() {
-		return deliveryAddress;
-	}
-
-	public void setDeliveryAddress(DeliveryAddressV1Response deliveryAddress) {
-		this.deliveryAddress = deliveryAddress;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-
-		if (o == null || getClass() != o.getClass()) return false;
-
-		OrderV1Response that = (OrderV1Response) o;
-
-		return new EqualsBuilder().append(id, that.id)
-				.append(createdDate, that.createdDate)
-				.append(lastModifiedDate, that.lastModifiedDate)
-				.append(totalPrice, that.totalPrice)
-				.append(cardName, that.cardName)
-				.append(cardNumber, that.cardNumber)
-				.append(expiration, that.expiration)
-				.append(cvv, that.cvv)
-				.append(paymentMethod, that.paymentMethod)
-				.append(selectedDishes, that.selectedDishes)
-				.append(selectedCategories, that.selectedCategories)
-				.append(userDetail, that.userDetail)
-				.append(deliveryAddress, that.deliveryAddress)
-				.isEquals();
-	}
-
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder().append(id)
-				.append(createdDate)
-				.append(lastModifiedDate)
-				.append(totalPrice)
-				.append(cardName)
-				.append(cardNumber)
-				.append(expiration)
-				.append(cvv)
-				.append(paymentMethod)
-				.append(selectedCategories)
-				.append(selectedDishes)
-				.append(userDetail)
-				.append(deliveryAddress)
-				.toHashCode();
-	}
-
-	@Override
-	public String toString() {
-		return "OrderV1Response{" +
-				"id=" + id +
-				", createdDate=" + createdDate +
-				", lastModifiedDate=" + lastModifiedDate +
-				", totalPrice=" + totalPrice +
-				", cardName='" + cardName + '\'' +
-				", cardNumber='" + cardNumber + '\'' +
-				", expiration='" + expiration + '\'' +
-				", cvv='" + cvv + '\'' +
-				", paymentMethod=" + paymentMethod +
-				", selectedDishes=" + selectedDishes +
-				", selectedCategories=" + selectedCategories +
-				", userDetail=" + userDetail +
-				", deliveryAddress=" + deliveryAddress +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "OrderV1Response{" +
+                "id=" + id +
+                ", totalPrice=" + totalPrice +
+                ", paymentMethod=" + paymentMethod +
+                ", selectedDishes=" + selectedDishes +
+                ", selectedCategories=" + selectedCategories +
+                ", userDetail=" + userDetail +
+                ", deliveryAddress=" + deliveryAddress +
+                ", orderStatus=" + orderStatus +
+                ", dishesToOrder=" + dishesToOrder +
+                ", createdDate=" + createdDate +
+                ", lastModifiedDate=" + lastModifiedDate +
+                '}';
+    }
 }

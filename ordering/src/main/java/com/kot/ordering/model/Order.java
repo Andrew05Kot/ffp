@@ -4,40 +4,42 @@ import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.kot.ordering.entity.OrderEntity;
+import com.kot.ordering.entity.OrderStatus;
 import com.kot.ordering.entity.PaymentMethod;
 
 public class Order {
 
     private UUID id;
     private BigDecimal totalPrice;
-    private String cardName;
-    private String cardNumber;
-    private String expiration;
-    private String cvv;
+    private OrderStatus orderStatus;
     private PaymentMethod paymentMethod;
-    private List<Long> selectedDishes;
-    private List<String> selectedCategories;
+    private List<DishToOrder> dishesToOrder;
     private DeliveryAddress deliveryAddress;
     private UserDetail userDetail;
     private ZonedDateTime createdDate;
     private ZonedDateTime lastModifiedDate;
 
-    public Order() {}
+    public Order() {
+    }
 
     public Order(OrderEntity entity) {
         setId(entity.getId());
         setTotalPrice(entity.getTotalPrice());
-        setCardName(entity.getCardName());
-        setCardNumber(entity.getCardNumber());
-        setExpiration(entity.getExpiration());
-        setCvv(entity.getCvv());
+        setOrderStatus(entity.getOrderStatus());
         setPaymentMethod(entity.getPaymentMethod());
-        setSelectedDishes(entity.getSelectedDishes());
-        setSelectedCategories(entity.getSelectedCategories());
-//        setDeliveryAddress(new DeliveryAddress(entity.getDeliveryAddress()));
-//        setUserDetail(new UserDetail(entity.getUserDetail()));
+        if (entity.getDishesToOrder() != null) {
+            setDishesToOrder(entity.getDishesToOrder().stream().map(DishToOrder::new).toList());
+        }
+        if (entity.getDeliveryAddress() != null) {
+            setDeliveryAddress(new DeliveryAddress(entity.getDeliveryAddress()));
+        }
+        if (entity.getUserDetail() != null) {
+            setUserDetail(new UserDetail(entity.getUserDetail()));
+        }
         setCreatedDate(entity.getCreatedDate());
         setLastModifiedDate(entity.getLastModifiedDate());
     }
@@ -46,21 +48,19 @@ public class Order {
         OrderEntity entity = new OrderEntity();
         entity.setId(this.id);
         entity.setTotalPrice(this.totalPrice);
-        entity.setCardName(this.cardName);
-        entity.setCardNumber(this.cardNumber);
-        entity.setExpiration(this.expiration);
-        entity.setCvv(this.getCvv());
+        entity.setOrderStatus(this.orderStatus);
         entity.setPaymentMethod(this.paymentMethod);
-        entity.setSelectedDishes(this.selectedDishes);
-        entity.setSelectedCategories(this.selectedCategories);
-        entity.setCreatedDate(this.createdDate);
-        entity.setLastModifiedDate(this.lastModifiedDate);
+        if (this.dishesToOrder != null) {
+            entity.setDishesToOrder(this.dishesToOrder.stream().map(DishToOrder::getEntity).toList());
+        }
         if (this.userDetail != null) {
             entity.setUserDetail(this.userDetail.getEntity());
         }
         if (this.deliveryAddress != null) {
             entity.setDeliveryAddress(this.deliveryAddress.getEntity());
         }
+        entity.setCreatedDate(this.createdDate);
+        entity.setLastModifiedDate(this.lastModifiedDate);
         return entity;
     }
 
@@ -80,36 +80,12 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public String getCardName() {
-        return cardName;
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setCardName(String cardName) {
-        this.cardName = cardName;
-    }
-
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public String getExpiration() {
-        return expiration;
-    }
-
-    public void setExpiration(String expiration) {
-        this.expiration = expiration;
-    }
-
-    public String getCvv() {
-        return cvv;
-    }
-
-    public void setCvv(String cvv) {
-        this.cvv = cvv;
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public PaymentMethod getPaymentMethod() {
@@ -120,20 +96,12 @@ public class Order {
         this.paymentMethod = paymentMethod;
     }
 
-    public List<Long> getSelectedDishes() {
-        return selectedDishes;
+    public List<DishToOrder> getDishesToOrder() {
+        return dishesToOrder;
     }
 
-    public void setSelectedDishes(List<Long> selectedDishes) {
-        this.selectedDishes = selectedDishes;
-    }
-
-    public List<String> getSelectedCategories() {
-        return selectedCategories;
-    }
-
-    public void setSelectedCategories(List<String> selectedCategories) {
-        this.selectedCategories = selectedCategories;
+    public void setDishesToOrder(List<DishToOrder> dishesToOrder) {
+        this.dishesToOrder = dishesToOrder;
     }
 
     public DeliveryAddress getDeliveryAddress() {
@@ -166,5 +134,54 @@ public class Order {
 
     public void setLastModifiedDate(ZonedDateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof Order order)) return false;
+
+        return new EqualsBuilder()
+                .append(id, order.id)
+                .append(totalPrice, order.totalPrice)
+                .append(orderStatus, order.orderStatus)
+                .append(paymentMethod, order.paymentMethod)
+                .append(dishesToOrder, order.dishesToOrder)
+                .append(deliveryAddress, order.deliveryAddress)
+                .append(userDetail, order.userDetail)
+                .append(createdDate, order.createdDate)
+                .append(lastModifiedDate, order.lastModifiedDate)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(id)
+                .append(totalPrice)
+                .append(orderStatus)
+                .append(paymentMethod)
+                .append(dishesToOrder)
+                .append(deliveryAddress)
+                .append(userDetail)
+                .append(createdDate)
+                .append(lastModifiedDate)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", totalPrice=" + totalPrice +
+                ", orderStatus=" + orderStatus +
+                ", paymentMethod=" + paymentMethod +
+                ", dishesToOrder=" + dishesToOrder +
+                ", deliveryAddress=" + deliveryAddress +
+                ", userDetail=" + userDetail +
+                ", createdDate=" + createdDate +
+                ", lastModifiedDate=" + lastModifiedDate +
+                '}';
     }
 }

@@ -1,25 +1,28 @@
 package com.kot.ordering.api.mobile.v1.delevery_address;
 
-import java.util.UUID;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class DeliveryAddressV1MobileResponse {
+@OpenAPIDefinition(info = @Info(title = "Delivery ADDRESS Mobile V1 API", version = "1.0", description = "API for user's delivery address of requested orders"))
+public class DeliveryAddressMobileV1Request {
 
-    private UUID id;
+    @Schema(description = "The country of the delivery address")
     private String country;
+
+    @Schema(description = "The city of the delivery address")
     private String city;
+
+    @Schema(description = "The street of the delivery address")
     private String street;
+
+    @Schema(description = "The house number of the delivery address")
     private String houseNumber;
+
+    @Schema(description = "Additional information about the delivery address")
     private String additionalInfo;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public String getCountry() {
         return country;
@@ -65,10 +68,9 @@ public class DeliveryAddressV1MobileResponse {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof DeliveryAddressV1MobileResponse that)) return false;
+        if (!(o instanceof DeliveryAddressMobileV1Request that)) return false;
 
         return new EqualsBuilder()
-                .append(getId(), that.getId())
                 .append(getCountry(), that.getCountry())
                 .append(getCity(), that.getCity())
                 .append(getStreet(), that.getStreet())
@@ -80,7 +82,6 @@ public class DeliveryAddressV1MobileResponse {
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .append(getId() )
                 .append(getCountry())
                 .append(getCity())
                 .append(getStreet())
@@ -91,9 +92,8 @@ public class DeliveryAddressV1MobileResponse {
 
     @Override
     public String toString() {
-        return "DeliveryAddressV1MobileResponse{" +
-                "id='" + id + '\'' +
-                ", country='" + country + '\'' +
+        return "DeliveryAddressMobileV1Request{" +
+                "country='" + country + '\'' +
                 ", city='" + city + '\'' +
                 ", street='" + street + '\'' +
                 ", houseNumber='" + houseNumber + '\'' +

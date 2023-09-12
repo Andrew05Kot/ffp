@@ -6,7 +6,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
-@Entity(name = "user_detail")
+@Entity
+@Table(name = "user_detail")
 public class UserDetailEntity extends BaseEntity {
 
     @Id

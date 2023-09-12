@@ -1,6 +1,5 @@
 package com.kot.ordering.entity;
 
-import java.time.Instant;
 import java.time.ZonedDateTime;
 import javax.persistence.Column;
 import org.springframework.data.annotation.CreatedDate;

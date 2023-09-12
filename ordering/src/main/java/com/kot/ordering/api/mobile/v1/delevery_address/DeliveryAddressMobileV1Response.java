@@ -1,15 +1,25 @@
 package com.kot.ordering.api.mobile.v1.delevery_address;
 
+import java.util.UUID;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class DeliveryAddressV1MobileRequest {
+public class DeliveryAddressMobileV1Response {
 
+    private UUID id;
     private String country;
     private String city;
     private String street;
     private String houseNumber;
     private String additionalInfo;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public String getCountry() {
         return country;
@@ -55,9 +65,10 @@ public class DeliveryAddressV1MobileRequest {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof DeliveryAddressV1MobileRequest that)) return false;
+        if (!(o instanceof DeliveryAddressMobileV1Response that)) return false;
 
         return new EqualsBuilder()
+                .append(getId(), that.getId())
                 .append(getCountry(), that.getCountry())
                 .append(getCity(), that.getCity())
                 .append(getStreet(), that.getStreet())
@@ -69,6 +80,7 @@ public class DeliveryAddressV1MobileRequest {
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
+                .append(getId() )
                 .append(getCountry())
                 .append(getCity())
                 .append(getStreet())
@@ -79,8 +91,9 @@ public class DeliveryAddressV1MobileRequest {
 
     @Override
     public String toString() {
-        return "DeliveryAddressV1MobileRequest{" +
-                "country='" + country + '\'' +
+        return "DeliveryAddressMobileV1Response{" +
+                "id='" + id + '\'' +
+                ", country='" + country + '\'' +
                 ", city='" + city + '\'' +
                 ", street='" + street + '\'' +
                 ", houseNumber='" + houseNumber + '\'' +

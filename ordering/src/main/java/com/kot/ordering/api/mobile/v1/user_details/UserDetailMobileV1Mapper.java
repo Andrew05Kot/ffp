@@ -8,7 +8,7 @@ import com.kot.ordering.model.UserDetail;
 @Component
 public class UserDetailMobileV1Mapper {
 
-    public UserDetail dtoToDomain(UserDetailV1MobileRequest request) {
+    public UserDetail dtoToDomain(UserDetailMobileV1Request request) {
         UserDetail model = new UserDetail();
         model.setFirstName(request.getFirstName());
         model.setLastName(request.getLastName());
@@ -18,8 +18,8 @@ public class UserDetailMobileV1Mapper {
         return model;
     }
 
-    public UserDetailV1MobileResponse domainToDto(UserDetailEntity model) {
-        UserDetailV1MobileResponse response = new UserDetailV1MobileResponse();
+    public UserDetailMobileV1Response domainToDto(UserDetailEntity model) {
+        UserDetailMobileV1Response response = new UserDetailMobileV1Response();
         response.setId(model.getId());
         response.setFirstName(model.getFirstName());
         response.setLastName(model.getLastName());

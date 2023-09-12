@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -24,34 +23,17 @@ public class OrderEntity extends BaseEntity {
     @NotNull
     private BigDecimal totalPrice;
 
-    @Column(name = "card_name", nullable = false)
-    @NotBlank
-    private String cardName;
-
-    @Column(name = "card_number", nullable = false)
-    @NotBlank
-    private String cardNumber;
-
-    @Column(name = "expiration", nullable = false)
-    @NotBlank
-    private String expiration;
-
-    @Column(name = "cvv", nullable = false)
-    @NotBlank
-    private String cvv;
+    @Column(name = "order_status", nullable = false)
+    @NotNull
+    private OrderStatus orderStatus;
 
     @Column(name = "payment_method", nullable = false)
     @NotNull
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
-    @Column(name = "selected_dishes_ids")
-    @ElementCollection(targetClass = Long.class)
-    private List<Long> selectedDishes;
-
-    @Column(name = "selected_categories")
-    @ElementCollection(targetClass = String.class)
-    private List<String> selectedCategories;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DishToOrderEntity> dishesToOrder;
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private DeliveryAddressEntity deliveryAddress;
@@ -75,36 +57,12 @@ public class OrderEntity extends BaseEntity {
         this.totalPrice = totalPrice;
     }
 
-    public String getCardName() {
-        return cardName;
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setCardName(String cardName) {
-        this.cardName = cardName;
-    }
-
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public String getExpiration() {
-        return expiration;
-    }
-
-    public void setExpiration(String expiration) {
-        this.expiration = expiration;
-    }
-
-    public String getCvv() {
-        return cvv;
-    }
-
-    public void setCvv(String cvv) {
-        this.cvv = cvv;
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public PaymentMethod getPaymentMethod() {
@@ -115,20 +73,12 @@ public class OrderEntity extends BaseEntity {
         this.paymentMethod = paymentMethod;
     }
 
-    public List<Long> getSelectedDishes() {
-        return selectedDishes;
+    public List<DishToOrderEntity> getDishesToOrder() {
+        return dishesToOrder;
     }
 
-    public void setSelectedDishes(List<Long> selectedDishes) {
-        this.selectedDishes = selectedDishes;
-    }
-
-    public List<String> getSelectedCategories() {
-        return selectedCategories;
-    }
-
-    public void setSelectedCategories(List<String> selectedCategories) {
-        this.selectedCategories = selectedCategories;
+    public void setDishesToOrder(List<DishToOrderEntity> dishesToOrder) {
+        this.dishesToOrder = dishesToOrder;
     }
 
     public DeliveryAddressEntity getDeliveryAddress() {
@@ -151,43 +101,33 @@ public class OrderEntity extends BaseEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (o == null || getClass() != o.getClass()) return false;
-
-        OrderEntity that = (OrderEntity) o;
+        if (!(o instanceof OrderEntity that)) return false;
 
         return new EqualsBuilder()
-                .append(id, that.id)
-                .append(getCreatedDate(), getLastModifiedDate())
-                .append(getLastModifiedDate(), getLastModifiedDate())
-                .append(totalPrice, that.totalPrice)
-                .append(cardName, that.cardName)
-                .append(cardNumber, that.cardNumber)
-                .append(expiration, that.expiration)
-                .append(cvv, that.cvv)
-                .append(paymentMethod, that.paymentMethod)
-                .append(selectedCategories, that.selectedCategories)
-                .append(selectedDishes, that.selectedDishes)
-                .append(deliveryAddress, that.deliveryAddress)
-                .append(userDetail, that.userDetail)
+                .append(getId(), that.getId())
+                .append(getTotalPrice(), that.getTotalPrice())
+                .append(getOrderStatus(), that.getOrderStatus())
+                .append(getPaymentMethod(), that.getPaymentMethod())
+                .append(getDishesToOrder(), that.getDishesToOrder())
+                .append(getDeliveryAddress(), that.getDeliveryAddress())
+                .append(getUserDetail(), that.getUserDetail())
+                .append(getCreatedDate(), that.getCreatedDate())
+                .append(getLastModifiedDate(), that.getLastModifiedDate())
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .append(id)
+                .append(getId())
+                .append(getTotalPrice())
+                .append(getOrderStatus())
+                .append(getPaymentMethod())
+                .append(getDishesToOrder())
+                .append(getDeliveryAddress())
+                .append(getUserDetail())
                 .append(getCreatedDate())
                 .append(getLastModifiedDate())
-                .append(totalPrice)
-                .append(cardName)
-                .append(cardNumber)
-                .append(expiration)
-                .append(cvv)
-                .append(paymentMethod)
-                .append(selectedDishes)
-                .append(selectedCategories)
-                .append(deliveryAddress)
-                .append(userDetail)
                 .toHashCode();
     }
 
@@ -196,15 +136,11 @@ public class OrderEntity extends BaseEntity {
         return "OrderEntity{" +
                 "id=" + id +
                 ", totalPrice=" + totalPrice +
-                ", cardName='" + cardName + '\'' +
-                ", cardNumber='" + cardNumber + '\'' +
-                ", expiration='" + expiration + '\'' +
-                ", cvv='" + cvv + '\'' +
+                ", orderStatus=" + orderStatus +
                 ", paymentMethod=" + paymentMethod +
-                ", selectedDishes=" + selectedDishes +
-                ", selectedCategories=" + selectedCategories +
-//                ", deliveryAddress=" + deliveryAddress +
-//                ", userDetail=" + userDetail +
+                ", dishesToOrder=" + dishesToOrder +
+                ", deliveryAddress=" + deliveryAddress +
+                ", userDetail=" + userDetail +
                 ", createdDate=" + getCreatedDate() +
                 ", lastModifiedDate=" + getLastModifiedDate() +
                 '}';

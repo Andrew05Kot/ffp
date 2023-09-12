@@ -91,7 +91,7 @@ public class DeliveryAddressV1Response {
 
     @Override
     public String toString() {
-        return "DeliveryAddressV1MobileResponse{" +
+        return "DeliveryAddressMobileV1Response{" +
                 "id='" + id + '\'' +
                 ", country='" + country + '\'' +
                 ", city='" + city + '\'' +

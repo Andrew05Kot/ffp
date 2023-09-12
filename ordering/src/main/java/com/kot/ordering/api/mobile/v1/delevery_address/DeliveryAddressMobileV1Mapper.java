@@ -8,7 +8,7 @@ import com.kot.ordering.model.DeliveryAddress;
 @Component
 public class DeliveryAddressMobileV1Mapper {
 
-    public DeliveryAddress dtoToDomain(DeliveryAddressV1MobileRequest request) {
+    public DeliveryAddress dtoToDomain(DeliveryAddressMobileV1Request request) {
         DeliveryAddress model = new DeliveryAddress();
         model.setCountry(request.getCountry());
         model.setCity(request.getCity());
@@ -18,8 +18,8 @@ public class DeliveryAddressMobileV1Mapper {
         return model;
     }
 
-    public DeliveryAddressV1MobileResponse domainToDto(DeliveryAddressEntity entity) {
-        DeliveryAddressV1MobileResponse response = new DeliveryAddressV1MobileResponse();
+    public DeliveryAddressMobileV1Response domainToDto(DeliveryAddressEntity entity) {
+        DeliveryAddressMobileV1Response response = new DeliveryAddressMobileV1Response();
         response.setId(entity.getId());
         response.setCountry(entity.getCountry());
         response.setCity(entity.getCity());

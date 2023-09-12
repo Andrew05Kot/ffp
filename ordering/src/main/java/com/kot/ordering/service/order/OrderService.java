@@ -14,7 +14,10 @@ import org.springframework.stereotype.Service;
 import com.kot.ordering.client.DishV1Client;
 import com.kot.ordering.client.FraudDishV1Response;
 import com.kot.ordering.dao.OrderDao;
+import com.kot.ordering.entity.DishToOrderEntity;
 import com.kot.ordering.entity.OrderEntity;
+import com.kot.ordering.entity.OrderStatus;
+import com.kot.ordering.model.DishToOrder;
 import com.kot.ordering.model.Order;
 import com.kot.ordering.service.delivery_address.DeliveryAddressService;
 import com.kot.ordering.service.user_detail.UserDetailService;
@@ -35,9 +38,14 @@ public class OrderService {
     private UserDetailService userDetailService;
 
     public OrderEntity create(Order model) {
-        model.setTotalPrice(calculateTotalPrice(model.getSelectedDishes()));
+        if (model.getDishesToOrder() != null) {
+            //TODO throw some Exception
+            return null;
+        }
+        List<Long> selectedDishesIds = model.getDishesToOrder().stream().map(DishToOrder::getDishId).toList();
+        model.setTotalPrice(calculateTotalPrice(selectedDishesIds));
         model.setLastModifiedDate(ZonedDateTime.now());
-
+        model.setOrderStatus(OrderStatus.PENDING);
         OrderEntity entity = orderDao.create(model.getEntity());
 
         onCreatedOrder(entity, model);
