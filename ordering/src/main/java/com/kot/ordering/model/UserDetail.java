@@ -33,6 +33,7 @@ public class UserDetail {
 
     public UserDetailEntity getEntity() {
         UserDetailEntity entity = new UserDetailEntity();
+        entity.setId(this.id);
         entity.setFirstName(this.firstName);
         entity.setLastName(this.lastName);
         entity.setEmail(this.email);

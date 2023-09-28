@@ -35,15 +35,17 @@ public class OrderV1ApiMapper {
         response.setTotalPrice(order.getTotalPrice());
         response.setOrderStatus(order.getOrderStatus());
         response.setPaymentMethod(order.getPaymentMethod());
-        if (order.getDishesToOrder() != null) {
-            response.setDishesToOrder(order.getDishesToOrder().stream().map(dishToOrderV1Mapper::domainToDto).toList());
-        }
         if (order.getDeliveryAddress() != null) {
             response.setDeliveryAddress(deliveryAddressV1Mapper.domainToDto(order.getDeliveryAddress().getEntity()));
         }
         if (order.getUserDetail() != null) {
             response.setUserDetail(userDetailV1Mapper.domainToDto(order.getUserDetail().getEntity()));
         }
+        if (order.getDishesToOrder() != null) {
+            response.setDishesToOrder(order.getDishesToOrder().stream().map(dishToOrderV1Mapper::domainToDto).toList());
+        }
+        response.setCreatedDate(order.getCreatedDate());
+        response.setLastModifiedDate(order.getLastModifiedDate());
         expandResponse(response, order, expandFields);
         return response;
     }

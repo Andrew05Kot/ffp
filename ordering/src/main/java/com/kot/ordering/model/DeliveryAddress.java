@@ -34,6 +34,7 @@ public class DeliveryAddress {
 
     public DeliveryAddressEntity getEntity() {
         DeliveryAddressEntity entity = new DeliveryAddressEntity();
+        entity.setId(this.id);
         entity.setCountry(this.country);
         entity.setCity(this.city);
         entity.setStreet(this.street);
