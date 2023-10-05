@@ -20,9 +20,7 @@ public class DishService {
 	private DishDao dishDao;
 
 	@Autowired
-	private FilteringCriteriaParser searchCriteriaParser;
-
-	private final DishSpecificationsBuilder dishSpecificationsBuilder = new DishSpecificationsBuilder();
+	private DishSpecificationsBuilder dishSpecificationsBuilder;
 
 	public DishEntity create(DishEntity dish) {
 		return dishDao.create(dish);
@@ -41,7 +39,7 @@ public class DishService {
 	}
 
 	public Page<DishEntity> findAll(String search, Pageable pageable) {
-		Specification<DishEntity> specification = buildSpecification(search);
+		Specification<DishEntity> specification = this.dishSpecificationsBuilder.buildSpecification(search);
 		return dishDao.findAll(specification, pageable);
 	}
 
@@ -57,13 +55,5 @@ public class DishService {
 		return dishDao.findAll(pageable);
 	}
 
-	private Specification<DishEntity> buildSpecification(String filter) {
-		Specification<DishEntity> filteringSpecification = null;
-		if (filter != null) {
-			List<FilteringCriteria> searchCriteria = searchCriteriaParser.parseSearchCriteria(filter,
-					this.dishSpecificationsBuilder.getAllowedFilterableProperties());
-			filteringSpecification = this.dishSpecificationsBuilder.buildSpecification(searchCriteria);
-		}
-		return filteringSpecification;
-	}
+
 }

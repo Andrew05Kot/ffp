@@ -51,7 +51,7 @@ public class DishesTestDataGenerator {
 				"Hamburger",
 				BigDecimal.valueOf(2),
 				"A hamburger is a type of sandwich consisting of a chopped patty served inside a sliced bun. In addition to meat, a hamburger can have a large number of different seasonings, for example: ketchup and mayonnaise, lettuce, pickled cucumber, cheese or fried onion, tomato.",
-				"https://live.staticflickr.com/5488/9075153360_cb9b2deded_z.jpg",
+				"https://pngimg.com/uploads/burger_sandwich/burger_sandwich_PNG96787.png",
 				this::getHamburgerRecipe
 		);
 
@@ -59,7 +59,7 @@ public class DishesTestDataGenerator {
 				"Hamburger",
 				BigDecimal.valueOf(2.10),
 				"A cheeseburger is a hamburger topped with cheese. Traditionally, the slice of cheese is placed on top of the meat patty. The cheese is usually added to the cooking hamburger patty shortly before serving, which allows the cheese to melt. Cheeseburgers can include variations in structure, ingredients and composition. As with other hamburgers, a cheeseburger may include toppings such as lettuce, tomato, onion, pickles, bacon, mayonnaise, ketchup, and mustard.",
-				"https://live.staticflickr.com/7334/27568788370_e101cfd3f6.jpg",
+				"https://www.mcdonalds.com.sg/sites/default/files/2023-02/1200x1200_MOP_BBPilot_Cheeseburger_1.png",
 				this::getCheeseburgerRecipe
 		);
 
@@ -67,7 +67,7 @@ public class DishesTestDataGenerator {
 				"Hamburger",
 				BigDecimal.valueOf(3.50),
 				"Although the legendary Double Burger really needs no introduction, please allow us... Tucked in between three soft buns are two all-beef patties, cheddar cheese, ketchup, onion, pickles and iceberg lettuce. Hesburger's own paprika and cucumber mayonnaise add the crowning touch. Oh baby!",
-				"https://live.staticflickr.com/1777/42976245025_62ce57d552_k.jpg",
+				"https://res.cloudinary.com/sonic-drive-in/image/upload/c_fit,w_600,h_600,dpr_2,f_auto,q_auto/v1621250831/oa_menu/products/menuproduct_burger_double-cheeseburger_sauce.png",
 				this::getDoubleBurgerRecipe
 		);
 
@@ -75,7 +75,7 @@ public class DishesTestDataGenerator {
 				"Hamburger",
 				BigDecimal.valueOf(3.00),
 				"For the healthy and calorie conscious folks we've got this tasty burger. A lentil, mushroom and sun dried tomato pattie packed between a whole wheat bun.",
-				null,
+				"https://prairiepizzas.ca/wp-content/uploads/2020/07/swiss-mashroom-burger.png",
 				this::getMushroomBurgerRecipe
 		);
 
@@ -83,7 +83,7 @@ public class DishesTestDataGenerator {
 				"Hamburger",
 				BigDecimal.valueOf(3.50),
 				"This burger takes things to the next level with crispy bacon and melted cheese on top of a juicy patty.",
-				null,
+				"https://res.cloudinary.com/sonic-drive-in/image/upload/c_fit,w_600,h_600,dpr_2,f_auto,q_auto/v1633113774/oa_menu/products/menuthumbnail_burger_bacon-cheeseburger.png",
 				this::getBaconCheeseburgerRecipe
 		);
 
@@ -91,7 +91,7 @@ public class DishesTestDataGenerator {
 				"Pizza",
 				BigDecimal.valueOf(3.00),
 				"It should be no shocker that a classic is the statistical favorite. Cheese pizza is one of the most popular choices. It will always be a simple, unadorned masterpiece on its own.",
-				"https://live.staticflickr.com/7165/6707822395_e49eb0fd50_b.jpg",
+				"https://www.cicis.com/media/d21b0xj1/mac-and-cheese-pizza.png",
 				this::getCheesePizzaRecipe
 		);
 
@@ -99,7 +99,7 @@ public class DishesTestDataGenerator {
 				"Pizza",
 				BigDecimal.valueOf(3.00),
 				"When you want to jazz up your cheese pizza with color and texture, veggies are the perfect topping. And you’re only limited by your imagination. Everything from peppers and mushrooms, to eggplant and onions make for an exciting and tasty veggie pizza.",
-				"https://live.staticflickr.com/3002/2746214882_377a22ea38_b.jpg",
+				"https://www.cicis.com/media/nctfaewb/veggie-pizza.png",
 				this::getVeggiePizzaRecipe
 		);
 
@@ -107,7 +107,7 @@ public class DishesTestDataGenerator {
 				"Pizza",
 				BigDecimal.valueOf(2.80),
 				"There’s a reason this is one of the most popular types of pizza. Who doesn’t love biting into a crispy, salty round of pepperoni?",
-				null,
+				"https://static.vecteezy.com/system/resources/previews/023/742/403/original/pepperoni-pizza-isolated-illustration-ai-generative-free-png.png",
 				this::getPepperoniPizzaRecipe
 		);
 
@@ -115,7 +115,7 @@ public class DishesTestDataGenerator {
 				"Pizza",
 				BigDecimal.valueOf(3.05),
 				"Deceptively simple, the Margherita pizza is made with basil, fresh mozzarella, and tomatoes. There’s a reason it’s an Italian staple and one of the most popular types of pizza in the country.",
-				"https://live.staticflickr.com/8699/17144434218_8324b5d89c_b.jpg",
+				"https://jow.fr/_next/image?url=https%3A%2F%2Fstatic.jow.fr%2F880x880%2Frecipes%2Fa0Lk7trMz4MOyw.png&w=2560&q=100",
 				this::getMargheritaPizzaRecipe
 		);
 
@@ -123,7 +123,7 @@ public class DishesTestDataGenerator {
 				"Pizza",
 				BigDecimal.valueOf(4.00),
 				"This pizza is loaded with pepperoni, sausage, bacon, and ham for a hearty and satisfying meal.",
-				"https://live.staticflickr.com/4025/4547182511_42e46a9818_b.jpg",
+				"https://littleceopizza.com/wp-content/uploads/2018/08/meat-600x600.png",
 				this::getMeatLoversPizzaRecipe
 		);
 
@@ -131,7 +131,7 @@ public class DishesTestDataGenerator {
 				"Coffee",
 				BigDecimal.valueOf(1.00),
 				"This classic drink is typically 1/3 espresso and 2/3 steamed milk, topped with a thin layer of foam, but coffee shops have come up with seemingly endless customizations. You can experiment with flavored syrups like vanilla and pumpkin spice or create a nondairy version by using oat milk. Skilled baristas often swirl the foam into latte art!",
-				"https://live.staticflickr.com/5553/14122661794_2374c45868_b.jpg",
+				"https://www.peets.com/cdn/shop/products/iced-latte.png?v=1597269390",
 				this::getLatteRecipe
 		);
 
@@ -139,7 +139,7 @@ public class DishesTestDataGenerator {
 				"Coffee",
 				BigDecimal.valueOf(0.75),
 				"This espresso-based drink is similar to a latte, but the frothy top layer is thicker. The standard ratio is equal parts espresso, steamed milk, and foam. It's often served in a 6-ounce cup (smaller than a latte cup) and can be topped with a sprinkling of cinnamon.",
-				"https://live.staticflickr.com/65535/51145487162_a019ceb695_b.jpg",
+				"https://cdn.shopify.com/s/files/1/0319/0764/3436/products/traditional-cappuccino.png?v=1597269389",
 				this::getCappuccinoRecipe
 		);
 
@@ -147,7 +147,7 @@ public class DishesTestDataGenerator {
 				"Coffee",
 				BigDecimal.valueOf(0.75),
 				"Order this drink and you'll get a shot of espresso diluted with hot water.",
-				null,
+				"https://cdn.shopify.com/s/files/1/0319/0764/3436/products/caffe-americano.png?v=1597269387",
 				this::getAmericanoRecipe
 		);
 
@@ -155,7 +155,7 @@ public class DishesTestDataGenerator {
 				"Coffee",
 				BigDecimal.valueOf(1.10),
 				"Like the latte, this drink consists of espresso and steamed milk, but the ratio of espresso to milk is higher. Baristas also fold the milk as it steams, which creates a more velvety texture. The flat white has roots in Australia and New Zealand.",
-				null,
+				"https://grycan.pl/wp-content/uploads/2019/01/flathwhite.png",
 				this::getFlatWhiteRecipe
 		);
 
@@ -163,7 +163,7 @@ public class DishesTestDataGenerator {
 				"Coffee",
 				BigDecimal.valueOf(1.50),
 				"A refreshing way to enjoy your coffee on a hot day. Brewed coffee poured over ice and served with your choice of cream and sugar.",
-				"https://live.staticflickr.com/8785/17833846288_4c1df9d221_b.jpg",
+				"https://res.cloudinary.com/sonic-drive-in/image/upload/c_fit,w_600,h_600,dpr_2,f_auto,q_auto/v1603477512/oa_menu/products/menuproduct-coldbrew_2.png",
 				this::getIcedCoffeeRecipe
 		);
 
@@ -171,7 +171,7 @@ public class DishesTestDataGenerator {
 				"Breakfast",
 				BigDecimal.valueOf(4.00),
 				"Start your day off right with this breakfast burrito filled with scrambled eggs, cheese, potatoes, and your choice of bacon or sausage.",
-				"https://live.staticflickr.com/8487/8288501304_45ccfb5443_b.jpg",
+				"https://res.cloudinary.com/sonic-drive-in/image/upload/c_fit,w_600,h_600,dpr_2,f_auto,q_auto/v1622138834/oa_menu/products/menuproduct_breakfast_burrito-sausage-egg-cheese-jr.png",
 				this::getBreakfastBurritoRecipe
 		);
 
@@ -179,7 +179,7 @@ public class DishesTestDataGenerator {
 				"Breakfast",
 				BigDecimal.valueOf(3.00),
 				"A classic breakfast dish, pancakes are made with a fluffy batter and served with butter and syrup. Add toppings like berries, whipped cream, or chocolate chips for a sweet twist.",
-				"https://live.staticflickr.com/7662/16958480458_f678f57241_c.jpg",
+				"https://olo-images-live.imgix.net/16/1641973e8b0e465abb6227325d06f895.png?auto=format%2Ccompress&q=60&cs=tinysrgb&w=528&h=352&fit=crop&s=c4a385991717420f4eb66ab2bc08504c",
 				this::getPancakesRecipe
 		);
 	}
