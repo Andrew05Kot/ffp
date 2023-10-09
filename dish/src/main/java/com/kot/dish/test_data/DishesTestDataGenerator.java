@@ -18,7 +18,6 @@ import com.kot.dish.domain.RecipeEntity;
 import com.kot.dish.repository.CategoryRepository;
 import com.kot.dish.repository.DishRepository;
 import com.kot.dish.repository.IngredientRepository;
-import com.kot.dish.repository.RecipeRepository;
 
 @Component
 @Profile("testdata")
@@ -33,61 +32,57 @@ public class DishesTestDataGenerator {
 	@Autowired
 	private IngredientRepository ingredientRepository;
 
-	@Autowired
-	private RecipeRepository recipeRepository;
-
 	private Map<String, CategoryEntity> categories;
 
 	@PostConstruct
 	public void generateTestData() {
 		this.categories = buildAndSaveCategories();
-
 		buildAndSaveIngredients();
 		buildAndSaveDishes();
 	}
 
 	private void buildAndSaveDishes() {
-		createAndSave("Hamburger",
-				"Hamburger",
+		createAndSaveDish("Hamburger",
+				"Burger",
 				BigDecimal.valueOf(2),
 				"A hamburger is a type of sandwich consisting of a chopped patty served inside a sliced bun. In addition to meat, a hamburger can have a large number of different seasonings, for example: ketchup and mayonnaise, lettuce, pickled cucumber, cheese or fried onion, tomato.",
 				"https://pngimg.com/uploads/burger_sandwich/burger_sandwich_PNG96787.png",
 				this::getHamburgerRecipe
 		);
 
-		createAndSave("Cheeseburger",
-				"Hamburger",
+		createAndSaveDish("Cheeseburger",
+				"Burger",
 				BigDecimal.valueOf(2.10),
 				"A cheeseburger is a hamburger topped with cheese. Traditionally, the slice of cheese is placed on top of the meat patty. The cheese is usually added to the cooking hamburger patty shortly before serving, which allows the cheese to melt. Cheeseburgers can include variations in structure, ingredients and composition. As with other hamburgers, a cheeseburger may include toppings such as lettuce, tomato, onion, pickles, bacon, mayonnaise, ketchup, and mustard.",
 				"https://www.mcdonalds.com.sg/sites/default/files/2023-02/1200x1200_MOP_BBPilot_Cheeseburger_1.png",
 				this::getCheeseburgerRecipe
 		);
 
-		createAndSave("Double burger",
-				"Hamburger",
+		createAndSaveDish("Double burger",
+				"Burger",
 				BigDecimal.valueOf(3.50),
 				"Although the legendary Double Burger really needs no introduction, please allow us... Tucked in between three soft buns are two all-beef patties, cheddar cheese, ketchup, onion, pickles and iceberg lettuce. Hesburger's own paprika and cucumber mayonnaise add the crowning touch. Oh baby!",
 				"https://res.cloudinary.com/sonic-drive-in/image/upload/c_fit,w_600,h_600,dpr_2,f_auto,q_auto/v1621250831/oa_menu/products/menuproduct_burger_double-cheeseburger_sauce.png",
 				this::getDoubleBurgerRecipe
 		);
 
-		createAndSave("Mushroom burger",
-				"Hamburger",
+		createAndSaveDish("Mushroom burger",
+				"Burger",
 				BigDecimal.valueOf(3.00),
 				"For the healthy and calorie conscious folks we've got this tasty burger. A lentil, mushroom and sun dried tomato pattie packed between a whole wheat bun.",
 				"https://prairiepizzas.ca/wp-content/uploads/2020/07/swiss-mashroom-burger.png",
 				this::getMushroomBurgerRecipe
 		);
 
-		createAndSave("Bacon Cheeseburger",
-				"Hamburger",
+		createAndSaveDish("Bacon Cheeseburger",
+				"Burger",
 				BigDecimal.valueOf(3.50),
 				"This burger takes things to the next level with crispy bacon and melted cheese on top of a juicy patty.",
 				"https://res.cloudinary.com/sonic-drive-in/image/upload/c_fit,w_600,h_600,dpr_2,f_auto,q_auto/v1633113774/oa_menu/products/menuthumbnail_burger_bacon-cheeseburger.png",
 				this::getBaconCheeseburgerRecipe
 		);
 
-		createAndSave("Cheese Pizza",
+		createAndSaveDish("Cheese Pizza",
 				"Pizza",
 				BigDecimal.valueOf(3.00),
 				"It should be no shocker that a classic is the statistical favorite. Cheese pizza is one of the most popular choices. It will always be a simple, unadorned masterpiece on its own.",
@@ -95,7 +90,7 @@ public class DishesTestDataGenerator {
 				this::getCheesePizzaRecipe
 		);
 
-		createAndSave("Veggie Pizza",
+		createAndSaveDish("Veggie Pizza",
 				"Pizza",
 				BigDecimal.valueOf(3.00),
 				"When you want to jazz up your cheese pizza with color and texture, veggies are the perfect topping. And you’re only limited by your imagination. Everything from peppers and mushrooms, to eggplant and onions make for an exciting and tasty veggie pizza.",
@@ -103,7 +98,7 @@ public class DishesTestDataGenerator {
 				this::getVeggiePizzaRecipe
 		);
 
-		createAndSave("Pepperoni Pizza",
+		createAndSaveDish("Pepperoni Pizza",
 				"Pizza",
 				BigDecimal.valueOf(2.80),
 				"There’s a reason this is one of the most popular types of pizza. Who doesn’t love biting into a crispy, salty round of pepperoni?",
@@ -111,7 +106,7 @@ public class DishesTestDataGenerator {
 				this::getPepperoniPizzaRecipe
 		);
 
-		createAndSave("Margherita Pizza",
+		createAndSaveDish("Margherita Pizza",
 				"Pizza",
 				BigDecimal.valueOf(3.05),
 				"Deceptively simple, the Margherita pizza is made with basil, fresh mozzarella, and tomatoes. There’s a reason it’s an Italian staple and one of the most popular types of pizza in the country.",
@@ -119,7 +114,7 @@ public class DishesTestDataGenerator {
 				this::getMargheritaPizzaRecipe
 		);
 
-		createAndSave("Meat Lovers Pizza",
+		createAndSaveDish("Meat Lovers Pizza",
 				"Pizza",
 				BigDecimal.valueOf(4.00),
 				"This pizza is loaded with pepperoni, sausage, bacon, and ham for a hearty and satisfying meal.",
@@ -127,7 +122,7 @@ public class DishesTestDataGenerator {
 				this::getMeatLoversPizzaRecipe
 		);
 
-		createAndSave("Latte",
+		createAndSaveDish("Latte",
 				"Coffee",
 				BigDecimal.valueOf(1.00),
 				"This classic drink is typically 1/3 espresso and 2/3 steamed milk, topped with a thin layer of foam, but coffee shops have come up with seemingly endless customizations. You can experiment with flavored syrups like vanilla and pumpkin spice or create a nondairy version by using oat milk. Skilled baristas often swirl the foam into latte art!",
@@ -135,7 +130,7 @@ public class DishesTestDataGenerator {
 				this::getLatteRecipe
 		);
 
-		createAndSave("Cappuccino",
+		createAndSaveDish("Cappuccino",
 				"Coffee",
 				BigDecimal.valueOf(0.75),
 				"This espresso-based drink is similar to a latte, but the frothy top layer is thicker. The standard ratio is equal parts espresso, steamed milk, and foam. It's often served in a 6-ounce cup (smaller than a latte cup) and can be topped with a sprinkling of cinnamon.",
@@ -143,7 +138,7 @@ public class DishesTestDataGenerator {
 				this::getCappuccinoRecipe
 		);
 
-		createAndSave("Americano",
+		createAndSaveDish("Americano",
 				"Coffee",
 				BigDecimal.valueOf(0.75),
 				"Order this drink and you'll get a shot of espresso diluted with hot water.",
@@ -151,7 +146,7 @@ public class DishesTestDataGenerator {
 				this::getAmericanoRecipe
 		);
 
-		createAndSave("Flat White",
+		createAndSaveDish("Flat White",
 				"Coffee",
 				BigDecimal.valueOf(1.10),
 				"Like the latte, this drink consists of espresso and steamed milk, but the ratio of espresso to milk is higher. Baristas also fold the milk as it steams, which creates a more velvety texture. The flat white has roots in Australia and New Zealand.",
@@ -159,7 +154,7 @@ public class DishesTestDataGenerator {
 				this::getFlatWhiteRecipe
 		);
 
-		createAndSave("Iced Coffee",
+		createAndSaveDish("Iced Coffee",
 				"Coffee",
 				BigDecimal.valueOf(1.50),
 				"A refreshing way to enjoy your coffee on a hot day. Brewed coffee poured over ice and served with your choice of cream and sugar.",
@@ -167,7 +162,7 @@ public class DishesTestDataGenerator {
 				this::getIcedCoffeeRecipe
 		);
 
-		createAndSave("Breakfast Burrito",
+		createAndSaveDish("Breakfast Burrito",
 				"Breakfast",
 				BigDecimal.valueOf(4.00),
 				"Start your day off right with this breakfast burrito filled with scrambled eggs, cheese, potatoes, and your choice of bacon or sausage.",
@@ -175,7 +170,7 @@ public class DishesTestDataGenerator {
 				this::getBreakfastBurritoRecipe
 		);
 
-		createAndSave("Pancakes",
+		createAndSaveDish("Pancakes",
 				"Breakfast",
 				BigDecimal.valueOf(3.00),
 				"A classic breakfast dish, pancakes are made with a fluffy batter and served with butter and syrup. Add toppings like berries, whipped cream, or chocolate chips for a sweet twist.",
@@ -184,7 +179,7 @@ public class DishesTestDataGenerator {
 		);
 	}
 
-	private void createAndSave(String name, String categoryName, BigDecimal price, String description, String imageUrl, Function<DishEntity, RecipeEntity> recipeProvider) {
+	private void createAndSaveDish(String name, String categoryName, BigDecimal price, String description, String imageUrl, Function<DishEntity, RecipeEntity> recipeProvider) {
 		DishEntity dishEntity = new DishEntity();
 		dishEntity.setName(name);
 		dishEntity.setCategory(categories.get(categoryName));
@@ -198,9 +193,9 @@ public class DishesTestDataGenerator {
 	public Map<String, CategoryEntity> buildAndSaveCategories() {
 		Map<String, CategoryEntity> categories = new HashMap<>();
 		CategoryEntity sandwich = new CategoryEntity();
-		sandwich.setName("Hamburger");
-		sandwich.setDescription("A hamburger is a type of sandwich. It consists of two or more slices of bread (often a bun) and one or more layers of meat and other fillings. In big cities (especially in the West), the sandwich has become an integral part of the food culture.");
-		sandwich.setIconName("hamburger");
+		sandwich.setName("Burger");
+		sandwich.setDescription("A burger is a type of sandwich. It consists of two or more slices of bread (often a bun) and one or more layers of meat and other fillings. In big cities (especially in the West), the sandwich has become an integral part of the food culture.");
+		sandwich.setIconName("Burger");
 		categories.put(sandwich.getName(), categoryRepository.save(sandwich));
 
 		CategoryEntity pizza = new CategoryEntity();

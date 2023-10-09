@@ -30,6 +30,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import com.kot.user.api.backoffice.v1.PageV1Response;
 import com.kot.user.builder.UserEntityBuilder;
 import com.kot.user.entity.UserEntity;
 import com.kot.user.service.UserService;
@@ -75,7 +76,6 @@ class UserV1ControllerTest {
 	public void testNotFoundUserOnFindById() throws Exception {
 		String userId = "random-id";
 		when(userService.findById(any(String.class))).thenReturn(null);
-
 
 		mockMvc.perform(get(UserV1Controller.API_URL + "/{id}", userId)
 						.accept(MediaType.APPLICATION_JSON))
@@ -124,12 +124,17 @@ class UserV1ControllerTest {
 		queryParams.add("sortDirection", "ASC");
 		queryParams.add("sortField", "username");
 
+		PageV1Response<UserV1Response> expectedResponse = new PageV1Response<>(page.stream().map(userV1ApiMapper::domainToDto).toList(),
+				page.getTotalElements(),
+				0,
+				10);
+
 		mockMvc.perform(get(UserV1Controller.API_URL)
 						.params(queryParams)
 						.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//				.andExpect(content().json(getJson(page))) TODO
+				.andExpect(content().json(getJson(expectedResponse)))
 				.andReturn();
 
 		verify(userService, times(1)).findAll(any(Pageable.class));

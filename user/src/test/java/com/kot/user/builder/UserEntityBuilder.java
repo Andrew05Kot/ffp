@@ -43,7 +43,7 @@ public class UserEntityBuilder {
 		entity.setCity(this.city);
 		entity.setStreet(this.street);
 		entity.setHouseNumber(this.houseNumber);
-		this.initDefaultData();
+		initDefaultData();
 		return entity;
 	}
 
