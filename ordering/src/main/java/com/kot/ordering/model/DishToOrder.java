@@ -29,7 +29,6 @@ public class DishToOrder {
         setDishCategoryName(entity.getDishCategoryName());
         setDishId(entity.getDishId());
         setCategoryId(entity.getCategoryId());
-//        setOrder(new Order(entity.getOrder()));
         setCreatedDate(entity.getCreatedDate());
         setLastModifiedDate(entity.getLastModifiedDate());
     }
@@ -46,6 +45,7 @@ public class DishToOrder {
             entity.setOrder(this.order.getEntity());
         }
         entity.setLastModifiedDate(this.lastModifiedDate);
+        entity.setCreatedDate(this.createdDate);
         return entity;
     }
 

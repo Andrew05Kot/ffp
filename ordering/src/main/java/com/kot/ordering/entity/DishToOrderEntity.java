@@ -9,7 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "dish_to_order")
-public class DishToOrderEntity extends BaseEntity  {
+public class DishToOrderEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "UUID")

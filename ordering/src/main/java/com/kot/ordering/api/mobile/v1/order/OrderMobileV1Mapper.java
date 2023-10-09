@@ -26,6 +26,7 @@ public class OrderMobileV1Mapper {
         model.setDishesToOrder(dto.getDishes().stream().map(dishToOrderMobileV1Mapper::dtoToDomain).toList());
         model.setDeliveryAddress(deliveryAddressMobileV1Mapper.dtoToDomain(dto.getDeliveryAddress()));
         model.setUserDetail(userDetailMobileV1Mapper.dtoToDomain(dto.getUserDetail()));
+        model.setPaymentMethod(dto.getPaymentMethod());
         return model;
     }
 
@@ -59,6 +60,8 @@ public class OrderMobileV1Mapper {
         if (orderEntity.getDishesToOrder() != null) {
             response.setDishesToOrder(orderEntity.getDishesToOrder().stream().map(dishToOrderMobileV1Mapper::domainToDto).toList());
         }
+        response.setCreatedDate(orderEntity.getCreatedDate());
+        response.setLastModifiedDate(orderEntity.getLastModifiedDate());
         return response;
     }
 }

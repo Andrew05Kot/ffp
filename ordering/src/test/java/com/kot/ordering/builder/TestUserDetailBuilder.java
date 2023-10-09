@@ -15,6 +15,8 @@ public class TestUserDetailBuilder {
     private String email;
     private String phoneNumber;
     private String imageUrl;
+    private ZonedDateTime createdDate = ZonedDateTime.now();
+    private ZonedDateTime lastModifiedDate = ZonedDateTime.now();
 
     public TestUserDetailBuilder() {
         initDefaultData();
@@ -38,6 +40,8 @@ public class TestUserDetailBuilder {
         entity.setEmail(this.email);
         entity.setPhoneNumber(this.phoneNumber);
         entity.setImageUrl(this.imageUrl);
+        entity.setCreatedDate(this.createdDate);
+        entity.setLastModifiedDate(this.lastModifiedDate);
         this.initDefaultData();
         return entity;
     }

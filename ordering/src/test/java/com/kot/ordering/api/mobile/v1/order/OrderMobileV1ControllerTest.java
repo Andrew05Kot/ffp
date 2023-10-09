@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.IOException;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -22,10 +23,13 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.kot.ordering.api.mobile.v1.delevery_address.DeliveryAddressMobileV1Request;
 import com.kot.ordering.api.mobile.v1.delevery_address.DeliveryAddressMobileV1Response;
+import com.kot.ordering.api.mobile.v1.dishes_list.DishToOrderMobileV1Request;
+import com.kot.ordering.api.mobile.v1.dishes_list.DishToOrderMobileV1Response;
 import com.kot.ordering.api.mobile.v1.user_details.UserDetailMobileV1Request;
 import com.kot.ordering.api.mobile.v1.user_details.UserDetailMobileV1Response;
 import com.kot.ordering.builder.TestOrderBuilder;
 import com.kot.ordering.model.DeliveryAddress;
+import com.kot.ordering.model.DishToOrder;
 import com.kot.ordering.model.Order;
 import com.kot.ordering.model.UserDetail;
 import com.kot.ordering.service.order.OrderService;
@@ -49,6 +53,7 @@ class OrderMobileV1ControllerTest {
     private static final Order TEST_ORDER = TEST_ORDER_BUILDER.build();
     private static final DeliveryAddress TEST_DELIVERY_ADDRESS = TEST_ORDER.getDeliveryAddress();
     private static final UserDetail TEST_USER_DETAIL = TEST_ORDER.getUserDetail();
+    private static final List<DishToOrder> TEST_DISHES_TO_ORDER = TEST_ORDER.getDishesToOrder();
 
     @Test
     public void testOrderCreation() throws Exception {
@@ -56,13 +61,15 @@ class OrderMobileV1ControllerTest {
 
         doAnswer((invocation) -> TEST_ORDER.getEntity()).when(orderService).create(any(Order.class));
 
+        OrderMobileV1Response expectedResponse = getExpectedOrderMobileV1Response();
+
         mockMvc.perform(post(OrderMobileV1Controller.API_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(getJson(request))
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated())
-                .andExpect(content().json(getJson(getExpectedOrderMobileV1Response())));
+                .andExpect(content().json(getJson(expectedResponse)));
 
         verify(orderService).create(any());
     }
@@ -71,18 +78,19 @@ class OrderMobileV1ControllerTest {
         OrderMobileV1Response response = new OrderMobileV1Response();
         response.setId(TEST_ORDER.getId());
         response.setTotalPrice(TEST_ORDER.getTotalPrice());
-        response.setCardName(TEST_ORDER.getCardName());
-        response.setCardNumber(TEST_ORDER.getCardNumber());
-        response.setExpiration(TEST_ORDER.getExpiration());
-        response.setCvv(TEST_ORDER.getCvv());
+        response.setOrderStatus(TEST_ORDER.getOrderStatus());
         response.setPaymentMethod(TEST_ORDER.getPaymentMethod());
         response.setDeliveryAddress(getExpectedDeliveryAddressMobileV1Response());
         response.setUserDetail(getExpectedUserDetailMobileV1Response());
+        response.setDishesToOrder(getExpectedDishesToOrderMobileV1Responses());
+        response.setCreatedDate(TEST_ORDER.getCreatedDate());
+        response.setLastModifiedDate(TEST_ORDER.getLastModifiedDate());
         return response;
     }
 
     private DeliveryAddressMobileV1Response getExpectedDeliveryAddressMobileV1Response() {
         DeliveryAddressMobileV1Response response = new DeliveryAddressMobileV1Response();
+        response.setId(TEST_DELIVERY_ADDRESS.getId());
         response.setCountry(TEST_DELIVERY_ADDRESS.getCountry());
         response.setCity(TEST_DELIVERY_ADDRESS.getCity());
         response.setStreet(TEST_DELIVERY_ADDRESS.getStreet());
@@ -93,6 +101,7 @@ class OrderMobileV1ControllerTest {
 
     private UserDetailMobileV1Response getExpectedUserDetailMobileV1Response() {
         UserDetailMobileV1Response response = new UserDetailMobileV1Response();
+        response.setId(TEST_USER_DETAIL.getId());
         response.setFirstName(TEST_USER_DETAIL.getFirstName());
         response.setLastName(TEST_USER_DETAIL.getLastName());
         response.setEmail(TEST_USER_DETAIL.getEmail());
@@ -101,17 +110,27 @@ class OrderMobileV1ControllerTest {
         return response;
     }
 
+    private List<DishToOrderMobileV1Response> getExpectedDishesToOrderMobileV1Responses() {
+        return TEST_ORDER.getDishesToOrder().stream().map(dishToOrder -> {
+            DishToOrderMobileV1Response dishToOrderMobileV1Response = new DishToOrderMobileV1Response();
+            dishToOrderMobileV1Response.setId(dishToOrder.getId());
+            dishToOrderMobileV1Response.setQuantity(dishToOrder.getQuantity());
+            dishToOrderMobileV1Response.setDishName(dishToOrder.getDishName());
+            dishToOrderMobileV1Response.setDishCategoryName(dishToOrder.getDishCategoryName());
+            dishToOrderMobileV1Response.setCategoryId(dishToOrder.getCategoryId());
+            dishToOrderMobileV1Response.setDishId(dishToOrder.getDishId());
+            dishToOrderMobileV1Response.setCreatedDate(dishToOrder.getCreatedDate());
+            dishToOrderMobileV1Response.setLastModifiedDate(dishToOrder.getLastModifiedDate());
+            return dishToOrderMobileV1Response;
+        }).toList();
+    }
+
     private OrderMobileV1Request getOrderMobileV1Request() {
         OrderMobileV1Request request = new OrderMobileV1Request();
-        request.setCardName(TEST_ORDER.getCardName());
-        request.setCardNumber(TEST_ORDER.getCardNumber());
-        request.setExpiration(TEST_ORDER.getExpiration());
-        request.setCvv(TEST_ORDER.getCvv());
         request.setPaymentMethod(TEST_ORDER.getPaymentMethod());
         request.setUserDetail(getValidUserDetailMobileV1Request());
         request.setDeliveryAddress(getDeliveryAddressMobileV1Request());
-        request.setUserId("1L");
-        request.setDishIds(TEST_ORDER.getSelectedDishes());
+        request.setDishes(getValidDishToOrderMobileV1Requests());
         return request;
     }
 
@@ -132,6 +151,18 @@ class OrderMobileV1ControllerTest {
         request.setPhoneNumber(TEST_USER_DETAIL.getPhoneNumber());
         request.setImageUrl(TEST_USER_DETAIL.getImageUrl());
         return request;
+    }
+
+    private List<DishToOrderMobileV1Request> getValidDishToOrderMobileV1Requests() {
+        return TEST_DISHES_TO_ORDER.stream().map(dishToOrder -> {
+            DishToOrderMobileV1Request request = new DishToOrderMobileV1Request();
+            request.setDishId(dishToOrder.getDishId());
+            request.setCategoryId(dishToOrder.getCategoryId());
+            request.setQuantity(dishToOrder.getQuantity());
+            request.setDishName(dishToOrder.getDishName());
+            request.setDishCategoryName(dishToOrder.getDishCategoryName());
+            return request;
+        }).toList();
     }
 
     private String getJson(Object object) throws IOException {

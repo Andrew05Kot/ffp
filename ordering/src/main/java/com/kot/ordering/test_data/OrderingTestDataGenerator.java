@@ -19,7 +19,7 @@ import com.kot.ordering.model.UserDetail;
 import com.kot.ordering.service.order.OrderService;
 
 @Component
-//@Profile("test-data")
+@Profile("test-data")
 public class OrderingTestDataGenerator {
 
     @Autowired
