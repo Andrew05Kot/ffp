@@ -11,10 +11,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +29,6 @@ import com.kot.dish.service.DishService;
 @RestController
 @RequestMapping(DishV1Controller.API_URL)
 @Tag(name = "Dish Backoffice API V1")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8765", "http://localhost:8082"})
 public class DishV1Controller {
 
 	static final int DEFAULT_PAGE_SIZE = 15;
@@ -52,9 +51,9 @@ public class DishV1Controller {
 	}
 
 
-	@PostMapping("/")
+	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<DishV1Response> create(@RequestBody DishV1Request request) {
-		DishEntity model = dishService.save(dishAPIMapper.dtoToDomain(request));
+		DishEntity model = dishService.create(dishAPIMapper.dtoToDomain(request));
 		return new ResponseEntity<>(dishAPIMapper.domainToDto(model), HttpStatus.OK);
 	}
 
@@ -85,7 +84,16 @@ public class DishV1Controller {
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/unpaged")
 	public List<DishV1Response> getAll() {
 		Page<DishEntity> fetchedPage = dishService.findAll();
-		return fetchedPage.stream().map(dishAPIMapper::domainToDto).toList();
+		return fetchedPage.getContent().stream().map(dishAPIMapper::domainToDto).toList();
+	}
+
+	@PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<DishV1Response> update(@PathVariable Long id,
+												 @RequestBody DishV1Request request) {
+		DishEntity entity = dishService.findById(id);
+		dishAPIMapper.copyProperties(request, entity);
+		entity = dishService.update(entity, entity.getId());
+		return new ResponseEntity<>(dishAPIMapper.domainToDto(entity), HttpStatus.OK);
 	}
 
 	private static Pageable getResult(Optional<Integer> pageIndex, Optional<Integer> pageSize, Sort sort) {

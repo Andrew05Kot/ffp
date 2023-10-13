@@ -1,5 +1,6 @@
 package com.kot.dish.dao;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,8 +28,8 @@ public class CategoryDao {
 		return categoryRepository.findAll(Specification.where(null), Pageable.unpaged());
 	}
 
-	public Page<CategoryEntity> findAll(Specification specification) {
-		return (Page<CategoryEntity>) categoryRepository.findAll(specification);
+	public List<CategoryEntity> findAll(Specification<CategoryEntity> specification) {
+		return categoryRepository.findAll(specification);
 	}
 
 	public Page<CategoryEntity> findAll(Specification<CategoryEntity> filter, Pageable pageable) {

@@ -34,8 +34,11 @@ public class DishMobileV1Controller {
 
     @GetMapping("/{id}")
     public ResponseEntity<DishMobileV1Response> getById(@PathVariable Long id) {
-        DishEntity model = dishService.findById(id);
-        return new ResponseEntity<>(dishAPIMapper.domainToDto(model), HttpStatus.OK);
+        DishEntity dish = dishService.findById(id);
+        if (dish != null) {
+            return new ResponseEntity<>(dishAPIMapper.domainToDto(dish), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/")

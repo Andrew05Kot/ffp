@@ -22,6 +22,14 @@ The business idea of this project is to sell burgers in Telegram client, Mobile 
 2. Run `mvn compile` command
 3. Run Api-Gateway, Eureka and another microservices which need for you
 
+## Constraints Naming Convention
+
+- **Primary Key**: `table_name_pk`
+- **Foreign Key**: `table_name_reference_table_name_fk`
+- **Unique Constraint**: `table_name_column_name_uq`
+- **Index Constraint**: `table_name_column_name_idx`
+
+
 ## URLs (local environment)
 1. **Swagger**: http://localhost:8765/webjars/swagger-ui/index.html
 

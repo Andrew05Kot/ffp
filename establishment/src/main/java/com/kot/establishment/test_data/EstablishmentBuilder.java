@@ -16,6 +16,10 @@ public class EstablishmentBuilder {
 
 	private String houseNumber;
 
+	private Double longitude;
+
+	private Double latitude;
+
 	public EstablishmentBuilder() {
 		this.initDefaultData();
 	}
@@ -36,6 +40,8 @@ public class EstablishmentBuilder {
 		entity.setCity(this.city);
 		entity.setStreet(this.street);
 		entity.setHouseNumber(this.houseNumber);
+		entity.setLongitude(this.longitude);
+		entity.setLatitude(this.latitude);
 		initDefaultData();
 		return entity;
 	}
@@ -66,6 +72,16 @@ public class EstablishmentBuilder {
 
 	public EstablishmentBuilder setHouseNumber(String houseNumber) {
 		this.houseNumber = houseNumber;
+		return this;
+	}
+
+	public EstablishmentBuilder setLongitude(Double longitude) {
+		this.longitude = longitude;
+		return this;
+	}
+
+	public EstablishmentBuilder setLatitude(Double latitude) {
+		this.latitude = latitude;
 		return this;
 	}
 }

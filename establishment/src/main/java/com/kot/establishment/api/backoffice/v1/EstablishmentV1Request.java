@@ -15,6 +15,10 @@ public class EstablishmentV1Request {
 
 	private String houseNumber;
 
+	private Double latitude;
+
+	private Double longitude;
+
 	public EstablishmentEntity toEntityForCreate(Long id) {
 		EstablishmentEntity entity = new EstablishmentEntity();
 		entity.setId(id);
@@ -22,6 +26,8 @@ public class EstablishmentV1Request {
 		entity.setCity(this.city);
 		entity.setStreet(this.street);
 		entity.setHouseNumber(this.houseNumber);
+		entity.setLatitude(this.latitude);
+		entity.setLongitude(this.longitude);
 		return toEntityForUpdate(entity);
 	}
 
@@ -61,6 +67,22 @@ public class EstablishmentV1Request {
 		this.houseNumber = houseNumber;
 	}
 
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -74,6 +96,8 @@ public class EstablishmentV1Request {
 				.append(city, that.city)
 				.append(street, that.street)
 				.append(houseNumber, that.houseNumber)
+				.append(latitude, that.latitude)
+				.append(longitude, that.longitude)
 				.isEquals();
 	}
 
@@ -84,6 +108,8 @@ public class EstablishmentV1Request {
 				.append(city)
 				.append(street)
 				.append(houseNumber)
+				.append(longitude)
+				.append(latitude)
 				.toHashCode();
 	}
 
@@ -94,6 +120,8 @@ public class EstablishmentV1Request {
 				", city='" + city + '\'' +
 				", street='" + street + '\'' +
 				", houseNumber='" + houseNumber + '\'' +
+				", longitude='" + longitude + '\'' +
+				", latitude='" + latitude + '\'' +
 				'}';
 	}
 }

@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.kot.dish.dao.IngredientDao;
 import com.kot.dish.domain.IngredientEntity;
-import com.kot.dish.filtering.FilteringCriteria;
-import com.kot.dish.filtering.FilteringCriteriaParser;
-import com.kot.dish.filtering.IngredientSpecificationsBuilder;
+import com.kot.dish.filtering.criteria_parser.FilteringCriteria;
+import com.kot.dish.filtering.criteria_parser.FilteringCriteriaParser;
+import com.kot.dish.filtering.models.ingredient.IngredientSpecificationsBuilder;
 
 @Service
 public class IngredientService {
@@ -37,10 +37,9 @@ public class IngredientService {
 		return ingredientDao.findAll(filter, pageable);
 	}
 
-	public Page<IngredientEntity> findAll(Specification<IngredientEntity> specification) {
+	public List<IngredientEntity> findAll(Specification<IngredientEntity> specification) {
 		return ingredientDao.findAll(specification);
 	}
-
 
 	public Page<IngredientEntity> findAll(Pageable pageable) {
 		return ingredientDao.findAll(pageable);
@@ -50,7 +49,7 @@ public class IngredientService {
 		Specification<IngredientEntity> filteringSpecification = null;
 		if (filter != null) {
 			List<FilteringCriteria> searchCriteria = searchCriteriaParser.parseSearchCriteria(filter,
-					ingredientSpecificationsBuilder.getFilterableProperties());
+					ingredientSpecificationsBuilder.getAllowedFilterableProperties());
 			filteringSpecification = ingredientSpecificationsBuilder.buildSpecification(searchCriteria);
 		}
 		return filteringSpecification;

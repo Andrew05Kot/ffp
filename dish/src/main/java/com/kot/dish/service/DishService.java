@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.kot.dish.dao.DishDao;
 import com.kot.dish.domain.DishEntity;
-import com.kot.dish.filtering.DishSpecificationsBuilder;
-import com.kot.dish.filtering.FilteringCriteria;
-import com.kot.dish.filtering.FilteringCriteriaParser;
+import com.kot.dish.filtering.criteria_parser.FilteringCriteria;
+import com.kot.dish.filtering.criteria_parser.FilteringCriteriaParser;
+import com.kot.dish.filtering.models.dish.DishSpecificationsBuilder;
 
 @Service
 public class DishService {
@@ -20,12 +20,14 @@ public class DishService {
 	private DishDao dishDao;
 
 	@Autowired
-	private FilteringCriteriaParser searchCriteriaParser;
+	private DishSpecificationsBuilder dishSpecificationsBuilder;
 
-	private final DishSpecificationsBuilder dishSpecificationsBuilder = new DishSpecificationsBuilder();
+	public DishEntity create(DishEntity dish) {
+		return dishDao.create(dish);
+	}
 
-	public DishEntity save(DishEntity dish) {
-		return dishDao.save(dish, dish.getId());
+	public DishEntity update(DishEntity dish, Long id) {
+		return dishDao.update(dish, id);
 	}
 
 	public DishEntity findById(Long id) {
@@ -37,7 +39,7 @@ public class DishService {
 	}
 
 	public Page<DishEntity> findAll(String search, Pageable pageable) {
-		Specification<DishEntity> specification = buildSpecification(search);
+		Specification<DishEntity> specification = this.dishSpecificationsBuilder.buildSpecification(search);
 		return dishDao.findAll(specification, pageable);
 	}
 
@@ -45,22 +47,13 @@ public class DishService {
 		return dishDao.findAll(filter, pageable);
 	}
 
-	public Page<DishEntity> findAll(Specification<DishEntity> specification) {
+	public List<DishEntity> findAll(Specification<DishEntity> specification) {
 		return dishDao.findAll(specification);
 	}
-
 
 	public Page<DishEntity> findAll(Pageable pageable) {
 		return dishDao.findAll(pageable);
 	}
 
-	private Specification<DishEntity> buildSpecification(String filter) {
-		Specification<DishEntity> filteringSpecification = null;
-		if (filter != null) {
-			List<FilteringCriteria> searchCriteria = searchCriteriaParser.parseSearchCriteria(filter,
-					this.dishSpecificationsBuilder.getFilterableProperties());
-			filteringSpecification = this.dishSpecificationsBuilder.buildSpecification(searchCriteria);
-		}
-		return filteringSpecification;
-	}
+
 }

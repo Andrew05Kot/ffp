@@ -11,11 +11,12 @@
 
   <modules>
     <module>dish</module>
-    <module>eureka-server</module>
-    <module>api-getaway</module>
+    <module>eureka</module>
+    <module>getaway</module>
     <module>image</module>
     <module>ordering</module>
     <module>establishment</module>
+    <module>user</module>
   </modules>
 
   <name>ffp</name>

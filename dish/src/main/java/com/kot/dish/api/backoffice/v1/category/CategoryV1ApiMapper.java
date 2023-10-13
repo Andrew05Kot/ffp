@@ -29,4 +29,9 @@ public class CategoryV1ApiMapper implements ApiV1Mapper<CategoryEntity, Category
 		model.setName(dto.getName());
 		return model;
 	}
+
+	@Override
+	public void copyProperties(CategoryV1Request categoryV1Request, CategoryEntity categoryEntity) {
+
+	}
 }

@@ -54,4 +54,13 @@ public class DishV1ApiMapper implements ApiV1Mapper<DishEntity, DishV1Response, 
 		model.setCategory(categoryService.findById(dto.getCategoryId()));
 		return model;
 	}
+
+	@Override
+	public void copyProperties(DishV1Request request, DishEntity entity) {
+		entity.setName(request.getName());
+		entity.setDescription(request.getDescription());
+		entity.setImageUrl(request.getImageUrl());
+		entity.setPrice(request.getPrice());
+		entity.setCategory(categoryService.findById(request.getCategoryId()));
+	}
 }

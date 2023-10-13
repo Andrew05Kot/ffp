@@ -9,4 +9,6 @@ public interface ApiV1Mapper<Entity, Response, Request> {
 	Response domainToDto(Entity entity);
 
 	Entity dtoToDomain(Request dto);
+
+	void copyProperties(Request request, Entity entity);
 }
