@@ -38,7 +38,7 @@ public class OrderService {
     private UserDetailService userDetailService;
 
     public OrderEntity create(Order model) {
-        if (model.getDishesToOrder() != null) {
+        if (model.getDishesToOrder() == null) {
             //TODO throw some Exception
             return null;
         }
