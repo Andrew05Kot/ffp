@@ -2,25 +2,29 @@ package com.kot.ordering.test_data;
 
 import java.math.BigDecimal;
 import java.security.SecureRandom;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.kot.ordering.client.DishV1Client;
 import com.kot.ordering.client.FraudDishV1Response;
 import com.kot.ordering.dao.OrderDao;
 import com.kot.ordering.entity.*;
-import com.kot.ordering.model.Order;
-import com.kot.ordering.model.UserDetail;
-import com.kot.ordering.service.order.OrderService;
 
 @Component
 //@Profile("test-data")
 public class OrderingTestDataGenerator {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderingTestDataGenerator.class);
 
     @Autowired
     private OrderDao orderDao;
@@ -34,15 +38,17 @@ public class OrderingTestDataGenerator {
 
     @PostConstruct
     public void buildAndSaveOrders() {
+        LOGGER.info("Started data generating...");
         this.allDishes = dishClient.getDishes();
 
-        int ordersCount = random.nextInt(900) + 750;
+        int ordersCount = random.nextInt(9000) + 7500;
         for (int i = 0; i < ordersCount; i++) {
 
             OrderEntity order = new OrderEntity();
             order.setTotalPrice(new BigDecimal(Math.random() * 100));
             order.setOrderStatus(OrderStatus.RECEIVED);
             order.setPaymentMethod(PaymentMethod.CREDIT_CARD);
+            order.setCreatedDate(getRandomDate());
             List<Long> dishIds = getRandomDishes();
             List<DishToOrderEntity> dishesToOrder = new ArrayList<>();
             for (Long dishId : dishIds) {
@@ -104,6 +110,16 @@ public class OrderingTestDataGenerator {
 //            UserDetailEntity userDetail = new UserDetailEntity();
 //            userDetail.setEmail("some-user.email");
         }
+        LOGGER.info("Generated {} of random orders", ordersCount);
+    }
+
+    private ZonedDateTime getRandomDate() {
+        ZonedDateTime currentDateTime = ZonedDateTime.now();
+        int year = currentDateTime.getYear();
+        int randomMonth = random.nextInt(12) + 1;
+        int maxDay = YearMonth.of(year, randomMonth).lengthOfMonth();
+        int randomDay = random.nextInt(maxDay) + 1;
+        return ZonedDateTime.of(LocalDate.of(year, randomMonth, randomDay), currentDateTime.toLocalTime(), ZoneId.systemDefault());
     }
 
     private List<Long> getRandomDishes() {
