@@ -11,12 +11,11 @@
 
   <modules>
     <module>dish</module>
-    <module>eureka</module>
-    <module>getaway</module>
     <module>image</module>
     <module>ordering</module>
     <module>establishment</module>
     <module>user</module>
+    <module>application</module>
   </modules>
 
   <name>ffp</name>
@@ -29,6 +28,7 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <spring.boot.maven.plugin.version>2.7.0</spring.boot.maven.plugin.version>
+
     <spring.boot.dependencies.version>2.7.0</spring.boot.dependencies.version>
     <spring.cloud-version>2021.0.3</spring.cloud-version>
   </properties>
