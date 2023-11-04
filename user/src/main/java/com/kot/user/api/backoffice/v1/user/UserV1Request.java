@@ -11,6 +11,8 @@ public class UserV1Request {
 	private UUID id;
 	private String firstName;
 	private String lastName;
+	private String email;
+	private String password;
 	private Date birthday;
 	private String country;
 	private String city;
@@ -41,6 +43,22 @@ public class UserV1Request {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Date getBirthday() {
@@ -110,6 +128,8 @@ public class UserV1Request {
 		return new EqualsBuilder().append(id, that.id)
 				.append(firstName, that.firstName)
 				.append(lastName, that.lastName)
+				.append(email, that.email)
+				.append(password, that.password)
 				.append(birthday, that.birthday)
 				.append(country, that.country)
 				.append(city, that.city)
@@ -125,6 +145,8 @@ public class UserV1Request {
 		return new HashCodeBuilder().append(id)
 				.append(firstName)
 				.append(lastName)
+				.append(email)
+				.append(password)
 				.append(birthday)
 				.append(country)
 				.append(city)
@@ -141,6 +163,7 @@ public class UserV1Request {
 				"id=" + id +
 				", firstName='" + firstName + '\'' +
 				", lastName='" + lastName + '\'' +
+				", lastName='" + email + '\'' +
 				", birthday=" + birthday +
 				", country='" + country + '\'' +
 				", city='" + city + '\'' +

@@ -13,6 +13,7 @@ public class UserV1ApiMapperImpl implements UserV1ApiMapper {
 		response.setId(entity.getId());
 		response.setFirstName(entity.getFirstName());
 		response.setLastName(entity.getLastName());
+		response.setEmail(entity.getEmail());
 		response.setBirthday(entity.getBirthday());
 		response.setCountry(entity.getCountry());
 		response.setCity(entity.getCity());
@@ -33,6 +34,8 @@ public class UserV1ApiMapperImpl implements UserV1ApiMapper {
 		entity.setId(request.getId());
 		entity.setFirstName(request.getFirstName());
 		entity.setLastName(request.getLastName());
+		entity.setEmail(request.getEmail());
+		entity.setPassword(request.getPassword());
 		entity.setBirthday(request.getBirthday());
 		entity.setCountry(request.getCountry());
 		entity.setCity(request.getCity());
@@ -44,6 +47,7 @@ public class UserV1ApiMapperImpl implements UserV1ApiMapper {
 	public void mapUpdateFields(UserV1Request request, UserEntity entity) {
 		entity.setFirstName(request.getFirstName());
 		entity.setLastName(request.getLastName());
+		entity.setEmail(request.getEmail());
 		entity.setBirthday(request.getBirthday());
 		entity.setCountry(request.getCountry());
 		entity.setCity(request.getCity());

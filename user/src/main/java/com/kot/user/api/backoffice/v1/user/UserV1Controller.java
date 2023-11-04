@@ -11,11 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.kot.user.api.ApiInfo;
 import com.kot.user.api.backoffice.v1.PageV1Response;
@@ -39,6 +35,12 @@ public class UserV1Controller {
 
 	@Autowired
 	private UserV1ApiMapper userV1ApiMapper;
+
+	@PostMapping
+	public ResponseEntity<UserV1Response> create(@RequestBody UserV1Request request) {
+		UserEntity entity = userService.create(userV1ApiMapper.dtoToDomain(request));
+		return new ResponseEntity<>(userV1ApiMapper.domainToDto(entity), HttpStatus.CREATED);
+	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<UserV1Response> getById(@PathVariable String id) {
