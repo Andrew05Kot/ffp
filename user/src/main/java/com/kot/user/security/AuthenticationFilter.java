@@ -19,7 +19,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.kot.user.api.backoffice.v1.login.LoginV1RequestModel;
-import com.kot.user.api.backoffice.v1.user.UserV1Response;
+import com.kot.user.entity.UserEntity;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -60,9 +60,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
         String userName = ((User) authResult.getPrincipal()).getUsername();
-
-        //TODO can i use UserEntity?
-        UserV1Response userDetails = userDetailsService.getUserDetailsByEmail(userName);
+        UserEntity userDetails = userDetailsService.getUserDetailsByEmail(userName);
 
         String token = Jwts.builder()
                 .setSubject(userDetails.getId().toString())

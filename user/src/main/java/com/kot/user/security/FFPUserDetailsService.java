@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.kot.user.api.backoffice.v1.user.UserV1ApiMapper;
-import com.kot.user.api.backoffice.v1.user.UserV1Response;
 import com.kot.user.entity.UserEntity;
 import com.kot.user.repository.UserRepository;
 
@@ -31,11 +30,11 @@ public class FFPUserDetailsService implements UserDetailsService {
         return new User(userEntity.getEmail(), userEntity.getPassword(), true, true, true, true, List.of());
     }
 
-    public UserV1Response getUserDetailsByEmail(String email) {
+    public UserEntity getUserDetailsByEmail(String email) {
         UserEntity userEntity = userRepository.findByEmail(email);
         if (userEntity == null) {
             throw new UsernameNotFoundException(email);
         }
-        return userV1ApiMapper.domainToDto(userEntity);
+        return userEntity;
     }
 }
