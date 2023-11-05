@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+//import com.kot.user.api.backoffice.v1.login.LoginV1Controller;
+import com.kot.user.api.ApiInfo;
 import com.kot.user.api.backoffice.v1.user.UserV1Controller;
 
 @Configuration
@@ -44,6 +46,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     private AuthenticationFilter getAuthenticationFilter() throws Exception {
         AuthenticationFilter authenticationFilter = new AuthenticationFilter(ffpUserDetailsService, environment, authenticationManager());
+        authenticationFilter.setFilterProcessesUrl(environment.getProperty("api.v1.login_url"));
         return authenticationFilter;
     }
 }
