@@ -1,6 +1,6 @@
 package com.kot.getaway;
 
-import java.util.Collections;
+import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.reactive.CorsWebFilter;
@@ -13,7 +13,7 @@ public class GatewayCorsConfig {
 	@Bean
 	public CorsWebFilter corsWebFilter() {
 		CorsConfiguration corsConfig = new CorsConfiguration();
-		corsConfig.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+		corsConfig.setAllowedOrigins(List.of("http://localhost:4200", "*"));
 		corsConfig.addAllowedHeader("*");
 		corsConfig.addAllowedMethod("*");
 

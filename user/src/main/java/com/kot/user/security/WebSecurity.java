@@ -33,10 +33,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+        http.headers().frameOptions().disable();
+
         http.authorizeRequests().antMatchers(UserV1Controller.API_URL + "/**").permitAll()
                 .and()
                 .addFilter(getAuthenticationFilter());
-        http.headers().frameOptions().disable();
     }
 
     @Override
