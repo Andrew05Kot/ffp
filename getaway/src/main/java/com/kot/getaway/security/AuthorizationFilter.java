@@ -1,51 +1,46 @@
 package com.kot.getaway.security;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import io.jsonwebtoken.Jwts;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilter;
+import org.springframework.web.server.WebFilterChain;
+import reactor.core.publisher.Mono;
 
-public class AuthorizationFilter extends BasicAuthenticationFilter {
-
+public class AuthorizationFilter implements WebFilter {
     private final Environment environment;
     private final String headerName;
     private final String headerPrefix;
 
-    public AuthorizationFilter(AuthenticationManager authenticationManager,
-                               Environment environment) {
-        super(authenticationManager);
+    public AuthorizationFilter(Environment environment) {
+        super();
         this.environment = environment;
         headerName = environment.getProperty("authorization.token.header.name");
         headerPrefix = environment.getProperty("authorization.token.header.prefix");
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain chain) throws IOException, ServletException {
-        String authorizationHeader = request.getHeader(headerName);
+    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        String authorizationHeader = exchange.getRequest().getHeaders().getFirst(headerName);
 
         if (authorizationHeader == null || !authorizationHeader.startsWith(headerPrefix)) {
-            chain.doFilter(request, response);
-            return;
+            return chain.filter(exchange);
         }
 
-        UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
+        UsernamePasswordAuthenticationToken authentication = getAuthentication(exchange.getRequest());
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        chain.doFilter(request, response);
+        return chain.filter(exchange);
     }
 
-    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        String authorizationHeader = request.getHeader(headerName);
+    private UsernamePasswordAuthenticationToken getAuthentication(ServerHttpRequest request) {
+        String authorizationHeader = request.getHeaders().getFirst(headerName);
 
         if (authorizationHeader == null) {
             return null;

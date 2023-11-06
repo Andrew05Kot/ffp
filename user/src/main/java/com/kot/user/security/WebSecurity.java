@@ -1,6 +1,7 @@
 package com.kot.user.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,17 +10,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-//import com.kot.user.api.backoffice.v1.login.LoginV1Controller;
-import com.kot.user.api.ApiInfo;
 import com.kot.user.api.backoffice.v1.user.UserV1Controller;
 
 @Configuration
+@EnableAutoConfiguration
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private FFPUserDetailsService ffpUserDetailsService;
-    private Environment environment;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final FFPUserDetailsService ffpUserDetailsService;
+    private final Environment environment;
 
     @Autowired
     public WebSecurity(FFPUserDetailsService ffpUserDetailsService,
@@ -35,7 +35,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.headers().frameOptions().disable();
 
-        http.authorizeRequests().antMatchers(UserV1Controller.API_URL + "/**").permitAll()
+        http
+                .authorizeRequests().antMatchers(UserV1Controller.API_URL + "/registration").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .addFilter(getAuthenticationFilter());
     }

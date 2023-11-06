@@ -36,7 +36,7 @@ public class UserV1Controller {
 	@Autowired
 	private UserV1ApiMapper userV1ApiMapper;
 
-	@PostMapping
+	@PostMapping(path = "/registration")
 	public ResponseEntity<UserV1Response> create(@RequestBody UserV1Request request) {
 		UserEntity entity = userService.create(userV1ApiMapper.dtoToDomain(request));
 		return new ResponseEntity<>(userV1ApiMapper.domainToDto(entity), HttpStatus.CREATED);

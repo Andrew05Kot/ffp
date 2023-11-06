@@ -23,7 +23,7 @@ public class FFPUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity userEntity = userRepository.findByEmail(username);
+        UserEntity userEntity = userRepository.findDistinctByEmail(username);
         if (userEntity == null) {
             throw new UsernameNotFoundException(username);
         }
@@ -31,7 +31,7 @@ public class FFPUserDetailsService implements UserDetailsService {
     }
 
     public UserEntity getUserDetailsByEmail(String email) {
-        UserEntity userEntity = userRepository.findByEmail(email);
+        UserEntity userEntity = userRepository.findDistinctByEmail(email);
         if (userEntity == null) {
             throw new UsernameNotFoundException(email);
         }

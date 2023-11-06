@@ -13,5 +13,5 @@ public interface UserRepository extends CrudRepository<UserEntity, UUID>,
 		JpaSpecificationExecutor<UserEntity>,
 		PagingAndSortingRepository<UserEntity, UUID> {
 
-	UserEntity findByEmail(String email);
+	UserEntity findDistinctByEmail(String email);
 }
