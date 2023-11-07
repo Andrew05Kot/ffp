@@ -2,8 +2,6 @@ package com.kot.getaway.security;
 
 import java.util.ArrayList;
 import io.jsonwebtoken.Jwts;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,7 +24,8 @@ public class AuthorizationFilter implements WebFilter {
     }
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+    public Mono<Void> filter(ServerWebExchange exchange,
+                             WebFilterChain chain) {
         String authorizationHeader = exchange.getRequest().getHeaders().getFirst(headerName);
 
         if (authorizationHeader == null || !authorizationHeader.startsWith(headerPrefix)) {

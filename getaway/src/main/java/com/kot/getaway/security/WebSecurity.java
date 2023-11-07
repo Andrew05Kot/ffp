@@ -17,7 +17,6 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     private final Environment environment;
-    private AuthorizationFilter authorizationFilter;
 
     @Autowired
     public WebSecurity(Environment environment) throws Exception {
