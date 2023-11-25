@@ -8,8 +8,6 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 
 @SpringBootApplication
 @EnableEurekaClient
-@EnableWebFlux
-@ComponentScan(basePackages = "com.kot.getaway")
 public class GetawayApplication {
 
 	public static void main(String[] args) {
