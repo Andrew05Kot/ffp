@@ -12,15 +12,6 @@ import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 public class SpringSecurityConfiguration {
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf().disable().oauth2ResourceServer(
-                        j -> j.jwt().jwtAuthenticationConverter(new JwtAuthConverter())).authorizeHttpRequests()
-                .anyRequest()
-                .permitAll().and().build();
-    }
-
     @Bean
     public FilterRegistrationBean<CorsFilter> customCorsFilter() {
         var source = new UrlBasedCorsConfigurationSource();
