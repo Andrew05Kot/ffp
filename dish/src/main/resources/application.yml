@@ -1,4 +1,6 @@
 eureka:
+  instance:
+    hostname: localhost
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
@@ -26,3 +28,15 @@ spring:
       enabled: true
   profiles:
     active: testdata
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/ffd-app
+
+jwt:
+  auth:
+    converter:
+      resource-id: ffp-client
+      principle-attribute: preferred_username
+

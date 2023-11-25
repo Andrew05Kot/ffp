@@ -1,0 +1,50 @@
+server:
+  port: 8765
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: dish
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/v1/dishes/**
+        - id: establishment
+          uri: http://localhost:8084
+          predicates:
+            - Path=/**
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/ffd-app
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+
+eureka:
+  client:
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+jwt:
+  auth:
+    converter:
+      principle-attribute: preferred_username
+      resource-id: ffp-client
+api:
+  h2-console:
+    url:
+      path: /user/h2-console/**
+  login:
+    url:
+      path: /user/api/v1/login
+  registration:
+    url:
+      path: /user/api/v1/users/registration

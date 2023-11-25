@@ -1,4 +1,4 @@
-package com.kot.getaway.security;
+package com.kot.dish;
 
 import java.util.Collection;
 import java.util.Map;
@@ -16,10 +16,9 @@ import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 @Component
-public class JwtAuthConverter implements Converter<Jwt, Mono<? extends AbstractAuthenticationToken>> {
+public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationToken> {
 
     private final JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
 
@@ -30,15 +29,12 @@ public class JwtAuthConverter implements Converter<Jwt, Mono<? extends AbstractA
     private String resourceId;
 
     @Override
-    public Mono<? extends AbstractAuthenticationToken> convert(@NonNull Jwt jwt) {
-        return Mono.fromCallable(() -> {
-            Collection<? extends GrantedAuthority> extractedRoles = extractResourceRoles(jwt);
-            Collection<GrantedAuthority> authorities = Stream.concat(
-                    jwtGrantedAuthoritiesConverter.convert(jwt).stream(),
-                    extractedRoles.stream()
-            ).collect(Collectors.toSet());
-            return new JwtAuthenticationToken(jwt, authorities, getPrincipleClaimName(jwt));
-        });
+    public AbstractAuthenticationToken convert(@NonNull Jwt jwt) {
+        Collection<GrantedAuthority> authorities = Stream.concat(
+                jwtGrantedAuthoritiesConverter.convert(jwt).stream(),
+                extractResourceRoles(jwt).stream()
+        ).collect(Collectors.toSet());
+        return new JwtAuthenticationToken(jwt, authorities, getPrincipleClaimName(jwt));
     }
 
     private String getPrincipleClaimName(Jwt jwt) {
