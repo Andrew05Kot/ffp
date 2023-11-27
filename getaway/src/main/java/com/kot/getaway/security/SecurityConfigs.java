@@ -22,7 +22,7 @@ public class SecurityConfigs {
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http.csrf().disable()
                 .authorizeExchange()
-                .pathMatchers("/public/**").permitAll() // Public endpoints
+                .pathMatchers("/api/v1/dishes/unpaged/**").permitAll()
                 .anyExchange().authenticated()
                 .and()
                 .oauth2ResourceServer()

@@ -19,7 +19,15 @@ spring:
         - id: establishment
           uri: http://localhost:8084
           predicates:
-            - Path=/**
+            - Path=/api/v1/establishments/**
+        - id: user
+          uri: http://localhost:8085
+          predicates:
+            - Path=/api/v1/users/**
+        - id: ordering
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/v1/ordering/**
   security:
     oauth2:
       resourceserver:
