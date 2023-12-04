@@ -2,16 +2,8 @@ package com.kot.dish.domain;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import java.util.Set;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -48,6 +40,14 @@ public class DishEntity {
 	@OneToOne(mappedBy = "dish", cascade = CascadeType.ALL)
 	private RecipeEntity recipe;
 
+	@ManyToMany
+	@JoinTable(
+			name = "dish_labels",
+			joinColumns = @JoinColumn(name = "dish_id"),
+			inverseJoinColumns = @JoinColumn(name = "label_id")
+	)
+	private Set<LabelEntity> labels;
+
 	@CreatedDate
 	@Column(name = "created_date", updatable = false)
 	private Instant createdDate = Instant.now();
@@ -55,6 +55,9 @@ public class DishEntity {
 	@LastModifiedDate
 	@Column(name = "last_modified_date")
 	private Instant lastModifiedDate = Instant.now();
+
+	public DishEntity() {
+	}
 
 	public Long getId() {
 		return id;
@@ -128,6 +131,14 @@ public class DishEntity {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
+	public Set<LabelEntity> getLabels() {
+		return labels;
+	}
+
+	public void setLabels(Set<LabelEntity> labels) {
+		this.labels = labels;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -144,6 +155,7 @@ public class DishEntity {
 				.append(price, that.price)
 				.append(imageUrl, that.imageUrl)
 				.append(recipe, that.recipe)
+				.append(labels, that.labels)
 				.append(createdDate, that.createdDate)
 				.append(lastModifiedDate, that.lastModifiedDate)
 				.isEquals();
@@ -159,6 +171,7 @@ public class DishEntity {
 				.append(price)
 				.append(imageUrl)
 				.append(recipe)
+				.append(labels)
 				.append(createdDate)
 				.append(lastModifiedDate)
 				.toHashCode();
@@ -174,6 +187,7 @@ public class DishEntity {
 				", price=" + price +
 				", imageUrl=" + imageUrl +
 				", recipe=" + recipe +
+				", labels=" + labels +
 				", createdDate=" + createdDate +
 				", lastModifiedDate=" + lastModifiedDate +
 				'}';

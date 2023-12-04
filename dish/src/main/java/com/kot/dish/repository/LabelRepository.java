@@ -5,12 +5,12 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import com.kot.dish.domain.CategoryEntity;
+import com.kot.dish.domain.LabelEntity;
 
 @Repository
-public interface CategoryRepository extends CrudRepository<CategoryEntity, Long>,
-		JpaSpecificationExecutor<CategoryEntity>,
-		PagingAndSortingRepository<CategoryEntity, Long> {
+public interface LabelRepository extends CrudRepository<LabelEntity, Long>,
+        JpaSpecificationExecutor<LabelEntity>,
+        PagingAndSortingRepository<LabelEntity, Long> {
 
-	CategoryEntity findByName(String name);
+    LabelEntity findByName(String name);
 }

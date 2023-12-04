@@ -11,13 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import com.kot.dish.domain.CategoryEntity;
-import com.kot.dish.domain.DishEntity;
-import com.kot.dish.domain.IngredientEntity;
-import com.kot.dish.domain.RecipeEntity;
-import com.kot.dish.repository.CategoryRepository;
-import com.kot.dish.repository.DishRepository;
-import com.kot.dish.repository.IngredientRepository;
+import com.kot.dish.domain.*;
+import com.kot.dish.repository.*;
 
 @Component
 @Profile("testdata")
@@ -32,13 +27,18 @@ public class DishesTestDataGenerator {
 	@Autowired
 	private IngredientRepository ingredientRepository;
 
-	private Map<String, CategoryEntity> categories;
+	@Autowired
+	private RecipeRepository recipeRepository;
+
+	@Autowired
+	private LabelRepository labelRepository;
 
 	@PostConstruct
 	public void generateTestData() {
-		this.categories = buildAndSaveCategories();
+		buildAndSaveCategories();
 		buildAndSaveIngredients();
 		buildAndSaveDishes();
+		buildAndSaveLabels();
 	}
 
 	private void buildAndSaveDishes() {
@@ -177,53 +177,66 @@ public class DishesTestDataGenerator {
 				"https://olo-images-live.imgix.net/16/1641973e8b0e465abb6227325d06f895.png?auto=format%2Ccompress&q=60&cs=tinysrgb&w=528&h=352&fit=crop&s=c4a385991717420f4eb66ab2bc08504c",
 				this::getPancakesRecipe
 		);
+
+		createAndSaveDish("X-mas Waffles",
+				"Christmas",
+				BigDecimal.valueOf(3.00),
+				"Christmas waffles are a festive variation of traditional waffles, often made during the holiday season. They are typically prepared using a waffle iron and feature ingredients such as seasonal spices like cinnamon, nutmeg, and ginger, along with additions like cranberries, chocolate chips, or a topping of whipped cream and berries. These waffles are enjoyed as a delightful and cozy treat during the Christmas celebrations.",
+				"https://iili.io/JIJaehg.png",
+				this::xMasWafflesRecipe
+		);
 	}
 
 	private void createAndSaveDish(String name, String categoryName, BigDecimal price, String description, String imageUrl, Function<DishEntity, RecipeEntity> recipeProvider) {
 		DishEntity dishEntity = new DishEntity();
 		dishEntity.setName(name);
-		dishEntity.setCategory(categories.get(categoryName));
+		dishEntity.setCategory(categoryRepository.findByName(categoryName));
 		dishEntity.setPrice(price);
 		dishEntity.setDescription(description);
 		dishEntity.setImageUrl(imageUrl);
-		dishEntity.setRecipe(recipeProvider.apply(dishEntity));
+//		dishEntity = dishRepository.save(dishEntity);
+//		dishEntity.setRecipe(recipeProvider.apply(dishEntity));
 		dishRepository.save(dishEntity);
 	}
 
-	public Map<String, CategoryEntity> buildAndSaveCategories() {
-		Map<String, CategoryEntity> categories = new HashMap<>();
-		CategoryEntity sandwich = new CategoryEntity();
-		sandwich.setName("Burger");
-		sandwich.setDescription("A burger is a type of sandwich. It consists of two or more slices of bread (often a bun) and one or more layers of meat and other fillings. In big cities (especially in the West), the sandwich has become an integral part of the food culture.");
-		sandwich.setIconName("Burger");
-		categories.put(sandwich.getName(), categoryRepository.save(sandwich));
+	public void buildAndSaveCategories() {
+//		Map<String, CategoryEntity> categories = new HashMap<>();
+//		CategoryEntity sandwich = new CategoryEntity();
+//		sandwich.setName("Burger");
+//		sandwich.setDescription("A burger is a type of sandwich. It consists of two or more slices of bread (often a bun) and one or more layers of meat and other fillings. In big cities (especially in the West), the sandwich has become an integral part of the food culture.");
+//		sandwich.setIconName("Burger");
+//		categoryRepository.save(sandwich);
+//
+//		CategoryEntity pizza = new CategoryEntity();
+//		pizza.setName("Pizza");
+//		pizza.setDescription("Pizza is an Italian national dish, namely a flatbread, usually round in shape, which is covered with tomato paste and cheese and baked.");
+//		pizza.setIconName("pizza");
+//		categoryRepository.save(pizza);
+//
+//		CategoryEntity roll = new CategoryEntity();
+//		roll.setName("Roll");
+//		roll.setDescription("It is a dish made of pita bread, which is filled with chopped fried meat (lamb, beef, turkey or chicken; in Europe sometimes also pork) with the addition of seasonings, sauces and a salad of fresh vegetables");
+//		roll.setIconName("roll");
+//		categoryRepository.save(roll);
+//
+//		CategoryEntity coffee = new CategoryEntity();
+//		coffee.setName("Coffee");
+//		coffee.setDescription("Coffee is a brewed drink prepared from roasted coffee beans, the seeds of berries from certain flowering plants in the Coffea genus. From the coffee fruit, the seeds are separated to produce a stable, raw product: unroasted green coffee. The seeds are then roasted, a process which transforms them into a consumable product: roasted coffee, which is ground into fine particles that are typically steeped in hot water before being filtered out, producing a cup of coffee.\n" +
+//				"Coffee is a brewed drink prepared from roasted coffee beans, the seeds of berries from certain flowering plants in the Coffea genus. From the coffee fruit, the seeds are separated to produce a stable, raw product: unroasted green coffee. The seeds are then roasted, a process which transforms them into a consumable product: roasted coffee, which is ground into fine particles that are typically steeped in hot water before being filtered out, producing a cup of coffee.");
+//		coffee.setIconName("coffee");
+//		categoryRepository.save(coffee);
+//
+//		CategoryEntity breakfast = new CategoryEntity();
+//		breakfast.setName("Breakfast");
+//		breakfast.setDescription("Breakfast is the first meal of the day, usually eaten in the morning. It typically includes a variety of foods such as eggs, bacon, sausages, pancakes, waffles, oatmeal, cereal, toast, and coffee or tea.");
+//		breakfast.setIconName("breakfast");
+//		categoryRepository.save(breakfast);
 
-		CategoryEntity pizza = new CategoryEntity();
-		pizza.setName("Pizza");
-		pizza.setDescription("Pizza is an Italian national dish, namely a flatbread, usually round in shape, which is covered with tomato paste and cheese and baked.");
-		pizza.setIconName("pizza");
-		categories.put(pizza.getName(), categoryRepository.save(pizza));
-
-		CategoryEntity roll = new CategoryEntity();
-		roll.setName("Roll");
-		roll.setDescription("It is a dish made of pita bread, which is filled with chopped fried meat (lamb, beef, turkey or chicken; in Europe sometimes also pork) with the addition of seasonings, sauces and a salad of fresh vegetables");
-		roll.setIconName("roll");
-		categories.put(roll.getName(), categoryRepository.save(roll));
-
-		CategoryEntity coffee = new CategoryEntity();
-		coffee.setName("Coffee");
-		coffee.setDescription("Coffee is a brewed drink prepared from roasted coffee beans, the seeds of berries from certain flowering plants in the Coffea genus. From the coffee fruit, the seeds are separated to produce a stable, raw product: unroasted green coffee. The seeds are then roasted, a process which transforms them into a consumable product: roasted coffee, which is ground into fine particles that are typically steeped in hot water before being filtered out, producing a cup of coffee.\n" +
-				"Coffee is a brewed drink prepared from roasted coffee beans, the seeds of berries from certain flowering plants in the Coffea genus. From the coffee fruit, the seeds are separated to produce a stable, raw product: unroasted green coffee. The seeds are then roasted, a process which transforms them into a consumable product: roasted coffee, which is ground into fine particles that are typically steeped in hot water before being filtered out, producing a cup of coffee.");
-		coffee.setIconName("coffee");
-		categories.put(coffee.getName(), categoryRepository.save(coffee));
-
-		CategoryEntity breakfast = new CategoryEntity();
-		breakfast.setName("Breakfast");
-		breakfast.setDescription("Breakfast is the first meal of the day, usually eaten in the morning. It typically includes a variety of foods such as eggs, bacon, sausages, pancakes, waffles, oatmeal, cereal, toast, and coffee or tea.");
-		breakfast.setIconName("breakfast");
-		categories.put(breakfast.getName(), categoryRepository.save(breakfast));
-
-		return categories;
+		CategoryEntity christmas = new CategoryEntity();
+		christmas.setName("Christmas");
+		christmas.setDescription("Christmas is an annual festival commemorating the birth of Jesus Christ, celebrated on December 25th as a religious and cultural holiday by billions of people around the world. It is characterized by gift-giving, festive decorations, traditional meals, including roast turkey, ham, mashed potatoes, gravy, stuffing, cranberry sauce, and special desserts like Christmas pudding or fruitcake.");
+		christmas.setIconName("christmas");
+		categoryRepository.save(christmas);
 	}
 
 	private void buildAndSaveIngredients() {
@@ -292,7 +305,7 @@ public class DishesTestDataGenerator {
 		hamburgerIngredients.add(ingredientRepository.findByName("Garlic"));
 		hamburgerRecipe.setIngredients(hamburgerIngredients);
 		hamburgerRecipe.setDish(dish);
-		return hamburgerRecipe;
+		return recipeRepository.save(hamburgerRecipe);
 	}
 
 	private RecipeEntity getCheeseburgerRecipe(DishEntity dish) {
@@ -547,6 +560,53 @@ public class DishesTestDataGenerator {
 		pancakesRecipe.setIngredients(pancakesIngredients);
 		pancakesRecipe.setDish(dish);
 		return pancakesRecipe;
+	}
+
+	private RecipeEntity xMasWafflesRecipe(DishEntity dish) {
+		RecipeEntity pancakesRecipe = new RecipeEntity();
+		pancakesRecipe.setName("Waffles");
+		pancakesRecipe.setDescription("A recipe for fluffy and delicious Waffles.");
+		List<IngredientEntity> pancakesIngredients = new ArrayList<>();
+		pancakesIngredients.add(ingredientRepository.findByName("All-Purpose Flour"));
+		pancakesIngredients.add(ingredientRepository.findByName("Sugar"));
+		pancakesIngredients.add(ingredientRepository.findByName("Baking Powder"));
+		pancakesIngredients.add(ingredientRepository.findByName("Salt"));
+		pancakesIngredients.add(ingredientRepository.findByName("Milk"));
+		pancakesIngredients.add(ingredientRepository.findByName("Eggs"));
+		pancakesIngredients.add(ingredientRepository.findByName("Butter"));
+		pancakesRecipe.setIngredients(pancakesIngredients);
+		pancakesRecipe.setDish(dish);
+		return pancakesRecipe;
+	}
+
+	private void buildAndSaveLabels() {
+		LabelEntity cheap = new LabelEntity();
+		cheap.setName("cheap");
+		labelRepository.save(cheap);
+
+		LabelEntity eco = new LabelEntity();
+		eco.setName("eco");
+		labelRepository.save(eco);
+
+		LabelEntity vegeterian = new LabelEntity();
+		vegeterian.setName("vegeterian");
+		labelRepository.save(vegeterian);
+
+		LabelEntity healthy = new LabelEntity();
+		healthy.setName("healthy");
+		labelRepository.save(healthy);
+
+		LabelEntity low_calorie = new LabelEntity();
+		low_calorie.setName("low_calorie");
+		labelRepository.save(low_calorie);
+
+		LabelEntity sweaty = new LabelEntity();
+		sweaty.setName("sweaty");
+		labelRepository.save(sweaty);
+
+		LabelEntity promotional = new LabelEntity();
+		promotional.setName("promotional");
+		labelRepository.save(promotional);
 	}
 
 }
