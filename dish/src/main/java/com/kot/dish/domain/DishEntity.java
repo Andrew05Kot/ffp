@@ -155,7 +155,6 @@ public class DishEntity {
 				.append(price, that.price)
 				.append(imageUrl, that.imageUrl)
 				.append(recipe, that.recipe)
-				.append(labels, that.labels)
 				.append(createdDate, that.createdDate)
 				.append(lastModifiedDate, that.lastModifiedDate)
 				.isEquals();
@@ -171,7 +170,6 @@ public class DishEntity {
 				.append(price)
 				.append(imageUrl)
 				.append(recipe)
-				.append(labels)
 				.append(createdDate)
 				.append(lastModifiedDate)
 				.toHashCode();
@@ -187,7 +185,6 @@ public class DishEntity {
 				", price=" + price +
 				", imageUrl=" + imageUrl +
 				", recipe=" + recipe +
-				", labels=" + labels +
 				", createdDate=" + createdDate +
 				", lastModifiedDate=" + lastModifiedDate +
 				'}';

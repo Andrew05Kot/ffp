@@ -11,6 +11,7 @@ public class UserDetailV1Mapper {
     public UserDetailV1Response domainToDto(UserDetailEntity model) {
         UserDetailV1Response response = new UserDetailV1Response();
         response.setId(model.getId());
+        response.setUserId(model.getUserId());
         response.setFirstName(model.getFirstName());
         response.setLastName(model.getLastName());
         response.setEmail(model.getEmail());

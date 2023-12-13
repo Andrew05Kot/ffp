@@ -7,6 +7,6 @@ import lombok.Data;
 public class RecommendationV1MobileResponse {
 
     private String userId;
-    private Set<String> recommendedDishesIds;
+    private Set<Long> recommendedDishesIds;
 
 }

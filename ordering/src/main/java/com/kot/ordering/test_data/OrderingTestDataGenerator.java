@@ -9,6 +9,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +38,86 @@ public class OrderingTestDataGenerator {
     private List<FraudDishV1Response> allDishes;
 
     @PostConstruct
-    public void buildAndSaveOrders() {
+    public void init() {
+//        buildAndSaveOrders();
+//        createAndSaveMyOrders();
+    }
+
+    private void createAndSaveMyOrders() {
+        this.allDishes = dishClient.getDishes();
+        Long[] dishIds = new Long[]{41l, 42l, 49l, 55l, 45l};
+        Long[] randomids = new Long[]{50l, 46l, 47l, 54l};
+
+        int ordersCount = 50;
+        for (int i = 0; i < ordersCount; i++) {
+            OrderEntity order = new OrderEntity();
+            order.setOrderStatus(OrderStatus.RECEIVED);
+            order.setPaymentMethod(PaymentMethod.CREDIT_CARD);
+            order.setCreatedDate(getRandomDate());
+            List<DishToOrderEntity> dishesToOrder = new ArrayList<>();
+            for (Long dishId : dishIds) {
+                FraudDishV1Response fraudDishV1Response = allDishes.stream().filter(d -> d.getId().equals(dishId)).findFirst().get();
+                DishToOrderEntity dishToOrder = new DishToOrderEntity();
+                dishToOrder.setQuantity(random.nextInt(5) + 1);
+                dishToOrder.setDishName(fraudDishV1Response.getName());
+                dishToOrder.setDishCategoryName(fraudDishV1Response.getCategory().getName());
+                dishToOrder.setDishId(dishId);
+                dishToOrder.setCategoryId(fraudDishV1Response.getCategory().getId());
+                dishToOrder.setOrder(order);
+                dishesToOrder.add(dishToOrder);
+            }
+            order.setTotalPrice(new BigDecimal(Math.random() * 100));
+            UserDetailEntity userDetail = new UserDetailEntity();
+            userDetail.setUserId(UUID.fromString("832d6104-1b36-4e57-af17-8bc493d8d77d"));
+            userDetail.setFirstName("Andrew");
+            userDetail.setLastName("Kot");
+            userDetail.setEmail("andrew_kit@example.com");
+            userDetail.setPhoneNumber("+31242r234");
+            userDetail.setImageUrl("https://images.prom.ua/4405019443_w640_h640_4405019443.jpg");
+            userDetail.setOrder(order);
+
+            order.setDishesToOrder(dishesToOrder);
+            order.setUserDetail(userDetail);
+
+            orderDao.create(order);
+        }
+
+        ordersCount = 11;
+        for (int i = 0; i < ordersCount; i++) {
+            OrderEntity order = new OrderEntity();
+            order.setTotalPrice(new BigDecimal(Math.random() * 20));
+            order.setOrderStatus(OrderStatus.RECEIVED);
+            order.setPaymentMethod(PaymentMethod.CREDIT_CARD);
+            order.setCreatedDate(getRandomDate());
+            List<DishToOrderEntity> dishesToOrder = new ArrayList<>();
+            for (Long dishId : randomids) {
+                FraudDishV1Response fraudDishV1Response = allDishes.stream().filter(d -> d.getId().equals(dishId)).findFirst().get();
+                DishToOrderEntity dishToOrder = new DishToOrderEntity();
+                dishToOrder.setQuantity(random.nextInt(5) + 1);
+                dishToOrder.setDishName(fraudDishV1Response.getName());
+                dishToOrder.setDishCategoryName(fraudDishV1Response.getCategory().getName());
+                dishToOrder.setDishId(dishId);
+                dishToOrder.setCategoryId(fraudDishV1Response.getCategory().getId());
+                dishToOrder.setOrder(order);
+                dishesToOrder.add(dishToOrder);
+            }
+            order.setTotalPrice(new BigDecimal(Math.random() * 20));
+            UserDetailEntity userDetail = new UserDetailEntity();
+            userDetail.setFirstName("Andrew");
+            userDetail.setLastName("Kot");
+            userDetail.setEmail("andrew_kit@example.com");
+            userDetail.setPhoneNumber("+31242r234");
+            userDetail.setImageUrl("https://images.prom.ua/4405019443_w640_h640_4405019443.jpg");
+            userDetail.setOrder(order);
+
+            order.setDishesToOrder(dishesToOrder);
+            order.setUserDetail(userDetail);
+
+            orderDao.create(order);
+        }
+    }
+
+    private void buildAndSaveOrders() {
         LOGGER.info("Started data generating...");
         this.allDishes = dishClient.getDishes();
 

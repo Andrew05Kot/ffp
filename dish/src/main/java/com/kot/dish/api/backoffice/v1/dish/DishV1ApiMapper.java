@@ -8,6 +8,7 @@ import com.kot.dish.api.backoffice.v1.category.CategoryV1ApiMapper;
 import com.kot.dish.api.backoffice.v1.infrastructure.ApiV1Mapper;
 import com.kot.dish.api.backoffice.v1.recipe.RecipeV1ApiMapper;
 import com.kot.dish.domain.DishEntity;
+import com.kot.dish.domain.LabelEntity;
 import com.kot.dish.service.CategoryService;
 
 @Component
@@ -35,6 +36,9 @@ public class DishV1ApiMapper implements ApiV1Mapper<DishEntity, DishV1Response, 
 		response.setLastModifiedDate(entity.getLastModifiedDate());
 		if (entity.getRecipe() != null) {
 			response.setRecipe(recipeMapper.domainToDto(entity.getRecipe(), null));
+		}
+		if (entity.getLabels() != null && !entity.getLabels().isEmpty()) {
+			response.setLabels(entity.getLabels().stream().map(LabelEntity::getName).toList());
 		}
 		return response;
 	}

@@ -54,7 +54,8 @@ public class TestUserDataGenerator {
 
 	@PostConstruct
 	public void generateTestData() {
-		buildAndSaveUsers();
+//		buildAndSaveUsers();
+//		createAndSaveMe();
 	}
 
 	private void buildAndSaveUsers() {
@@ -62,6 +63,25 @@ public class TestUserDataGenerator {
 			UserEntity userEntity = createAndSave();
 			System.out.println(userEntity.getId());
 		}
+	}
+
+	private UserEntity createAndSaveMe() {
+		UserEntity userEntity = new UserEntity();
+		userEntity.setImageUrl("https://scontent-iev1-1.cdninstagram.com/v/t51.2885-19/89925306_222759988917025_4127506924855885824_n.jpg?stp=dst-jpg_s320x320&_nc_ht=scontent-iev1-1.cdninstagram.com&_nc_cat=101&_nc_ohc=YmOrELE0yVgAX8632io&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfAG1aK0Q8fv0r2D0wdH2mlLZGif_ipMlphnNzNF6_8Ffw&oe=657612E4&_nc_sid=8b3546");
+		userEntity.setFirstName("Andrew");
+		userEntity.setLastName("Kot");
+		Date birthday = new Date();
+		birthday.setYear(2001);
+		birthday.setMonth(2);
+		birthday.setDate(5);
+		userEntity.setBirthday(birthday);
+		userEntity.setEmail("andrewkot@gmail.com");
+		userEntity.setCountry("Ukraine");
+		userEntity.setCity("Lviv");
+		userEntity.setStreet("Prospect Chornovola");
+		String houseNumber = "210A";
+		userEntity.setHouseNumber(houseNumber);
+		return userRepository.save(userEntity);
 	}
 
 	private UserEntity createAndSave() {
@@ -77,6 +97,7 @@ public class TestUserDataGenerator {
 			userEntity.setLastName(FEMALE_LAST_NAMES[random.nextInt(FEMALE_LAST_NAMES.length)]);
 		}
 		userEntity.setBirthday(generateRandomBirthday());
+		userEntity.setEmail(userEntity.getFirstName().toLowerCase() + "_" + userEntity.getLastName().toLowerCase() + userEntity.getBirthday().getYear() + "@gmail.com");
 		userEntity.setCountry("Ukraine");
 		userEntity.setCity(CITIES[random.nextInt(CITIES.length)]);
 		userEntity.setStreet(STREETS[random.nextInt(STREETS.length)]);

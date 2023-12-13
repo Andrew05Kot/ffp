@@ -35,10 +35,10 @@ public class DishesTestDataGenerator {
 
 	@PostConstruct
 	public void generateTestData() {
-		buildAndSaveCategories();
-		buildAndSaveIngredients();
-		buildAndSaveDishes();
-		buildAndSaveLabels();
+//		buildAndSaveCategories();
+//		buildAndSaveIngredients();
+//		buildAndSaveDishes();
+//		buildAndSaveLabels();
 	}
 
 	private void buildAndSaveDishes() {

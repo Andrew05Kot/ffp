@@ -15,6 +15,9 @@ public class UserDetailEntity extends BaseEntity {
     @GenericGenerator(name = "uuid-hibernate-generator", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
+    @Column(name = "user_id")
+    private UUID userId;
+
     @Column(name = "first_name")
     private String firstName;
 
@@ -90,6 +93,14 @@ public class UserDetailEntity extends BaseEntity {
         this.order = order;
     }
 
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -98,6 +109,7 @@ public class UserDetailEntity extends BaseEntity {
 
         return new EqualsBuilder()
                 .append(getId(), that.getId())
+                .append(getUserId(), that.getUserId())
                 .append(getFirstName(), that.getFirstName())
                 .append(getLastName(), that.getLastName())
                 .append(getEmail(), that.getEmail())
@@ -119,6 +131,7 @@ public class UserDetailEntity extends BaseEntity {
                 .append(getPhoneNumber())
                 .append(getImageUrl())
                 .append(getOrder())
+                .append(getUserId())
                 .append(getCreatedDate())
                 .append(getLastModifiedDate())
                 .toHashCode();
@@ -128,6 +141,7 @@ public class UserDetailEntity extends BaseEntity {
     public String toString() {
         return "UserDetailEntity{" +
                 "id=" + id +
+                ", userId='" + userId + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +

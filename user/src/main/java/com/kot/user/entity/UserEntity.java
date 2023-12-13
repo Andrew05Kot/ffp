@@ -3,19 +3,15 @@ package com.kot.user.entity;
 import java.time.Instant;
 import java.util.Date;
 import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-@Entity(name = "ffp_user")
+@Entity
+@Table(name = "ffd_user")
 public class UserEntity {
 
     @Id
@@ -54,7 +50,7 @@ public class UserEntity {
     @Column(name = "house_number")
     private String houseNumber;
 
-    @Column(name = "image_Url")
+    @Column(name = "image_Url", length=1000)
     private String imageUrl;
 
     @CreatedDate

@@ -2,6 +2,7 @@ package com.kot.dish.api.backoffice.v1.dish;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -27,6 +28,8 @@ public class DishV1Response {
 	private Instant lastModifiedDate;
 
 	private RecipeV1Response recipe;
+
+	private List<String> labels;
 
 	public Long getId() {
 		return id;
@@ -100,6 +103,14 @@ public class DishV1Response {
 		this.recipe = recipe;
 	}
 
+	public List<String> getLabels() {
+		return labels;
+	}
+
+	public void setLabels(List<String> labels) {
+		this.labels = labels;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -118,6 +129,7 @@ public class DishV1Response {
 				.append(createdDate, that.createdDate)
 				.append(lastModifiedDate, that.lastModifiedDate)
 				.append(recipe, that.recipe)
+				.append(labels, that.labels)
 				.isEquals();
 	}
 
@@ -133,6 +145,7 @@ public class DishV1Response {
 				.append(createdDate)
 				.append(lastModifiedDate)
 				.append(recipe)
+				.append(labels)
 				.toHashCode();
 	}
 
@@ -148,6 +161,7 @@ public class DishV1Response {
 				", createdDate=" + createdDate +
 				", lastModifiedDate=" + lastModifiedDate +
 				", recipe=" + recipe +
+				", labels=" + labels +
 				'}';
 	}
 }

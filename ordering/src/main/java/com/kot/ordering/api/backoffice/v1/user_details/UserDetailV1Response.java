@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public class UserDetailV1Response {
 
     private UUID id;
+    private UUID userId;
     private String firstName;
     private String lastName;
     private String email;
@@ -61,6 +62,14 @@ public class UserDetailV1Response {
         this.imageUrl = imageUrl;
     }
 
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,6 +78,7 @@ public class UserDetailV1Response {
 
         return new EqualsBuilder()
                 .append(getId(), that.getId())
+                .append(getUserId(), that.getUserId())
                 .append(getFirstName(), that.getFirstName())
                 .append(getLastName(), that.getLastName())
                 .append(getEmail(), that.getEmail())
@@ -81,6 +91,7 @@ public class UserDetailV1Response {
     public int hashCode() {
         return new HashCodeBuilder()
                 .append(getId())
+                .append(getUserId())
                 .append(getFirstName())
                 .append(getLastName())
                 .append(getEmail())
@@ -93,6 +104,7 @@ public class UserDetailV1Response {
     public String toString() {
         return "UserDetailMobileV1Response{" +
                 "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
