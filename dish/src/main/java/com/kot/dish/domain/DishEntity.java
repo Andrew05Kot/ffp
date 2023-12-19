@@ -48,6 +48,9 @@ public class DishEntity {
 	)
 	private Set<LabelEntity> labels;
 
+	@Column(name = "rating")
+	private Long rating;
+
 	@CreatedDate
 	@Column(name = "created_date", updatable = false)
 	private Instant createdDate = Instant.now();
@@ -139,6 +142,14 @@ public class DishEntity {
 		this.labels = labels;
 	}
 
+	public Long getRating() {
+		return rating;
+	}
+
+	public void setRating(Long rating) {
+		this.rating = rating;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -155,6 +166,7 @@ public class DishEntity {
 				.append(price, that.price)
 				.append(imageUrl, that.imageUrl)
 				.append(recipe, that.recipe)
+				.append(rating, that.rating)
 				.append(createdDate, that.createdDate)
 				.append(lastModifiedDate, that.lastModifiedDate)
 				.isEquals();
@@ -170,6 +182,7 @@ public class DishEntity {
 				.append(price)
 				.append(imageUrl)
 				.append(recipe)
+				.append(rating)
 				.append(createdDate)
 				.append(lastModifiedDate)
 				.toHashCode();
@@ -185,6 +198,7 @@ public class DishEntity {
 				", price=" + price +
 				", imageUrl=" + imageUrl +
 				", recipe=" + recipe +
+				", rating=" + rating +
 				", createdDate=" + createdDate +
 				", lastModifiedDate=" + lastModifiedDate +
 				'}';

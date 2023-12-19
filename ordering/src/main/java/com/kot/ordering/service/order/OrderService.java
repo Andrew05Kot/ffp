@@ -118,4 +118,12 @@ public class OrderService {
         return new PageImpl<>(ordersPage, orderEntitiesPage.getPageable(), orderEntitiesPage.getTotalElements());
     }
 
+    public List<Order> findAllByUser(UUID userId) {
+        List<OrderEntity> orderEntities = orderDao.findAllByUser(userId);
+        return orderEntities
+                .stream()
+                .map(Order::new)
+                .toList();
+    }
+
 }

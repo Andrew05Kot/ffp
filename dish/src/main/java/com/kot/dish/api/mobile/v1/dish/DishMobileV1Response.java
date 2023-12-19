@@ -15,6 +15,7 @@ public class DishMobileV1Response {
 	private String description;
 
 	private BigDecimal price;
+	private Long rating;
 
 	private CategoryMobileV1Response category;
 
@@ -58,6 +59,14 @@ public class DishMobileV1Response {
 		this.price = price;
 	}
 
+	public Long getRating() {
+		return rating;
+	}
+
+	public void setRating(Long rating) {
+		this.rating = rating;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -72,6 +81,7 @@ public class DishMobileV1Response {
 				.append(description, that.description)
 				.append(category, that.category)
 				.append(price, that.price)
+				.append(rating, that.rating)
 				.isEquals();
 	}
 
@@ -83,6 +93,7 @@ public class DishMobileV1Response {
 				.append(description)
 				.append(category)
 				.append(price)
+				.append(rating)
 				.toHashCode();
 	}
 
@@ -94,6 +105,7 @@ public class DishMobileV1Response {
 				", description='" + description + '\'' +
 				", category=" + category +
 				", price=" + price +
+				", rating=" + rating +
 				'}';
 	}
 }

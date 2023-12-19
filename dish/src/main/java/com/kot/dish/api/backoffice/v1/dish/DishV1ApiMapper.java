@@ -32,6 +32,7 @@ public class DishV1ApiMapper implements ApiV1Mapper<DishEntity, DishV1Response, 
 		response.setPrice(entity.getPrice());
 		response.setImageUrl(entity.getImageUrl());
 		response.setCategory(categoryMapper.domainToDto(entity.getCategory()));
+		response.setRating(entity.getRating());
 		response.setCreatedDate(entity.getCreatedDate());
 		response.setLastModifiedDate(entity.getLastModifiedDate());
 		if (entity.getRecipe() != null) {

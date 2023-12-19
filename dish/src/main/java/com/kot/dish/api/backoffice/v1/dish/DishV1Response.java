@@ -30,6 +30,7 @@ public class DishV1Response {
 	private RecipeV1Response recipe;
 
 	private List<String> labels;
+	private Long rating;
 
 	public Long getId() {
 		return id;
@@ -111,6 +112,14 @@ public class DishV1Response {
 		this.labels = labels;
 	}
 
+	public Long getRating() {
+		return rating;
+	}
+
+	public void setRating(Long rating) {
+		this.rating = rating;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -130,6 +139,7 @@ public class DishV1Response {
 				.append(lastModifiedDate, that.lastModifiedDate)
 				.append(recipe, that.recipe)
 				.append(labels, that.labels)
+				.append(rating, that.rating)
 				.isEquals();
 	}
 
@@ -145,6 +155,7 @@ public class DishV1Response {
 				.append(createdDate)
 				.append(lastModifiedDate)
 				.append(recipe)
+				.append(rating)
 				.append(labels)
 				.toHashCode();
 	}
@@ -161,6 +172,7 @@ public class DishV1Response {
 				", createdDate=" + createdDate +
 				", lastModifiedDate=" + lastModifiedDate +
 				", recipe=" + recipe +
+				", rating=" + rating +
 				", labels=" + labels +
 				'}';
 	}

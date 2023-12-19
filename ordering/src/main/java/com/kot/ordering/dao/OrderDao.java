@@ -45,6 +45,10 @@ public class OrderDao {
         return orderRepository.findAll(pageable);
     }
 
+    public List<OrderEntity> findAllByUser(UUID userId) {
+        return orderRepository.findByUserDetailUserId(userId);
+    }
+
     protected Specification<OrderEntity> addSpecifications() {
         return Specification.where(null);
     }
