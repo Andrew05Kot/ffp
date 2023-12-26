@@ -38,7 +38,7 @@ public class OrderService {
     private UserDetailService userDetailService;
 
     public OrderEntity create(Order model) {
-        if (model.getDishesToOrder() != null) {
+        if (model.getDishesToOrder() == null) {
             //TODO throw some Exception
             return null;
         }
@@ -116,6 +116,14 @@ public class OrderService {
                 .toList();
 
         return new PageImpl<>(ordersPage, orderEntitiesPage.getPageable(), orderEntitiesPage.getTotalElements());
+    }
+
+    public List<Order> findAllByUser(UUID userId) {
+        List<OrderEntity> orderEntities = orderDao.findAllByUser(userId);
+        return orderEntities
+                .stream()
+                .map(Order::new)
+                .toList();
     }
 
 }

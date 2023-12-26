@@ -2,25 +2,30 @@ package com.kot.ordering.test_data;
 
 import java.math.BigDecimal;
 import java.security.SecureRandom;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import javax.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.kot.ordering.client.DishV1Client;
 import com.kot.ordering.client.FraudDishV1Response;
 import com.kot.ordering.dao.OrderDao;
 import com.kot.ordering.entity.*;
-import com.kot.ordering.model.Order;
-import com.kot.ordering.model.UserDetail;
-import com.kot.ordering.service.order.OrderService;
 
 @Component
-@Profile("test-data")
+//@Profile("test-data")
 public class OrderingTestDataGenerator {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderingTestDataGenerator.class);
 
     @Autowired
     private OrderDao orderDao;
@@ -33,16 +38,68 @@ public class OrderingTestDataGenerator {
     private List<FraudDishV1Response> allDishes;
 
     @PostConstruct
-    public void buildAndSaveOrders() {
+    public void init() {
+//        buildAndSaveOrders();
+//        createAndSaveMyOrders();
+    }
+
+
+    private void createAndSaveMyOrders() {
+        this.allDishes = dishClient.getDishes();
+        Long[] randomids = new Long[]{39l, 41l, 42l, 45l, 49l, 50l, 46l, 47l, 54l, 55l, 56l , 52l};
+
+        int ordersCount = 50;
+        for (int i = 0; i < ordersCount; i++) {
+            int randomCountOfDishesInOrder = random.nextInt(randomids.length);
+            List<DishToOrderEntity> dishesToOrder = new ArrayList<>();
+
+            OrderEntity order = new OrderEntity();
+            order.setOrderStatus(OrderStatus.RECEIVED);
+            order.setPaymentMethod(PaymentMethod.CREDIT_CARD);
+            order.setCreatedDate(getRandomDate());
+
+            UserDetailEntity userDetail = new UserDetailEntity();
+            userDetail.setUserId(UUID.fromString("832d6104-1b36-4e57-af17-8bc493d8d77d"));
+            userDetail.setFirstName("Andrew");
+            userDetail.setLastName("Kot");
+            userDetail.setEmail("andrewkot@gmail.com");
+            userDetail.setPhoneNumber("+31242r234");
+            userDetail.setImageUrl("https://images.prom.ua/4405019443_w640_h640_4405019443.jpg");
+            userDetail.setOrder(order);
+            order.setUserDetail(userDetail);
+
+            for (int k = 0; k < randomCountOfDishesInOrder; k++) {
+                Long dishId = randomids[random.nextInt(randomids.length)];
+                FraudDishV1Response fraudDishV1Response = allDishes.stream().filter(d -> d.getId().equals(dishId)).findFirst().get();
+
+                DishToOrderEntity dishToOrder = new DishToOrderEntity();
+                dishToOrder.setQuantity(random.nextInt(5) + 1);
+                dishToOrder.setDishName(fraudDishV1Response.getName());
+                dishToOrder.setDishCategoryName(fraudDishV1Response.getCategory().getName());
+                dishToOrder.setDishId(dishId);
+                dishToOrder.setCategoryId(fraudDishV1Response.getCategory().getId());
+                dishToOrder.setOrder(order);
+                dishesToOrder.add(dishToOrder);
+            }
+
+            order.setDishesToOrder(dishesToOrder);
+            order.setTotalPrice(new BigDecimal(Math.random() * 100));
+            orderDao.create(order);
+        }
+    }
+
+    private void buildAndSaveOrders() {
+        LOGGER.info("Started data generating...");
         this.allDishes = dishClient.getDishes();
 
-        int ordersCount = random.nextInt(900) + 750;
+        int ordersCount = random.nextInt(9000) + 7500;
         for (int i = 0; i < ordersCount; i++) {
 
             OrderEntity order = new OrderEntity();
             order.setTotalPrice(new BigDecimal(Math.random() * 100));
             order.setOrderStatus(OrderStatus.RECEIVED);
             order.setPaymentMethod(PaymentMethod.CREDIT_CARD);
+            order.setCreatedDate(getRandomDate());
             List<Long> dishIds = getRandomDishes();
             List<DishToOrderEntity> dishesToOrder = new ArrayList<>();
             for (Long dishId : dishIds) {
@@ -104,6 +161,16 @@ public class OrderingTestDataGenerator {
 //            UserDetailEntity userDetail = new UserDetailEntity();
 //            userDetail.setEmail("some-user.email");
         }
+        LOGGER.info("Generated {} of random orders", ordersCount);
+    }
+
+    private ZonedDateTime getRandomDate() {
+        ZonedDateTime currentDateTime = ZonedDateTime.now();
+        int year = currentDateTime.getYear();
+        int randomMonth = random.nextInt(12) + 1;
+        int maxDay = YearMonth.of(year, randomMonth).lengthOfMonth();
+        int randomDay = random.nextInt(maxDay) + 1;
+        return ZonedDateTime.of(LocalDate.of(year, randomMonth, randomDay), currentDateTime.toLocalTime(), ZoneId.systemDefault());
     }
 
     private List<Long> getRandomDishes() {

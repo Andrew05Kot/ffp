@@ -58,6 +58,19 @@ public class OrderV1Controller {
         return pageV1Response;
     }
 
+    @Operation(summary = "Get page of existing orders")
+    @GetMapping(path = "/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public PageV1Response<OrderV1Response> getAllByUser(
+            @RequestParam(value = "expand_fields", required = false) Optional<String> expand,
+            @PathVariable UUID userId) {
+        List<Order> orders = orderService.findAllByUser(userId);
+        return new PageV1Response<>(
+                orders.stream().map(model -> orderV1ApiMapper.domainToDto(model, PagingV1Utils.parseExpandField(expand))).toList(),
+                orders.size(),
+                0,
+                orders.size());
+    }
+
     @Operation(summary = "Get an order by its id")
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<OrderV1Response> getById(

@@ -1,5 +1,6 @@
 package com.kot.ordering.api.mobile.v1.user_details;
 
+import java.util.UUID;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -8,6 +9,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @OpenAPIDefinition(info = @Info(title = "User Details Mobile V1 API", version = "1.0", description = "API for user's data of requested orders"))
 public class UserDetailMobileV1Request {
+
+    @Schema(description = "The identical code of the user")
+    private UUID userId;
 
     @Schema(description = "The first name of the user")
     private String firstName;
@@ -23,6 +27,14 @@ public class UserDetailMobileV1Request {
 
     @Schema(description = "The URL of the user's profile image")
     private String imageUrl;
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -71,6 +83,7 @@ public class UserDetailMobileV1Request {
         if (!(o instanceof UserDetailMobileV1Request that)) return false;
 
         return new EqualsBuilder()
+                .append(getUserId(), that.getUserId())
                 .append(getFirstName(), that.getFirstName())
                 .append(getLastName(), that.getLastName())
                 .append(getEmail(), that.getEmail())
@@ -82,6 +95,7 @@ public class UserDetailMobileV1Request {
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
+                .append(getUserId())
                 .append(getFirstName())
                 .append(getLastName())
                 .append(getEmail())
@@ -94,6 +108,7 @@ public class UserDetailMobileV1Request {
     public String toString() {
         return "UserDetailsV1Request{" +
                 "firstName='" + firstName + '\'' +
+                "userId='" + userId + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +

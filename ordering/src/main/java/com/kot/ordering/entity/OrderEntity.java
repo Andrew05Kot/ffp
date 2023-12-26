@@ -1,6 +1,7 @@
 package com.kot.ordering.entity;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.*;
@@ -8,10 +9,12 @@ import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 @Table(name = "ordering")
-public class OrderEntity extends BaseEntity {
+public class OrderEntity {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -40,6 +43,14 @@ public class OrderEntity extends BaseEntity {
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private UserDetailEntity userDetail;
+
+    @CreatedDate
+    @Column(name = "created_date", updatable = false, nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private ZonedDateTime createdDate = ZonedDateTime.now();
+
+    @LastModifiedDate
+    @Column(name = "last_modified_date")
+    private ZonedDateTime lastModifiedDate = ZonedDateTime.now();
 
     public UUID getId() {
         return id;
@@ -97,6 +108,22 @@ public class OrderEntity extends BaseEntity {
         this.userDetail = userDetail;
     }
 
+    public ZonedDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(ZonedDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public ZonedDateTime getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(ZonedDateTime lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -141,8 +168,8 @@ public class OrderEntity extends BaseEntity {
                 ", dishesToOrder=" + dishesToOrder +
                 ", deliveryAddress=" + deliveryAddress +
                 ", userDetail=" + userDetail +
-                ", createdDate=" + getCreatedDate() +
-                ", lastModifiedDate=" + getLastModifiedDate() +
+                ", createdDate=" + createdDate +
+                ", lastModifiedDate=" + lastModifiedDate +
                 '}';
     }
 }

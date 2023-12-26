@@ -48,7 +48,6 @@ public class OrderStatisticService {
 
         MathContext mc = new MathContext(3);
 
-
         return orders.stream().collect(Collectors.toMap(
                 order -> order.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM")),
                 order -> calculateTotal(order.getDishesToOrder()

@@ -3,6 +3,7 @@ package com.kot.user.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kot.user.dao.UserDao;
@@ -11,10 +12,17 @@ import com.kot.user.entity.UserEntity;
 @Service
 public class UserService {
 
+    private final UserDao userDao;
+    private final  BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
-    private UserDao userDao;
+    public UserService(UserDao userDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userDao = userDao;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     public UserEntity create(UserEntity entity) {
+        entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
         return userDao.create(entity);
     }
 

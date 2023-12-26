@@ -3,19 +3,15 @@ package com.kot.user.entity;
 import java.time.Instant;
 import java.util.Date;
 import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-@Entity(name = "ffp_user")
+@Entity
+@Table(name = "ffd_user")
 public class UserEntity {
 
     @Id
@@ -31,6 +27,9 @@ public class UserEntity {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -51,7 +50,7 @@ public class UserEntity {
     @Column(name = "house_number")
     private String houseNumber;
 
-    @Column(name = "image_Url")
+    @Column(name = "image_Url", length=1000)
     private String imageUrl;
 
     @CreatedDate
@@ -92,6 +91,14 @@ public class UserEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPhoneNumber() {
@@ -179,6 +186,7 @@ public class UserEntity {
                 .append(firstName, that.firstName)
                 .append(lastName, that.lastName)
                 .append(email, that.email)
+                .append(password, that.password)
                 .append(phoneNumber, that.phoneNumber)
                 .append(birthday, that.birthday)
                 .append(country, that.country)
@@ -198,6 +206,7 @@ public class UserEntity {
                 .append(firstName)
                 .append(lastName)
                 .append(email)
+                .append(password)
                 .append(phoneNumber)
                 .append(birthday)
                 .append(country)

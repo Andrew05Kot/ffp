@@ -12,4 +12,6 @@ import com.kot.user.entity.UserEntity;
 public interface UserRepository extends CrudRepository<UserEntity, UUID>,
 		JpaSpecificationExecutor<UserEntity>,
 		PagingAndSortingRepository<UserEntity, UUID> {
+
+	UserEntity findDistinctByEmail(String email);
 }

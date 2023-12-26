@@ -11,6 +11,7 @@ public class UserV1Response {
 	private UUID id;
 	private String firstName;
 	private String lastName;
+	private String email;
 	private Date birthday;
 	private String country;
 	private String city;
@@ -42,6 +43,14 @@ public class UserV1Response {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Date getBirthday() {
@@ -119,6 +128,7 @@ public class UserV1Response {
 		return new EqualsBuilder().append(id, response.id)
 				.append(firstName, response.firstName)
 				.append(lastName, response.lastName)
+				.append(email, response.email)
 				.append(birthday, response.birthday)
 				.append(country, response.country)
 				.append(city, response.city)
@@ -135,6 +145,7 @@ public class UserV1Response {
 		return new HashCodeBuilder().append(id)
 				.append(firstName)
 				.append(lastName)
+				.append(email)
 				.append(birthday)
 				.append(country)
 				.append(city)
@@ -152,6 +163,7 @@ public class UserV1Response {
 				"id=" + id +
 				", firstName='" + firstName + '\'' +
 				", lastName='" + lastName + '\'' +
+				", email='" + email + '\'' +
 				", birthday=" + birthday +
 				", country='" + country + '\'' +
 				", city='" + city + '\'' +

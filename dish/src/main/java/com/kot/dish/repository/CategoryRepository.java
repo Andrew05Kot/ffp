@@ -11,4 +11,6 @@ import com.kot.dish.domain.CategoryEntity;
 public interface CategoryRepository extends CrudRepository<CategoryEntity, Long>,
 		JpaSpecificationExecutor<CategoryEntity>,
 		PagingAndSortingRepository<CategoryEntity, Long> {
+
+	CategoryEntity findByName(String name);
 }

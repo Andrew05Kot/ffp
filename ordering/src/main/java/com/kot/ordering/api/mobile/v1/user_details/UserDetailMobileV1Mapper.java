@@ -10,6 +10,7 @@ public class UserDetailMobileV1Mapper {
 
     public UserDetail dtoToDomain(UserDetailMobileV1Request request) {
         UserDetail model = new UserDetail();
+        model.setUserId(request.getUserId());
         model.setFirstName(request.getFirstName());
         model.setLastName(request.getLastName());
         model.setEmail(request.getEmail());
@@ -21,6 +22,7 @@ public class UserDetailMobileV1Mapper {
     public UserDetailMobileV1Response domainToDto(UserDetailEntity model) {
         UserDetailMobileV1Response response = new UserDetailMobileV1Response();
         response.setId(model.getId());
+        response.setUserId(model.getUserId());
         response.setFirstName(model.getFirstName());
         response.setLastName(model.getLastName());
         response.setEmail(model.getEmail());

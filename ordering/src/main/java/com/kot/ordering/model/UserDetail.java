@@ -10,6 +10,7 @@ import com.kot.ordering.entity.UserDetailEntity;
 public class UserDetail {
 
     private UUID id;
+    private UUID userId;
     private String firstName;
     private String lastName;
     private String email;
@@ -23,6 +24,7 @@ public class UserDetail {
     public UserDetail(UserDetailEntity entity) {
         setId(entity.getId());
         setFirstName(entity.getFirstName());
+        setUserId(entity.getUserId());
         setLastName(entity.getLastName());
         setEmail(entity.getEmail());
         setPhoneNumber(entity.getPhoneNumber());
@@ -34,6 +36,7 @@ public class UserDetail {
     public UserDetailEntity getEntity() {
         UserDetailEntity entity = new UserDetailEntity();
         entity.setId(this.id);
+        entity.setUserId(this.userId);
         entity.setFirstName(this.firstName);
         entity.setLastName(this.lastName);
         entity.setEmail(this.email);
@@ -64,6 +67,14 @@ public class UserDetail {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public String getEmail() {
@@ -113,6 +124,7 @@ public class UserDetail {
         if (!(o instanceof UserDetail that)) return false;
 
         return new EqualsBuilder().append(getId(), that.getId())
+                .append(getUserId(), that.getUserId())
                 .append(getFirstName(), that.getFirstName())
                 .append(getLastName(), that.getLastName())
                 .append(getEmail(), that.getEmail())
@@ -126,6 +138,7 @@ public class UserDetail {
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(getId())
+                .append(getUserId())
                 .append(getFirstName())
                 .append(getLastName())
                 .append(getEmail())

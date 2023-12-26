@@ -1,5 +1,6 @@
 package com.kot.ordering.repository;
 
+import java.util.List;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
@@ -12,4 +13,6 @@ import com.kot.ordering.entity.OrderEntity;
 public interface OrderRepository extends CrudRepository<OrderEntity, UUID>,
         JpaSpecificationExecutor<OrderEntity>,
         PagingAndSortingRepository<OrderEntity, UUID> {
+
+    List<OrderEntity> findByUserDetailUserId(UUID userId);
 }
