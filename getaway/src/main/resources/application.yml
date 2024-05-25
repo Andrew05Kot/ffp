@@ -28,6 +28,10 @@ spring:
           uri: http://localhost:8082
           predicates:
             - Path=/api/v1/ordering/**
+        - id: recommendation
+          uri: http://localhost:8086
+          predicates:
+            - Path=/api/v1/recommendation/**
   security:
     oauth2:
       resourceserver:

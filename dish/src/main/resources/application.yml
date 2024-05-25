@@ -13,16 +13,10 @@ spring:
   application:
     name: dish
   datasource:
-    driverClassName: org.h2.Driver
-    url: jdbc:h2:mem:micro_dish;
-    username: micro_dish_user
-    password:
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://127.0.0.1:5432/micro_dish
+    username: postgres
+    password: postgres
   h2:
     console:
       enabled: true

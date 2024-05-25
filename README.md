@@ -13,10 +13,6 @@ The business idea of this project is to sell burgers in Telegram client, Mobile 
 * Integration Postgres and H2 databases
 * Configuration Api Gateway
 
-## Structure of APIs:
-
-![image](https://user-images.githubusercontent.com/55507306/181814284-6699bb11-83f2-48b6-b741-22f5ce342cf2.png)
-
 ## How to tweak this project for your own uses
 1. Clone this repository and unban from the _develop_ branch
 2. Run `mvn compile` command
@@ -29,6 +25,11 @@ The business idea of this project is to sell burgers in Telegram client, Mobile 
 - **Unique Constraint**: `table_name_column_name_uq`
 - **Index Constraint**: `table_name_column_name_idx`
 
+## Keycloak
+1. Recommended to use and install Keycloak 22.0.5
+2. To start, go to installed package with Keycloak and run bin/kc.sh start-dev`
+3. Go to [admin console](http://localhost:8080/admin) and login as root
+4. Use ffp-app with ffp-clients
 
 ## URLs (local environment)
 1. **Swagger**: http://localhost:8765/webjars/swagger-ui/index.html
